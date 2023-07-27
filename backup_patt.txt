@@ -1,0 +1,46 @@
+# Borgbackup --patterns-from format
+
+#  ██████   ██████  ██████   ██████
+#  ██   ██ ██    ██ ██   ██ ██
+#  ██████  ██    ██ ██████  ██   ███
+#  ██   ██ ██    ██ ██   ██ ██    ██
+#  ██████   ██████  ██   ██  ██████
+
+# "sh:" pattern style is the default, so the following line is not needed:
+# P sh
+
+# root if set via command line
+# R /home/lukasz
+
+- re:^.*\.env$
+
+- re:^.*\/\.env\/.*$
+- re:^.*\/env\/.*$
+- re:^.*\/env.bak\/.*$
+
+- re:^.*\.venv$
+
+- re:^.*\/\.venv\/.*$
+- re:^.*\/venv\/.*$
+- re:^.*\/venv.bak\/.*$
+
+- re:^.*\/ENV\/.*$
+- re:^.*\/mod\/.*$
+- re:^.*\/__pycache__\/.*$
+- re:^.*\/wheels\/.*$
+- re:^.*\/wheel\/.*$
+- re:^.*\/\.local\/share\/Trash\/.*$
+- re:^.*\/\.cache\/.*$
+- re:^.*\/[Ll]ogs\/.*$
+- re:^.*\/[Hh]istory\/.*$
+- re:^.*\/\.vscode\/.*$
+- re:^.*\/\.dotnet\/.*$
+- re:^.*\/snap\/.*$
+- re:^.*\/\.git\/.*$
+
+- re:^.*\/[Cc]ache\/.*$
+- re:^.*\/Cache.*$
+
+- re:^.*\.log$
+- re:^.*\.cache$
+- re:^.*\.bash_history$
