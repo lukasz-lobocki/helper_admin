@@ -114,7 +114,9 @@ or by specifying the _DIRNAME_.
 
 ```bash
 cd /mnt/btrfs/ncdata/data/lukasz/files
+```
 
+```bash
 bash -c \
   'find_func() \
     { find "$1" -type f -print0 | xargs -0I@ xxhsum @; }; \
@@ -138,18 +140,26 @@ find . -type f -iname "*.xxhsum" -execdir \
 ```
 
 <details>
-<summary>Creation and check alternative with rhash.</summary>
+<summary>Creation alternative with rhash.</summary>
 
 ```bash
 rhash --sha256 --recursive \
   --output=.sha256 .
+```
+  
+```bash
 rhash --crc32 --recursive --simple \
   --output=.crc32 .
 ```
 
+And check.
+
 ```bash
 rhash --check --skip-ok \
   ./.sha256
+```
+
+```bash
 rhash --check --skip-ok \
   ./.crc32
 ```
@@ -242,8 +252,7 @@ From _NUC_ to USB drive mounted on DietPi (raspberry).
 
 ```bash
 borg create \
-  --stats \
-  --patterns-from ~/Code/helper/admin/backup_patt.txt \
+  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   root@192.168.2.145:/mnt/usb/nucbackup::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
@@ -331,6 +340,9 @@ Turn off _Password authentication_.
 
 ```bash
 sudo nano /etc/ssh/sshd_config
+```
+
+```bash
 sudo systemctl restart ssh
 ```
 
@@ -340,6 +352,9 @@ Check [format-a-harddisk-partition](https://vitux.com/how-to-format-a-harddisk-p
 
 ```bash
 su -
+```
+
+```bash
 apt install btrfs-progs
 ```
 
@@ -422,7 +437,13 @@ What user/permissions should I have to the external USB drive mount point, the n
 
 ```bash
 sudo -u www-data bash
+```
+
+```bash
 cd /var/www/nextcloud
+```
+
+```bash
 php occ
 ```
 

@@ -4,6 +4,9 @@
 
 ```bash
 sudo touch /usr/share/glib-2.0/schemas/93_hidpi.gschema.override
+```
+
+```bash
 sudo nano /usr/share/glib-2.0/schemas/93_hidpi.gschema.override
 ```
 
@@ -20,6 +23,9 @@ sudo glib-compile-schemas /usr/share/glib-2.0/schemas
 
 ```bash
 snap-store --quit && sudo snap refresh snap-store
+```
+
+```bash
 sudo apt autoclean && sudo apt clean && sudo apt autoremove
 ```
 
@@ -27,6 +33,9 @@ sudo apt autoclean && sudo apt clean && sudo apt autoremove
 
 ```bash
 pip3 install --upgrade esptool
+```
+
+```bash
 pip3 install --upgrade rshell
 ```
 
