@@ -252,8 +252,7 @@ From _NUC_ to USB drive mounted on DietPi (raspberry).
 
 ```bash
 borg create \
-  --stats \
-  --patterns-from ~/Code/helper/admin/backup_patt.txt \
+  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   root@192.168.2.145:/mnt/usb/nucbackup::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
