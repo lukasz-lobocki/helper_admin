@@ -30,7 +30,7 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 - [4. REMOTE SYNCHRONIZE with rsync](#4-remote-synchronize-with-rsync)
 - [5. MOUNTING SAMBA](#5-mounting-samba)
 - [6. BORG BACKUP](#6-borg-backup)
-  - [6.1. Create](#61-create)
+  - [6.1. Create _archive_](#61-create-archive)
   - [6.2. Get info](#62-get-info)
   - [6.3. Prune](#63-prune)
 - [7. NEXTCLOUDPi SETUP](#7-nextcloudpi-setup)
@@ -55,7 +55,7 @@ sudo \
 
 ### 2.2. Permisions
 
-Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions](https://gist.github.com/lukasz-lobocki/706e2d53d86a0ba8085aed76dc07049b#permisions-1) pages.
+Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions](#permisions) pages.
 
 #### Directories
 
@@ -77,7 +77,7 @@ sudo \
 
 ### 2.3. Hashing
 
-Check [file-append_xxhsum.sh](https://gist.github.com/lukasz-lobocki/706e2d53d86a0ba8085aed76dc07049b#file-append_xxhsum-sh) and [append-xxhsum](https://github.com/lukasz-lobocki/append-xxhsum.git) pages.
+Check [file-append_xxhsum.sh](https://github.com/lukasz-lobocki/helper_admin/blob/main/other/append_xxhsum.sh) and [append-xxhsum](https://github.com/lukasz-lobocki/append-xxhsum.git) pages.
 
 #### Managing placeholders for hashes
 
@@ -237,7 +237,7 @@ sudo mount \
 
 ## 6. BORG BACKUP
 
-### 6.1. Create
+### 6.1. Create _archive_
 
 From _NextcloudPi_ to USB drive mounted on DietPi (raspberry).
 
