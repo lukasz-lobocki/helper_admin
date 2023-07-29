@@ -60,7 +60,7 @@ Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/m
 #### Directories
 
 ```bash
-sudo -u www-data \
+sudo \
   find /mnt/btrfs/ncdata -type d -print0 \
   | xargs -0 sudo -u www-data \
     chmod u=rwx,g=rx,o=rx
@@ -69,7 +69,7 @@ sudo -u www-data \
 #### Files
 
 ```bash
-sudo -u www-data \
+sudo \
   find /mnt/btrfs/ncdata -type f -print0 \
   | xargs -0 sudo -u www-data \
     chmod u=rw,g=r,o=r
