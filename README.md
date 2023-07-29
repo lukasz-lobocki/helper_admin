@@ -179,7 +179,7 @@ scp -Cr ./directory/ username@to_host:./directory/
 Re-synchronizes all files repository into _Slonecznikowa_.
 
 ```bash
-rsync \
+ssh la_lukasz@nextcloudpi.local rsync \
   --archive \
   --stats \
   --verbose \
@@ -242,7 +242,7 @@ sudo mount \
 From _NextcloudPi_ to USB drive mounted on DietPi (raspberry).
 
 ```bash
-borg create \
+ssh la_lukasz@nextcloudpi.local borg create \
   --stats \
   root@192.168.2.145:/mnt/usb/borgbackup::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/ncdata/data/lukasz/files
