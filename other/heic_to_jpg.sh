@@ -6,9 +6,9 @@
 # ██   ██ ██      ██ ██             ██    ██    ██     ██   ██ ██      ██      ██    ██ 
 # ██   ██ ███████ ██  ██████        ██     ██████       █████  ██      ███████  ██████  
 
-# Convert heic & HEIC to jpg. With cleainig.
+# Convert heic & HEIC to jpg. With cleaning.
 
-set -euo pipefail
+set -uo pipefail
 IFS=$'\n\t'
 
 # Rename *.heic of 'image/jpeg' to *.jpg
