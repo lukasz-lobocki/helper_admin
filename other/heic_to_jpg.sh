@@ -6,7 +6,7 @@
 # ██   ██ ██      ██ ██             ██    ██    ██     ██   ██ ██      ██      ██    ██ 
 # ██   ██ ███████ ██  ██████        ██     ██████       █████  ██      ███████  ██████  
 
-# Convert heic & HEIC to jpg. With cleainig.
+# Convert heic & HEIC to jpg. With cleaning.
 
 set -uo pipefail
 IFS=$'\n\t'
