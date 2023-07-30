@@ -8,7 +8,7 @@
 
 # Recursively adds missing xxhsum hashes from PATH to --xxhsum-filepath.
 
-set -euo pipefail
+set -uo pipefail
 
 function parse_params () {
 
