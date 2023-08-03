@@ -242,7 +242,7 @@ sudo mount \
 From _NextcloudPi_ to USB drive mounted on DietPi (raspberry).
 
 ```bash
-ssh la_lukasz@nextcloudpi.local borg create \
+borg create \
   --stats \
   root@192.168.2.145:/mnt/usb/borgbackup::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/ncdata/data/lukasz/files
