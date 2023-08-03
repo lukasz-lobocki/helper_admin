@@ -32,7 +32,8 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. Create _archive_](#61-create-archive)
   - [6.2. Get info](#62-get-info)
-  - [6.3. Prune](#63-prune)
+  - [6.3. Vorta to NextcloudPi backup](#63-vorta-to-nextcloudpi-backup)
+  - [6.4. Prune](#64-prune)
 - [7. NEXTCLOUDPi SETUP](#7-nextcloudpi-setup)
   - [7.1. Hardware](#71-hardware)
   - [7.2. Debian](#72-debian)
@@ -239,7 +240,7 @@ sudo mount \
 
 ### 6.1. Create _archive_
 
-From **NextcloudPi** to USB drive mounted on *DietPi* (raspberry).
+From **NextcloudPi** to USB drive mounted on _DietPi_ (raspberry).
 
 ```bash
 borg create \
@@ -295,7 +296,18 @@ borg check \
   root@192.168.2.145:/mnt/usb/nextcloudbackup
 ```
 
-### 6.3. Prune
+### 6.3. Vorta to NextcloudPi backup
+
+```bash
+source ~/homenv/bin/activate.fish
+```
+
+```bash
+set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
+  && vorta
+```
+
+### 6.4. Prune
 
 Remove extra _archives_.
 
