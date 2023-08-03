@@ -239,22 +239,13 @@ sudo mount \
 
 ### 6.1. Create _archive_
 
-From _NextcloudPi_ to USB drive mounted on DietPi (raspberry).
+From **NextcloudPi** to USB drive mounted on *DietPi* (raspberry).
 
 ```bash
 borg create \
   --stats \
-  root@192.168.2.145:/mnt/usb/borgbackup::{hostname}-{now:%Y%m%dT%H%M} \
+  root@192.168.2.145:/mnt/usb/nextcloudbackup::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/ncdata/data/lukasz/files
-```
-
-From _NUC_ to USB drive mounted on DietPi (raspberry).
-
-```bash
-borg create \
-  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  root@192.168.2.145:/mnt/usb/nucbackup::{hostname}-{now:%Y%m%dT%H%M} \
-  ~
 ```
 
 <details>
@@ -265,11 +256,20 @@ borg create \
   --list \
   --dry-run \
   --filter - \
-  root@192.168.2.145:/mnt/usb/borgbackup::{hostname}-{now:%Y%m%dT%H%M} \
+  root@192.168.2.145:/mnt/usb/nextcloudbackup::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/ncdata/data/lukasz/files
 ```
 
 </details>
+
+From **NUC** to USB drive mounted on _DietPi_ (raspberry).
+
+```bash
+borg create \
+  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  root@192.168.2.145:/mnt/usb/nucbackup::{hostname}-{now:%Y%m%dT%H%M} \
+  ~
+```
 
 ### 6.2. Get info
 
@@ -277,14 +277,14 @@ Information on _repository_.
 
 ```bash
 borg info \
-  root@192.168.2.145:/mnt/usb/borgbackup
+  root@192.168.2.145:/mnt/usb/nextcloudbackup
 ```
 
 List _archives_ in repository.
 
 ```bash
 borg list \
-  root@192.168.2.145:/mnt/usb/borgbackup
+  root@192.168.2.145:/mnt/usb/nextcloudbackup
 ```
 
 Verify consistnecy of _repository_.
@@ -292,7 +292,7 @@ Verify consistnecy of _repository_.
 ```bash
 borg check \
   --verbose --repository-only \
-  root@192.168.2.145:/mnt/usb/borgbackup
+  root@192.168.2.145:/mnt/usb/nextcloudbackup
 ```
 
 ### 6.3. Prune
@@ -301,7 +301,7 @@ Remove extra _archives_.
 
 ```bash
 borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  root@192.168.2.145:/mnt/usb/borgbackup
+  root@192.168.2.145:/mnt/usb/nextcloudbackup
 ```
 
 ## 7. NEXTCLOUDPi SETUP
