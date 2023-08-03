@@ -298,6 +298,9 @@ borg check \
 
 ### 6.3. Vorta to NextcloudPi backup
 
+<details>
+<summary>Not realy usefull.</summary>
+
 ```bash
 source ~/homenv/bin/activate.fish
 ```
@@ -306,6 +309,8 @@ source ~/homenv/bin/activate.fish
 set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
   && vorta
 ```
+
+</details>
 
 ### 6.4. Prune
 
