@@ -26,6 +26,7 @@ sudo apt --with-new-pkgs upgrade <packages-list>
   - [2.1. Ownership](#21-ownership)
   - [2.2. Permisions](#22-permisions)
   - [2.3. Hashing](#23-hashing)
+  - [2.4. Indexing](#24-indexing)
 - [3. REMOTE COPYING with scp](#3-remote-copying-with-scp)
 - [4. REMOTE SYNCHRONIZE with rsync](#4-remote-synchronize-with-rsync)
 - [5. MOUNTING SAMBA](#5-mounting-samba)
@@ -166,6 +167,10 @@ rhash --check --skip-ok \
 ```
 
 </details>
+
+### 2.4. Indexing
+
+Check [How to disable file indexing in Ubuntu](https://stackoverflow.com/a/76178044/4465044) post.
 
 ## 3. REMOTE COPYING with scp
 
