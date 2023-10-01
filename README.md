@@ -38,7 +38,8 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 - [7. NEXTCLOUDPi SETUP](#7-nextcloudpi-setup)
   - [7.1. Hardware](#71-hardware)
   - [7.2. Debian](#72-debian)
-  - [7.3. Install](#73-install)
+  - [7.3. Nextcloud AIO docker install](#73-nextcloud-aio-docker-install)
+  - [7.4. Admining](#74-admining)
 
 ## 1. CHEATSHEET
 
@@ -174,7 +175,7 @@ Check [How to disable file indexing in Ubuntu](https://stackoverflow.com/a/76178
 
 ## 3. REMOTE COPYING with scp
 
-With **C**ompression in transit and **r**ecursively.
+With <u>C</u>ompression in transit and <u>r</u>ecursively.
 
 ```bash
 scp -Cr ./directory/ username@to_host:./directory/
@@ -470,9 +471,7 @@ Append _fstab_ line.
 UUID=0bcd6094-3899-488f-8733-19f824e3be8c /mnt/btrfs btrfs defaults 0 3
 ```
 
-### 7.3. Install
-
-#### Nextcloud AIO docker install
+### 7.3. Nextcloud AIO docker install
 
 ```bash
 sudo docker run \
@@ -489,7 +488,13 @@ sudo docker run \
 nextcloud/all-in-one:latest
 ```
 
-##### Admining
+#### NextcloudPi install on Debian
+
+Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
+
+Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
+
+### 7.4. Admining
 
 ```bash
 usermod --append --groups www-data la_lukasz
@@ -508,28 +513,26 @@ sudo docker exec \
 ```
 
 ```bash
+sudo docker exec \
+  --user www-data -it nextcloud-aio-nextcloud php occ fulltextsearch:index
+```
+
+```bash
 sudo -u www-data bash
 ```
 
-#### NextcloudPi install on Debian
-
-Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
-
-##### Moving data directory
-
-Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
-
 ```bash
-sudo su -
-sudo bash
-sudo ncp-config
+sudo docker run \
+  -it --rm --volume nextcloud_aio_nextcloud:/var/www/html:rw alpine \
+  sh -c "apk add --no-cache nano \
+  && nano /var/www/html/config/config.php"
 ```
 
 ```bash
 sudo nano /var/www/nextcloud/config/config.php
 ```
 
-##### Permisions
+#### Permisions
 
 Check [permissions](https://help.nextcloud.com/t/frequently-asked-questions-faq-ncp/126325#what-userpermissions-should-i-have-to-the-external-usb-drive-mount-point-the-ncdata-and-ncdatabase-directory-11).
 
@@ -550,17 +553,3 @@ php occ
 ```
 
 Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
-
-##### Activation
-
-> Your NextCloudPi user is `ncp`
->
->Your NextCloudPi password is `***`
->
-> Save this password in order to access to the NextCloudPi web interface at [https://nextcloudpi.local:4443](https://nextcloudpi.local:4443). This password can be changed using `nc-passwd`
->
-> Your NextCloud user is `ncp`
->
->Your Nextcloud password is `***`
->
->Save this password in order to access NextCloud [https://nextcloudpi.local](https://nextcloudpi.local). This password can be changed from the Nextcloud user configuration.
