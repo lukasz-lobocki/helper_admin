@@ -33,8 +33,8 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. Create _archive_](#61-create-archive)
   - [6.2. Get info](#62-get-info)
-  - [6.4. Prune](#64-prune)
-  - [6.3. Vorta to NextcloudPi backup](#63-vorta-to-nextcloudpi-backup)
+  - [6.3. Prune](#63-prune)
+  - [6.4. Vorta to NextcloudPi backup](#64-vorta-to-nextcloudpi-backup)
 - [7. NEXTCLOUDPi SETUP](#7-nextcloudpi-setup)
   - [7.1. Hardware](#71-hardware)
   - [7.2. Debian](#72-debian)
@@ -271,7 +271,7 @@ borg create \
 </details>
 
 <details>
-<summary>...same for NUC.</summary>
+<summary>...same for <b>NUC</b>.</summary>
 
 From **NUC** to USB drive mounted on _DietPi_ (raspberry).
 
@@ -311,7 +311,7 @@ borg check \
 ```
 
 <details>
-<summary>...same for NUC.</summary>
+<summary>...same for <b>NUC</b>.</summary>
 
 ```bash
 borg info \
@@ -335,7 +335,7 @@ borg check \
 
 </details>
 
-### 6.4. Prune
+### 6.3. Prune
 
 Remove extra _archives_.
 
@@ -347,7 +347,7 @@ borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 
 ```
 
 <details>
-<summary>...same for NUC.</summary>
+<summary>...same for <b>NUC</b>.</summary>
 
 ```bash
 borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
@@ -356,7 +356,7 @@ borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 
 
 </details>
 
-### 6.3. Vorta to NextcloudPi backup
+### 6.4. Vorta to NextcloudPi backup
 
 <details>
 <summary>Not realy usefull.</summary>
