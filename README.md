@@ -44,7 +44,7 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 
 ## 1. CHEATSHEET
 
-:information_source: Check [Bash scripting cheatsheet](https://devhints.io/bash) and [how-to-use-double-or-single-brackets-parentheses-curly-braces](https://stackoverflow.com/questions/2188199/how-to-use-double-or-single-brackets-parentheses-curly-braces) pages.
+:information_source: Check [Bash scripting cheatsheet](https://devhints.io/bash) and [how-to-use-double-or-single-brackets-parentheses-curly-braces](https://stackoverflow.com/a/2188223/4465044) pages.
 
 Check [TOC generator](https://luciopaiva.com/markdown-toc/) page.
 
