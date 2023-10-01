@@ -509,6 +509,10 @@ Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-
 usermod --append --groups www-data la_lukasz
 ```
 
+```bash
+su - www-data
+```
+
 :information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
 
 ```bash
@@ -526,9 +530,7 @@ sudo docker exec \
   --user www-data -it nextcloud-aio-nextcloud php occ fulltextsearch:index
 ```
 
-```bash
-sudo -u www-data bash
-```
+Editting _config.php_
 
 ```bash
 sudo docker run \
