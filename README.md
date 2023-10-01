@@ -35,11 +35,12 @@ sudo apt --with-new-pkgs upgrade <packages-list>
   - [6.2. Get info](#62-get-info)
   - [6.3. Prune](#63-prune)
   - [6.4. Vorta to NextcloudPi backup](#64-vorta-to-nextcloudpi-backup)
-- [7. NEXTCLOUDPi SETUP](#7-nextcloudpi-setup)
-  - [7.1. Hardware](#71-hardware)
-  - [7.2. Debian](#72-debian)
-  - [7.3. Nextcloud AIO docker install](#73-nextcloud-aio-docker-install)
-  - [7.4. Admining](#74-admining)
+- [7. SUDOing](#7-sudoing)
+- [8. NEXTCLOUDPi SETUP](#8-nextcloudpi-setup)
+  - [8.1. Hardware](#81-hardware)
+  - [8.2. Debian](#82-debian)
+  - [8.3. Nextcloud AIO docker install](#83-nextcloud-aio-docker-install)
+  - [8.4. Admining](#84-admining)
 
 ## 1. CHEATSHEET
 
@@ -373,23 +374,31 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 
 </details>
 
-## 7. NEXTCLOUDPi SETUP
+## 7. SUDOing
 
-### 7.1. Hardware
+The commands `su`, `su -`, `sudo su -`, and `sudo -i` are all used in the Linux terminal to switch users or elevate privileges. However, they have some differences in their behavior.
+
+- `su`: This command stands for "switch user" and is used to log in as a different user. When you run `su` without any arguments, it will switch to the root user by default. You'll be prompted to enter the password of the user you're switching to.
+- `su -`: The - (dash) option with `su` is used to simulate a login session for the new user. It sets the environment variables, shell, and working directory to that of the new user. This is useful if you need to perform tasks as that user and need access to their environment.
+- `sudo su -`: The `sudo` command is used to execute a command with elevated privileges. When you run `sudo su -`, you're using `sudo` to execute the `su -` command as the root user. This is a quick way to switch to the root user without having to enter the root password.
+- `sudo -i`: This command is similar to sudo `su -`. The `-i` option stands for "login" and simulates a login session for the target user, in this case, the root user. This means that the root user's environment variables, shell, and working directory are used. It's also a quick way to get a root shell.
+
+## 8. NEXTCLOUDPi SETUP
+
+### 8.1. Hardware
 
 ```bash
 netboot_default
 ```
 
-### 7.2. Debian
+### 8.2. Debian
 
 Install _Debian_.
 
 #### ssh for user
 
 ```bash
-sudo su
-su -
+sudo su -
 groups
 ```
 
@@ -421,7 +430,7 @@ sudo systemctl restart ssh
 Check [format-a-harddisk-partition](https://vitux.com/how-to-format-a-harddisk-partition-with-btrfs-on-ubuntu-20-04/) and [btrfs-on-ubuntu](https://www.linuxfordevices.com/tutorials/linux/btrfs-on-ubuntu) pages.
 
 ```bash
-su -
+sudo su -
 ```
 
 ```bash
@@ -471,7 +480,7 @@ Append _fstab_ line.
 UUID=0bcd6094-3899-488f-8733-19f824e3be8c /mnt/btrfs btrfs defaults 0 3
 ```
 
-### 7.3. Nextcloud AIO docker install
+### 8.3. Nextcloud AIO docker install
 
 ```bash
 sudo docker run \
@@ -494,18 +503,18 @@ Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian
 
 Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
 
-### 7.4. Admining
+### 8.4. Admining
 
 ```bash
 usermod --append --groups www-data la_lukasz
 ```
 
+:information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
+
 ```bash
 sudo docker exec \
   --user www-data -it nextcloud-aio-nextcloud php occ list
 ```
-
-Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
 
 ```bash
 sudo docker exec \
@@ -547,9 +556,3 @@ What user/permissions should I have to the external USB drive mount point, the n
 ```bash
 cd /var/www/nextcloud
 ```
-
-```bash
-php occ
-```
-
-Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
