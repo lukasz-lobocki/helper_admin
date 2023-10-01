@@ -35,7 +35,7 @@ sudo apt --with-new-pkgs upgrade <packages-list>
   - [6.2. Get info](#62-get-info)
   - [6.3. Prune](#63-prune)
   - [6.4. Vorta to NextcloudPi backup](#64-vorta-to-nextcloudpi-backup)
-- [7. SUDOing](#7-sudoing)
+- [7. SUDO-ing](#7-sudo-ing)
 - [8. NEXTCLOUDPi SETUP](#8-nextcloudpi-setup)
   - [8.1. Hardware](#81-hardware)
   - [8.2. Debian](#82-debian)
@@ -44,7 +44,7 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 
 ## 1. CHEATSHEET
 
-Check [Bash scripting cheatsheet](https://devhints.io/bash) and [how-to-use-double-or-single-brackets-parentheses-curly-braces](https://stackoverflow.com/questions/2188199/how-to-use-double-or-single-brackets-parentheses-curly-braces) pages.
+:information_source: Check [Bash scripting cheatsheet](https://devhints.io/bash) and [how-to-use-double-or-single-brackets-parentheses-curly-braces](https://stackoverflow.com/questions/2188199/how-to-use-double-or-single-brackets-parentheses-curly-braces) pages.
 
 Check [TOC generator](https://luciopaiva.com/markdown-toc/) page.
 
@@ -374,12 +374,12 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 
 </details>
 
-## 7. SUDOing
+## 7. SUDO-ing
 
 The commands `su`, `su -`, `sudo su -`, and `sudo -i` are all used in the Linux terminal to switch users or elevate privileges. However, they have some differences in their behavior.
 
 - `su`: This command stands for "switch user" and is used to log in as a different user. When you run `su` without any arguments, it will switch to the root user by default. You'll be prompted to enter the password of the user you're switching to.
-- `su -`: The - (dash) option with `su` is used to simulate a login session for the new user. It sets the environment variables, shell, and working directory to that of the new user. This is useful if you need to perform tasks as that user and need access to their environment.
+- `su -`: The - (dash) option with `su` is used to simulate a login session for the new user. It sets the environment variables, shell, and working directory to that of the new user. This is useful if you need to perform tasks as that user and need access to their environment. New user name is to be provided after dash: `su - www-data`
 - `sudo su -`: The `sudo` command is used to execute a command with elevated privileges. When you run `sudo su -`, you're using `sudo` to execute the `su -` command as the root user. This is a quick way to switch to the root user without having to enter the root password.
 - `sudo -i`: This command is similar to sudo `su -`. The `-i` option stands for "login" and simulates a login session for the target user, in this case, the root user. This means that the root user's environment variables, shell, and working directory are used. It's also a quick way to get a root shell.
 
