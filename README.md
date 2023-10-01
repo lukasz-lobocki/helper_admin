@@ -33,8 +33,8 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. Create _archive_](#61-create-archive)
   - [6.2. Get info](#62-get-info)
-  - [6.3. Vorta to NextcloudPi backup](#63-vorta-to-nextcloudpi-backup)
   - [6.4. Prune](#64-prune)
+  - [6.3. Vorta to NextcloudPi backup](#63-vorta-to-nextcloudpi-backup)
 - [7. NEXTCLOUDPi SETUP](#7-nextcloudpi-setup)
   - [7.1. Hardware](#71-hardware)
   - [7.2. Debian](#72-debian)
@@ -185,7 +185,7 @@ scp -Cr ./directory/ username@to_host:./directory/
 Re-synchronizes all files repository into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@nextcloudpi.local rsync \
+ssh la_lukasz@192.168.2.120 rsync \
   --archive \
   --stats \
   --verbose \
@@ -198,7 +198,7 @@ ssh la_lukasz@nextcloudpi.local rsync \
   --progress \
   --delete \
   -e ssh \
-  /mnt/btrfs/ncdata/data/lukasz/files \
+  /mnt/btrfs/lukasz/files \
   la_lukasz@lobocki.ddns.net:base/ster_nextcloud
 ```
 
@@ -245,13 +245,15 @@ sudo mount \
 
 ### 6.1. Create _archive_
 
-From **NextcloudPi** to USB drive mounted on _DietPi_ (raspberry).
+#### Nextcloud
+
+From **Nextcloud** to USB drive mounted on _DietPi_ (raspberry).
 
 ```bash
 borg create \
   --stats \
   root@192.168.2.145:/mnt/usb/nextcloudbackup::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/ncdata/data/lukasz/files
+  /mnt/btrfs/lukasz/files
 ```
 
 <details>
@@ -263,10 +265,13 @@ borg create \
   --dry-run \
   --filter - \
   root@192.168.2.145:/mnt/usb/nextcloudbackup::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/ncdata/data/lukasz/files
+  /mnt/btrfs/lukasz/files
 ```
 
 </details>
+
+<details>
+<summary>...same for NUC.</summary>
 
 From **NUC** to USB drive mounted on _DietPi_ (raspberry).
 
@@ -277,9 +282,13 @@ borg create \
   ~
 ```
 
+</details>
+
 ### 6.2. Get info
 
 Information on _repository_.
+
+#### Nextcloud
 
 ```bash
 borg info \
@@ -301,6 +310,52 @@ borg check \
   root@192.168.2.145:/mnt/usb/nextcloudbackup
 ```
 
+<details>
+<summary>...same for NUC.</summary>
+
+```bash
+borg info \
+  root@192.168.2.145:/mnt/usb/nucbackup
+```
+
+List _archives_ in repository.
+
+```bash
+borg list \
+  root@192.168.2.145:/mnt/usb/nucbackup
+```
+
+Verify consistnecy of _repository_.
+
+```bash
+borg check \
+  --verbose --repository-only \
+  root@192.168.2.145:/mnt/usb/nucbackup
+```
+
+</details>
+
+### 6.4. Prune
+
+Remove extra _archives_.
+
+#### Nextcloud
+
+```bash
+borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  root@192.168.2.145:/mnt/usb/nextcloudbackup
+```
+
+<details>
+<summary>...same for NUC.</summary>
+
+```bash
+borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  root@192.168.2.145:/mnt/usb/nucbackup
+```
+
+</details>
+
 ### 6.3. Vorta to NextcloudPi backup
 
 <details>
@@ -316,15 +371,6 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 ```
 
 </details>
-
-### 6.4. Prune
-
-Remove extra _archives_.
-
-```bash
-borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  root@192.168.2.145:/mnt/usb/nextcloudbackup
-```
 
 ## 7. NEXTCLOUDPi SETUP
 
