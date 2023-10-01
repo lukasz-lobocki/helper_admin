@@ -350,12 +350,13 @@ Adding user to _sudoers_ group.
 
 ```bash
 usermod --append --groups sudo la_lukasz
+usermod --append --groups root la_lukasz
 ```
 
 Copying the public key to _192.168.2.120_
 
 ```bash
-ssh-copy-id -i ~/.ssh/id_rsa.pub la_lukasz@192.168.2.120
+ssh-copy-id -i ~/.ssh/id_ed25519.pub la_lukasz@192.168.2.120
 ```
 
 Turn off _Password authentication_.
@@ -425,11 +426,50 @@ UUID=0bcd6094-3899-488f-8733-19f824e3be8c /mnt/btrfs btrfs defaults 0 3
 
 ### 7.3. Install
 
-#### Nextcloud install on Debian
+#### Nextcloud AIO docker install
+
+```bash
+sudo docker run \
+--init \
+--sig-proxy=false \
+--name nextcloud-aio-mastercontainer \
+--restart always \
+--publish 80:80 \
+--publish 8080:8080 \
+--publish 8443:8443 \
+--volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
+-e NEXTCLOUD_DATADIR="/mnt/btrfs" \
+--volume /var/run/docker.sock:/var/run/docker.sock:ro \
+nextcloud/all-in-one:latest
+```
+
+##### Admining
+
+```bash
+usermod --append --groups www-data la_lukasz
+```
+
+```bash
+sudo docker exec \
+  --user www-data -it nextcloud-aio-nextcloud php occ list
+```
+
+Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
+
+```bash
+sudo docker exec \
+  --user www-data -it nextcloud-aio-nextcloud php occ files:scan --all
+```
+
+```bash
+sudo -u www-data bash
+```
+
+#### NextcloudPi install on Debian
 
 Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
 
-#### Moving data directory
+##### Moving data directory
 
 Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
 
@@ -443,7 +483,7 @@ sudo ncp-config
 sudo nano /var/www/nextcloud/config/config.php
 ```
 
-#### Permisions
+##### Permisions
 
 Check [permissions](https://help.nextcloud.com/t/frequently-asked-questions-faq-ncp/126325#what-userpermissions-should-i-have-to-the-external-usb-drive-mount-point-the-ncdata-and-ncdatabase-directory-11).
 
@@ -455,12 +495,6 @@ What user/permissions should I have to the external USB drive mount point, the n
 | `ncdata/`      | `www-data` | `www-data` | `drwxr-x—`   | `750`           |
 | `ncdatabase`   | `mysql`    | `mysql`    | `drwxr-xr-x` | `755`           |
 
-#### Admining
-
-```bash
-sudo -u www-data bash
-```
-
 ```bash
 cd /var/www/nextcloud
 ```
@@ -471,7 +505,7 @@ php occ
 
 Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
 
-#### Activation
+##### Activation
 
 > Your NextCloudPi user is `ncp`
 >
