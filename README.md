@@ -1,23 +1,14 @@
 # ADMIN
 
 ```bash
-git add --update && git commit -m "Gist update" && git push origin main
+sudo apt update && sudo apt upgrade \
+  && sudo apt autoclean && sudo apt clean \
+  && sudo apt autoremove
 ```
-
-<details>
-<summary>Linux updates.</summary>
 
 ```bash
-sudo apt update \
-  && sudo apt upgrade \
-  && sudo apt autoclean \
-  && sudo apt clean \
-  && sudo apt autoremove
-
 sudo apt --with-new-pkgs upgrade <packages-list>
 ```
-
-</details>
 
 ## TABLE OF CONTENTS <!-- omit in toc -->
 
@@ -46,7 +37,7 @@ sudo apt --with-new-pkgs upgrade <packages-list>
 
 :information_source: Check [Bash scripting cheatsheet](https://devhints.io/bash) and [how-to-use-double-or-single-brackets-parentheses-curly-braces](https://stackoverflow.com/a/2188223/4465044) pages.
 
-Check [TOC generator](https://luciopaiva.com/markdown-toc/) page.
+:information_source: Check [TOC generator](https://luciopaiva.com/markdown-toc/) page.
 
 ## 2. FILES HANDLING
 
@@ -54,34 +45,34 @@ Check [TOC generator](https://luciopaiva.com/markdown-toc/) page.
 
 ```bash
 sudo \
-  chown --recursive www-data:www-data /mnt/btrfs/ncdata
+  chown --recursive www-data:www-data /mnt/btrfs
 ```
 
 ### 2.2. Permisions
 
-Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions](#permisions) pages.
+:information_source: Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions](#permisions) pages.
 
 #### Directories
 
 ```bash
 sudo \
-  find /mnt/btrfs/ncdata -type d -print0 \
+  find /mnt/btrfs -type d -print0 \
   | xargs -0 sudo -u www-data \
-    chmod u=rwx,g=rx,o=rx
+    chmod u=rwx,g=rx
 ```
 
 #### Files
 
 ```bash
 sudo \
-  find /mnt/btrfs/ncdata -type f -print0 \
+  find /mnt/btrfs -type f -print0 \
   | xargs -0 sudo -u www-data \
-    chmod u=rw,g=r,o=r
+    chmod u=rw,g=r
 ```
 
 ### 2.3. Hashing
 
-Check [file-append_xxhsum.sh](https://github.com/lukasz-lobocki/helper_admin/blob/main/other/append_xxhsum.sh) and [append-xxhsum](https://github.com/lukasz-lobocki/append-xxhsum.git) pages.
+:information_source: Check [file-append_xxhsum.sh](https://github.com/lukasz-lobocki/helper_admin/blob/main/other/append_xxhsum.sh) and [append-xxhsum](https://github.com/lukasz-lobocki/append-xxhsum.git) pages.
 
 #### Managing placeholders for hashes
 
@@ -172,7 +163,7 @@ rhash --check --skip-ok \
 
 ### 2.4. Indexing
 
-Check [How to disable file indexing in Ubuntu](https://stackoverflow.com/a/76178044/4465044) post.
+:information_source: Check [How to disable file indexing in Ubuntu](https://stackoverflow.com/a/76178044/4465044) post.
 
 ## 3. REMOTE COPYING with scp
 
@@ -376,7 +367,7 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 
 ## 7. SUDO-ing
 
-The commands `su`, `su -`, `sudo su -`, and `sudo -i` are all used in the Linux terminal to switch users or elevate privileges. However, they have some differences in their behavior.
+:information_source: The commands `su`, `su -`, `sudo su -`, and `sudo -i` are all used in the Linux terminal to switch users or elevate privileges. However, they have some differences in their behavior.
 
 - `su`: This command stands for "switch user" and is used to log in as a different user. When you run `su` without any arguments, it will switch to the root user by default. You'll be prompted to enter the password of the user you're switching to.
 - `su -`: The - (dash) option with `su` is used to simulate a login session for the new user. It sets the environment variables, shell, and working directory to that of the new user. This is useful if you need to perform tasks as that user and need access to their environment. New user name is to be provided after dash: `su - www-data`
@@ -427,7 +418,7 @@ sudo systemctl restart ssh
 
 #### Better file system BTRFS
 
-Check [format-a-harddisk-partition](https://vitux.com/how-to-format-a-harddisk-partition-with-btrfs-on-ubuntu-20-04/) and [btrfs-on-ubuntu](https://www.linuxfordevices.com/tutorials/linux/btrfs-on-ubuntu) pages.
+:information_source: Check [format-a-harddisk-partition](https://vitux.com/how-to-format-a-harddisk-partition-with-btrfs-on-ubuntu-20-04/) and [btrfs-on-ubuntu](https://www.linuxfordevices.com/tutorials/linux/btrfs-on-ubuntu) pages.
 
 ```bash
 sudo su -
@@ -436,6 +427,8 @@ sudo su -
 ```bash
 apt install btrfs-progs
 ```
+
+Look around.
 
 ```bash
 lsblk
@@ -456,6 +449,8 @@ findmnt
 findmnt --fstab
 findmnt --evaluate
 ```
+
+Do.
 
 ```bash
 sudo fdisk /dev/sdb
@@ -499,9 +494,9 @@ nextcloud/all-in-one:latest
 
 #### NextcloudPi install on Debian
 
-Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
+:information_source: Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
 
-Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
+:information_source: Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
 
 ### 8.4. Admining
 
@@ -510,7 +505,7 @@ usermod --append --groups www-data la_lukasz
 ```
 
 ```bash
-su - www-data
+sudo su - www-data
 ```
 
 :information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
@@ -543,9 +538,15 @@ sudo docker run \
 sudo nano /var/www/nextcloud/config/config.php
 ```
 
+Illegal filenames.
+
+:information_source: Check [detox](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjh1vPbi9mBAxUa4QIHHWD9CqoQFnoECBcQAQ&url=https%3A%2F%2Flinux.die.net%2Fman%2F1%2Fdetox&usg=AOvVaw0GGiH9PguA-A1-H4MWUF-o&opi=89978449) command.
+
+:information_source: Check [this](other/detoxrc) out.
+
 #### Permisions
 
-Check [permissions](https://help.nextcloud.com/t/frequently-asked-questions-faq-ncp/126325#what-userpermissions-should-i-have-to-the-external-usb-drive-mount-point-the-ncdata-and-ncdatabase-directory-11).
+:information_source: Check [permissions](https://help.nextcloud.com/t/frequently-asked-questions-faq-ncp/126325#what-userpermissions-should-i-have-to-the-external-usb-drive-mount-point-the-ncdata-and-ncdatabase-directory-11).
 
 What user/permissions should I have to the external USB drive mount point, the ncdata and ncdatabase directory?
 

@@ -1,0 +1,30 @@
+#
+# !!!!!
+# detox -f ~/detoxrc -s lobo-uni -v -r --dry-run /mnt/btrfs/...
+#
+#
+#
+# config file for detox(1)
+# 
+
+#
+# Default sequence
+#
+
+sequence default {
+	utf_8 {
+             filename "/usr/share/detox/lobo.tbl";
+        };
+#	safe;
+#	wipeup;
+};
+
+#
+# Sequences meant primarily for detox
+#
+
+sequence "lobo-uni" {
+	utf_8 {
+             filename "/usr/share/detox/detox_lobo_uni.tbl";
+        };
+};
