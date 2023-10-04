@@ -38,13 +38,13 @@ sudo usermod --append --groups dialout "${USER}"
 
 sudo apt install xclip
 
-sudo add-apt-repository ppa:phoerious/keepassxc
+sudo add-apt-repository ppa:phoerious/keepassxc; apt update
 sudo apt install keepassxc
 
-sudo apt-add-repository ppa:fish-shell/release-3
+sudo apt-add-repository ppa:fish-shell/release-3; apt update
 sudo apt install fish
 
-sudo add-apt-repository ppa:alexx2000/doublecmd
+sudo add-apt-repository ppa:alexx2000/doublecmd; apt update
 sudo apt install doublecmd-gtk
 
 sudo apt install xxhash
@@ -59,6 +59,7 @@ echo "https://forum.openmediavault.org/index.php?thread/44252-how-to-use-the-ope
 
 # Git
 
+sudo add-apt-repository ppa:git-core/ppa; apt update
 sudo apt install git
 sudo apt install gh
 sudo apt install gitg
