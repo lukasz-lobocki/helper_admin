@@ -37,8 +37,16 @@ sudo usermod --append --groups dialout "${USER}"
 # Other
 
 sudo apt install xclip
+
+sudo add-apt-repository ppa:phoerious/keepassxc
 sudo apt install keepassxc
+
+sudo apt-add-repository ppa:fish-shell/release-3
+sudo apt install fish
+
+sudo add-apt-repository ppa:alexx2000/doublecmd
 sudo apt install doublecmd-gtk
+
 sudo apt install xxhash
 sudo apt install cookiecutter
 sudo apt install nodejs
