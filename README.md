@@ -264,14 +264,28 @@ borg create \
 </details>
 
 <details>
-<summary>...same for <b>NUC</b>.</summary>
+<summary>...same for <b>NUC11</b>.</summary>
 
-From **NUC** to USB drive mounted on _DietPi_ (raspberry).
+From **NUC11** to USB drive mounted on _DietPi_ (raspberry).
 
 ```bash
 borg create \
   --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   root@192.168.2.145:/mnt/usb/nucbackup::{hostname}-{now:%Y%m%dT%H%M} \
+  ~
+```
+
+</details>
+
+<details>
+<summary>...same for <b>NUC13</b>.</summary>
+
+From **NUC13** to USB drive mounted on _DietPi_ (raspberry).
+
+```bash
+borg create \
+  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  root@192.168.2.145:/mnt/usb/nuc13backup::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
 
