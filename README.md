@@ -271,7 +271,7 @@ From **NUC11** to USB drive mounted on _DietPi_ (raspberry).
 ```bash
 borg create \
   --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  root@192.168.2.145:/mnt/usb/nucbackup::{hostname}-{now:%Y%m%dT%H%M} \
+  root@192.168.2.145:/mnt/usb/nuc11backup::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
 
