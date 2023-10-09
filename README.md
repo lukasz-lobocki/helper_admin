@@ -530,13 +530,31 @@ sudo docker exec \
 ```
 
 ```bash
-sudo docker exec \
-  --user www-data -it nextcloud-aio-nextcloud php occ files:scan --all
+sudo chown --recursive www-data:www-data /mnt/btrfs/nextcloud
+sudo find /mnt/btrfs/nextcloud -type d -print0 \
+  | xargs -0 sudo -u www-data chmod u=rwx,g=rx
+sudo find /mnt/btrfs/nextcloud -type f -print0 \
+  | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
 ```bash
-sudo docker exec \
-  --user www-data -it nextcloud-aio-nextcloud php occ fulltextsearch:index
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ files:scan --all
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ files:scan-app-data
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ maps:scan-photos
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ photos:map-media-to-place
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ preview:generate
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ trashbin:cleanup
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ versions:cleanup
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php -d memory_limit=2G occ fulltextsearch:index \
+  --no-interaction --no-warnings --no-readline
 ```
 
 Editting _config.php_
