@@ -609,10 +609,22 @@ nano /home/la_lukasz/paperless-ngx/docker-compose.env
 PAPERLESS_TASK_WORKERS=2
 PAPERLESS_THREADS_PER_WORKER=1
 PAPERLESS_WEBSERVER_WORKERS=1
-PAPERLESS_WORKER_TIMEOUT=3600
+PAPERLESS_WORKER_TIMEOUT=1800
 PAPERLESS_OCR_MODE=skip
 PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
 PAPERLESS_OCR_PAGES=1
 PAPERLESS_CONVERT_MEMORY_LIMIT=32
-PAPERLESS_ENABLE_NLTK=0
+PAPERLESS_ENABLE_NLTK=false
+PAPERLESS_OCR_CLEAN=none
+PAPERLESS_OCR_DESKEW=false
+PAPERLESS_OCR_ROTATE_PAGES=false
+PAPERLESS_OCR_OUTPUT_TYPE=pdf
+
+docker-compose pull
+# skip..? docker-compose run --rm webserver createsuperuser
+docker-compose up -d
+```
+
+```text
+docker exec -it paperless_webserver_1 mail_fetcher
 ```
