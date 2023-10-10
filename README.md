@@ -32,6 +32,7 @@ sudo apt --with-new-pkgs upgrade <packages-list>
   - [8.2. Debian](#82-debian)
   - [8.3. Nextcloud AIO docker install](#83-nextcloud-aio-docker-install)
   - [8.4. Admining](#84-admining)
+- [9. paperless-ngx](#9-paperless-ngx)
 
 ## 1. CHEATSHEET
 
@@ -596,4 +597,22 @@ What user/permissions should I have to the external USB drive mount point, the n
 
 ```bash
 cd /var/www/nextcloud
+```
+
+## 9. paperless-ngx
+
+:information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
+
+```text
+nano /home/la_lukasz/paperless-ngx/docker-compose.env
+
+PAPERLESS_TASK_WORKERS=2
+PAPERLESS_THREADS_PER_WORKER=1
+PAPERLESS_WEBSERVER_WORKERS=1
+PAPERLESS_WORKER_TIMEOUT=3600
+PAPERLESS_OCR_MODE=skip
+PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
+PAPERLESS_OCR_PAGES=1
+PAPERLESS_CONVERT_MEMORY_LIMIT=32
+PAPERLESS_ENABLE_NLTK=0
 ```
