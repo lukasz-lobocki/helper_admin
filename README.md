@@ -620,9 +620,8 @@ PAPERLESS_OCR_DESKEW=false
 PAPERLESS_OCR_ROTATE_PAGES=false
 PAPERLESS_OCR_OUTPUT_TYPE=pdf
 
-docker-compose pull
-# skip..? docker-compose run --rm webserver createsuperuser
 docker-compose up -d
+docker exec -it paperless_webserver_1 printenv
 ```
 
 ```text
