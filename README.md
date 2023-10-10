@@ -515,7 +515,8 @@ nextcloud/all-in-one:latest
 ### 8.4. Admining
 
 ```bash
-usermod --append --groups www-data la_lukasz
+sudo usermod --append --groups www-data la_lukasz
+sudo usermod --append --groups docker la_lukasz
 ```
 
 ```bash
