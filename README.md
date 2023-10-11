@@ -604,6 +604,8 @@ cd /var/www/nextcloud
 
 :information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
 
+port 8081
+
 ```text
 nano /home/la_lukasz/paperless-ngx/docker-compose.env
 
