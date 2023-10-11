@@ -533,10 +533,10 @@ sudo docker exec \
 ```
 
 ```bash
-sudo chown --recursive www-data:www-data /mnt/btrfs/nextcloud
-sudo find /mnt/btrfs/nextcloud -type d -print0 \
+sudo chown --recursive www-data:www-data /mnt/btrfs
+sudo find /mnt/btrfs -type d -print0 \
   | xargs -0 sudo -u www-data chmod u=rwx,g=rx
-sudo find /mnt/btrfs/nextcloud -type f -print0 \
+sudo find /mnt/btrfs -type f -print0 \
   | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
