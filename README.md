@@ -552,7 +552,7 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ preview:generate
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ trashbin:cleanup
+  php occ trashbin:cleanup --all-users
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ versions:cleanup
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
