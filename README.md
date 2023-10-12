@@ -571,7 +571,7 @@ sudo find /mnt/btrfs -type f -print0 \
 ##### Paperless
 
 ```bash
-sudo chown --recursive www-data:la_lukasz \
+sudo chown --recursive la_lukasz:la_lukasz \
   /home/la_lukasz/paperless-ngx/consume
 sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
   | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
