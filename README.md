@@ -27,15 +27,13 @@ sudo apt --with-new-pkgs upgrade <packages-list>
   - [6.3. Prune](#63-prune)
   - [6.4. Vorta to NextcloudPi backup](#64-vorta-to-nextcloudpi-backup)
 - [7. SUDO-ing](#7-sudo-ing)
-- [8. NEXTCLOUDPi SETUP](#8-nextcloudpi-setup)
+- [8. PRIVATE CLOUD SETUP](#8-private-cloud-setup)
   - [8.1. Hardware](#81-hardware)
   - [8.2. Debian](#82-debian)
   - [8.3. Nextcloud AIO docker install](#83-nextcloud-aio-docker-install)
-  - [8.4. Admining](#84-admining)
-- [9. paperless-ngx](#9-paperless-ngx)
-  - [TCP port](#tcp-port)
-  - [Configuration in _docker-compose.env_](#configuration-in-docker-composeenv)
-  - [Ingest email](#ingest-email)
+  - [8.4. paperless-ngx install](#84-paperless-ngx-install)
+  - [8.5. Admining](#85-admining)
+  - [8.6. Ingest email](#86-ingest-email)
 
 ## 1. CHEATSHEET
 
@@ -392,7 +390,7 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 - `sudo su -`: The `sudo` command is used to execute a command with elevated privileges. When you run `sudo su -`, you're using `sudo` to execute the `su -` command as the root user. This is a quick way to switch to the root user without having to enter the root password.
 - `sudo -i`: This command is similar to sudo `su -`. The `-i` option stands for "login" and simulates a login session for the target user, in this case, the root user. This means that the root user's environment variables, shell, and working directory are used. It's also a quick way to get a root shell.
 
-## 8. NEXTCLOUDPi SETUP
+## 8. PRIVATE CLOUD SETUP
 
 ### 8.1. Hardware
 
@@ -517,7 +515,38 @@ nextcloud/all-in-one:latest
 
 :information_source: Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
 
-### 8.4. Admining
+### 8.4. paperless-ngx install
+
+:information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
+
+#### TCP port
+
+8081
+
+#### Configuration in _docker-compose.env_
+
+```text
+nano /home/la_lukasz/paperless-ngx/docker-compose.env
+
+PAPERLESS_TASK_WORKERS=2
+PAPERLESS_THREADS_PER_WORKER=1
+PAPERLESS_WEBSERVER_WORKERS=1
+PAPERLESS_WORKER_TIMEOUT=1800
+PAPERLESS_OCR_MODE=skip
+PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
+PAPERLESS_OCR_PAGES=1
+PAPERLESS_CONVERT_MEMORY_LIMIT=32
+PAPERLESS_ENABLE_NLTK=false
+PAPERLESS_OCR_CLEAN=none
+PAPERLESS_OCR_DESKEW=false
+PAPERLESS_OCR_ROTATE_PAGES=false
+PAPERLESS_OCR_OUTPUT_TYPE=pdf
+
+docker-compose up -d
+docker exec -it paperless_webserver_1 printenv
+```
+
+### 8.5. Admining
 
 ```bash
 sudo usermod --append --groups www-data la_lukasz
@@ -526,13 +555,6 @@ sudo usermod --append --groups docker la_lukasz
 
 ```bash
 sudo su - www-data
-```
-
-:information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
-
-```bash
-sudo docker exec \
-  --user www-data -it nextcloud-aio-nextcloud php occ list
 ```
 
 #### Chown and chmod
@@ -554,6 +576,15 @@ sudo chown --recursive www-data:la_lukasz \
   /home/la_lukasz/paperless-ngx/consume
 sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
   | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
+```
+
+#### occ commands
+
+:information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
+
+```bash
+sudo docker exec \
+  --user www-data -it nextcloud-aio-nextcloud php occ list
 ```
 
 #### Rescan
@@ -591,6 +622,8 @@ sudo docker run \
 sudo nano /var/www/nextcloud/config/config.php
 ```
 
+#### Illegal filenames
+
 :information_source: Check [detox](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjh1vPbi9mBAxUa4QIHHWD9CqoQFnoECBcQAQ&url=https%3A%2F%2Flinux.die.net%2Fman%2F1%2Fdetox&usg=AOvVaw0GGiH9PguA-A1-H4MWUF-o&opi=89978449) command.
 
 :information_source: Check [this](other/detoxrc) out.
@@ -616,38 +649,7 @@ What user/permissions should I have to the external USB drive mount point, the n
 cd /var/www/nextcloud
 ```
 
-## 9. paperless-ngx
-
-:information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
-
-### TCP port
-
-8081
-
-### Configuration in _docker-compose.env_
-
-```text
-nano /home/la_lukasz/paperless-ngx/docker-compose.env
-
-PAPERLESS_TASK_WORKERS=2
-PAPERLESS_THREADS_PER_WORKER=1
-PAPERLESS_WEBSERVER_WORKERS=1
-PAPERLESS_WORKER_TIMEOUT=1800
-PAPERLESS_OCR_MODE=skip
-PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
-PAPERLESS_OCR_PAGES=1
-PAPERLESS_CONVERT_MEMORY_LIMIT=32
-PAPERLESS_ENABLE_NLTK=false
-PAPERLESS_OCR_CLEAN=none
-PAPERLESS_OCR_DESKEW=false
-PAPERLESS_OCR_ROTATE_PAGES=false
-PAPERLESS_OCR_OUTPUT_TYPE=pdf
-
-docker-compose up -d
-docker exec -it paperless_webserver_1 printenv
-```
-
-### Ingest email
+### 8.6. Ingest email
 
 ```text
 docker exec -it paperless_webserver_1 mail_fetcher
