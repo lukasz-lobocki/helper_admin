@@ -541,6 +541,13 @@ sudo find /mnt/btrfs -type f -print0 \
 ```
 
 ```bash
+sudo chown --recursive www-data:la_lukasz \
+  /home/la_lukasz/paperless-ngx/consume
+sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
+  | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
+```
+
+```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ files:scan --all
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
