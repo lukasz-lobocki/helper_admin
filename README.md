@@ -171,7 +171,7 @@ rhash --check --skip-ok \
 With <u>C</u>ompression in transit and <u>r</u>ecursively.
 
 ```bash
-scp -Cr ./directory/ username@to_host:./directory/
+scp -Crp ./directory/ username@to_host:./directory/
 ```
 
 ## 4. REMOTE SYNCHRONIZE with rsync
