@@ -502,7 +502,7 @@ sudo docker run \
 --publish 8080:8080 \
 --publish 8443:8443 \
 --volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
--e NEXTCLOUD_DATADIR="/mnt/btrfs" \
+-e NEXTCLOUD_DATADIR="/mnt/btrfs/nextcloud" \
 -e NEXTCLOUD_MOUNT="/home/la_lukasz/paperless-ngx/media/documents/originals" \
 --volume /var/run/docker.sock:/var/run/docker.sock:ro \
 nextcloud/all-in-one:latest
