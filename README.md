@@ -33,7 +33,6 @@ sudo apt --with-new-pkgs upgrade <packages-list>
   - [8.3. Nextcloud AIO docker install](#83-nextcloud-aio-docker-install)
   - [8.4. paperless-ngx install](#84-paperless-ngx-install)
   - [8.5. Admining](#85-admining)
-  - [8.6. Ingest email](#86-ingest-email)
 
 ## 1. CHEATSHEET
 
@@ -649,7 +648,7 @@ What user/permissions should I have to the external USB drive mount point, the n
 cd /var/www/nextcloud
 ```
 
-### 8.6. Ingest email
+#### 8.6. Ingest email
 
 ```text
 docker exec -it paperless_webserver_1 mail_fetcher
