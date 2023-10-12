@@ -33,6 +33,9 @@ sudo apt --with-new-pkgs upgrade <packages-list>
   - [8.3. Nextcloud AIO docker install](#83-nextcloud-aio-docker-install)
   - [8.4. Admining](#84-admining)
 - [9. paperless-ngx](#9-paperless-ngx)
+  - [TCP port](#tcp-port)
+  - [Configuration in _docker-compose.env_](#configuration-in-docker-composeenv)
+  - [Ingest email](#ingest-email)
 
 ## 1. CHEATSHEET
 
@@ -532,6 +535,10 @@ sudo docker exec \
   --user www-data -it nextcloud-aio-nextcloud php occ list
 ```
 
+#### Chown and chmod
+
+##### Nextcloud
+
 ```bash
 sudo chown --recursive www-data:www-data /mnt/btrfs
 sudo find /mnt/btrfs -type d -print0 \
@@ -540,12 +547,16 @@ sudo find /mnt/btrfs -type f -print0 \
   | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
+##### Paperless
+
 ```bash
 sudo chown --recursive www-data:la_lukasz \
   /home/la_lukasz/paperless-ngx/consume
 sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
   | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
 ```
+
+#### Rescan
 
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
@@ -567,7 +578,7 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   --no-interaction --no-warnings --no-readline
 ```
 
-Editting _config.php_
+#### Editting _config.php_
 
 ```bash
 sudo docker run \
@@ -579,8 +590,6 @@ sudo docker run \
 ```bash
 sudo nano /var/www/nextcloud/config/config.php
 ```
-
-Illegal filenames.
 
 :information_source: Check [detox](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjh1vPbi9mBAxUa4QIHHWD9CqoQFnoECBcQAQ&url=https%3A%2F%2Flinux.die.net%2Fman%2F1%2Fdetox&usg=AOvVaw0GGiH9PguA-A1-H4MWUF-o&opi=89978449) command.
 
@@ -611,7 +620,11 @@ cd /var/www/nextcloud
 
 :information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
 
-port 8081
+### TCP port
+
+8081
+
+### Configuration in _docker-compose.env_
 
 ```text
 nano /home/la_lukasz/paperless-ngx/docker-compose.env
@@ -633,6 +646,8 @@ PAPERLESS_OCR_OUTPUT_TYPE=pdf
 docker-compose up -d
 docker exec -it paperless_webserver_1 printenv
 ```
+
+### Ingest email
 
 ```text
 docker exec -it paperless_webserver_1 mail_fetcher
