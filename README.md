@@ -503,7 +503,7 @@ sudo docker run \
 --publish 8443:8443 \
 --volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
 -e NEXTCLOUD_DATADIR="/mnt/btrfs/nextcloud" \
--e NEXTCLOUD_MOUNT="/home/la_lukasz/paperless-ngx/media/documents/originals" \
+-e NEXTCLOUD_MOUNT="/home/la_lukasz/paperless-ngx" \
 --volume /var/run/docker.sock:/var/run/docker.sock:ro \
 nextcloud/all-in-one:latest
 ```
@@ -513,6 +513,56 @@ nextcloud/all-in-one:latest
 :information_source: Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
 
 :information_source: Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
+
+#### Use External Storage app
+
+```bash
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ files_external -h
+```
+
+```json
+[
+    {
+        "mount_id": 1,
+        "mount_point": "\/Paperless",
+        "storage": "\\OC\\Files\\Storage\\Local",
+        "authentication_type": "null::null",
+        "configuration": {
+            "datadir": "\/home\/la_lukasz\/paperless-ngx\/media\/documents\/originals"
+        },
+        "options": {
+            "enable_sharing": false,
+            "encoding_compatibility": false,
+            "encrypt": true,
+            "filesystem_check_changes": 1,
+            "previews": true,
+            "readonly": true
+        },
+        "applicable_users": [],
+        "applicable_groups": []
+    },
+    {
+        "mount_id": 2,
+        "mount_point": "\/Consume",
+        "storage": "\\OC\\Files\\Storage\\Local",
+        "authentication_type": "null::null",
+        "configuration": {
+            "datadir": "\/home\/la_lukasz\/paperless-ngx\/consume"
+        },
+        "options": {
+            "enable_sharing": false,
+            "encoding_compatibility": false,
+            "encrypt": true,
+            "filesystem_check_changes": 1,
+            "previews": false,
+            "readonly": false
+        },
+        "applicable_users": [],
+        "applicable_groups": []
+    }
+]
+```
 
 ### 8.4. paperless-ngx install
 
