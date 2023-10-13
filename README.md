@@ -168,7 +168,7 @@ rhash --check --skip-ok \
 
 ## 3. REMOTE COPYING with scp
 
-With <u>C</u>ompression in transit and <u>r</u>ecursively.
+With <u>__C__</u>ompression in transit, <u>__r__</u>ecursively, <u>__p__</u> preserving modification timestamps.
 
 ```bash
 scp -Crp ./directory/ username@to_host:./directory/
@@ -241,7 +241,7 @@ sudo mount \
 
 #### Nextcloud
 
-From **Nextcloud** to USB drive mounted on _DietPi_ (raspberry).
+From __Nextcloud__ to USB drive mounted on _DietPi_ (raspberry).
 
 ```bash
 borg create \
@@ -267,7 +267,7 @@ borg create \
 <details>
 <summary>...same for <b>NUC11</b>.</summary>
 
-From **NUC11** to USB drive mounted on _DietPi_ (raspberry).
+From __NUC11__ to USB drive mounted on _DietPi_ (raspberry).
 
 ```bash
 borg create \
@@ -281,7 +281,7 @@ borg create \
 <details>
 <summary>...same for <b>NUC13</b>.</summary>
 
-From **NUC13** to USB drive mounted on _DietPi_ (raspberry).
+From __NUC13__ to USB drive mounted on _DietPi_ (raspberry).
 
 ```bash
 borg create \
@@ -443,7 +443,7 @@ sudo su -
 apt install btrfs-progs
 ```
 
-Look around.
+##### Look around
 
 ```bash
 lsblk
@@ -465,7 +465,7 @@ findmnt --fstab
 findmnt --evaluate
 ```
 
-Do.
+##### Do
 
 ```bash
 sudo fdisk /dev/sdb
