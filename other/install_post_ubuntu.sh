@@ -20,10 +20,6 @@ gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
 gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
 
 # Python
-
-python3 -m venv .venv
-source ~/.venv/bin/activate
-
 echo 'new approach: try to use venv & pip - for PYTHON modules'
 echo 'python3 -m venv homenv'
 echo 'source ~/homenv/bin/activate'
