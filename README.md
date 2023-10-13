@@ -168,7 +168,7 @@ rhash --check --skip-ok \
 
 ## 3. REMOTE COPYING with scp
 
-With <u>__C__</u>ompression in transit, <u>__r__</u>ecursively, <u>__p__</u> preserving modification timestamps.
+With <u>__C__</u>ompression in transit, <u>__r__</u>ecursively, <u>__p__</u>reserving modification timestamps.
 
 ```bash
 scp -Crp ./directory/ username@to_host:./directory/
