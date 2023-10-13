@@ -393,6 +393,8 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 
 ### 8.1. Hardware
 
+Odroid only.
+
 ```bash
 netboot_default
 ```
@@ -436,11 +438,7 @@ sudo systemctl restart ssh
 :information_source: Check [format-a-harddisk-partition](https://vitux.com/how-to-format-a-harddisk-partition-with-btrfs-on-ubuntu-20-04/) and [btrfs-on-ubuntu](https://www.linuxfordevices.com/tutorials/linux/btrfs-on-ubuntu) pages.
 
 ```bash
-sudo su -
-```
-
-```bash
-apt install btrfs-progs
+sudo apt install btrfs-progs
 ```
 
 ##### Look around
@@ -490,19 +488,29 @@ Append _fstab_ line.
 UUID=0bcd6094-3899-488f-8733-19f824e3be8c /mnt/btrfs btrfs defaults 0 3
 ```
 
+#### Docker
+
+```bash
+sudo apt install docker-compose
+```
+
 ### 8.3. paperless-ngx _docker_ install
 
 :information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
 
 #### TCP port
 
-8081
+:information_source: 8081
 
 #### Configuration in _docker-compose.env_
 
-```text
+```bash
 nano /home/la_lukasz/paperless-ngx/docker-compose.env
+```
 
+Append following lines.
+
+```text
 PAPERLESS_TASK_WORKERS=2
 PAPERLESS_THREADS_PER_WORKER=1
 PAPERLESS_WEBSERVER_WORKERS=1
@@ -518,7 +526,9 @@ PAPERLESS_OCR_ROTATE_PAGES=true
 PAPERLESS_OCR_OUTPUT_TYPE=pdf
 PAPERLESS_CONSUMER_RECURSIVE=true
 PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
+```
 
+```bash
 docker-compose up -d
 docker exec -it paperless_webserver_1 printenv
 ```
