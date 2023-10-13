@@ -492,6 +492,7 @@ UUID=0bcd6094-3899-488f-8733-19f824e3be8c /mnt/btrfs btrfs defaults 0 3
 
 ```bash
 sudo apt install docker-compose
+usermod --append --groups docker la_lukasz
 ```
 
 ### 8.3. paperless-ngx _docker_ install
@@ -613,11 +614,6 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 
 ```bash
 sudo usermod --append --groups www-data la_lukasz
-sudo usermod --append --groups docker la_lukasz
-```
-
-```bash
-sudo su - www-data
 ```
 
 #### Chown and chmod
@@ -625,20 +621,23 @@ sudo su - www-data
 ##### Nextcloud
 
 ```bash
-sudo chown --recursive www-data:www-data /mnt/btrfs
-sudo find /mnt/btrfs -type d -print0 \
-  | xargs -0 sudo -u www-data chmod u=rwx,g=rx
-sudo find /mnt/btrfs -type f -print0 \
-  | xargs -0 sudo -u www-data chmod u=rw,g=r
+sudo chown --recursive www-data:www-data \
+  /mnt/btrfs \
+  && sudo find /mnt/btrfs -type d -print0 \
+    | xargs -0 sudo -u www-data chmod u=rwx,g=rx \
+  && sudo find /mnt/btrfs -type f -print0 \
+    | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
 ##### Paperless
 
 ```bash
 sudo chown --recursive la_lukasz:la_lukasz \
-  /home/la_lukasz/paperless-ngx/consume
-sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
-  | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
+  /home/la_lukasz/paperless-ngx/consume \
+  && sudo find /home/la_lukasz/paperless-ngx/consume -type d -print0 \
+    | xargs -0 sudo -u la_lukasz chmod u=rwx,g=rx
+  && sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
+    | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
 ```
 
 #### occ commands
@@ -646,8 +645,8 @@ sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
 :information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
 
 ```bash
-sudo docker exec \
-  --user www-data -it nextcloud-aio-nextcloud php occ list
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ list
 ```
 
 #### Rescan
