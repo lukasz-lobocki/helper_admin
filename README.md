@@ -7,7 +7,7 @@ sudo apt update && sudo apt upgrade \
 ```
 
 ```bash
-sudo apt --with-new-pkgs upgrade <packages-list>
+sudo apt --with-new-pkgs upgrade <pckgs-lst>
 ```
 
 ## TABLE OF CONTENTS <!-- omit in toc -->
@@ -533,13 +533,15 @@ PAPERLESS_WEBSERVER_WORKERS=1
 PAPERLESS_WORKER_TIMEOUT=1800
 PAPERLESS_OCR_MODE=skip
 PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
-PAPERLESS_OCR_PAGES=1
+PAPERLESS_OCR_PAGES=3
 PAPERLESS_CONVERT_MEMORY_LIMIT=32
 PAPERLESS_ENABLE_NLTK=false
 PAPERLESS_OCR_CLEAN=none
 PAPERLESS_OCR_DESKEW=false
-PAPERLESS_OCR_ROTATE_PAGES=false
+PAPERLESS_OCR_ROTATE_PAGES=true
 PAPERLESS_OCR_OUTPUT_TYPE=pdf
+PAPERLESS_CONSUMER_RECURSIVE=true
+PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
 
 docker-compose up -d
 docker exec -it paperless_webserver_1 printenv
