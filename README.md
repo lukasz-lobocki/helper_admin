@@ -633,7 +633,7 @@ sudo chown --recursive www-data:www-data \
 sudo chown --recursive la_lukasz:la_lukasz \
   /home/la_lukasz/paperless-ngx/consume \
   && sudo find /home/la_lukasz/paperless-ngx/consume -type d -print0 \
-    | xargs -0 sudo -u la_lukasz chmod u=rwx,g=rx
+    | xargs -0 sudo -u la_lukasz chmod u=rwx,g=rx \
   && sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
     | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
 ```
