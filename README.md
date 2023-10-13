@@ -30,8 +30,8 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [8. PRIVATE CLOUD SETUP](#8-private-cloud-setup)
   - [8.1. Hardware](#81-hardware)
   - [8.2. Debian](#82-debian)
-  - [8.3. Nextcloud AIO docker install](#83-nextcloud-aio-docker-install)
-  - [8.4. paperless-ngx install](#84-paperless-ngx-install)
+  - [8.3. paperless-ngx _docker_ install](#83-paperless-ngx-docker-install)
+  - [8.4. Nextcloud AIO _docker_ install](#84-nextcloud-aio-docker-install)
   - [8.5. Admining](#85-admining)
 
 ## 1. CHEATSHEET
@@ -490,7 +490,40 @@ Append _fstab_ line.
 UUID=0bcd6094-3899-488f-8733-19f824e3be8c /mnt/btrfs btrfs defaults 0 3
 ```
 
-### 8.3. Nextcloud AIO docker install
+### 8.3. paperless-ngx _docker_ install
+
+:information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
+
+#### TCP port
+
+8081
+
+#### Configuration in _docker-compose.env_
+
+```text
+nano /home/la_lukasz/paperless-ngx/docker-compose.env
+
+PAPERLESS_TASK_WORKERS=2
+PAPERLESS_THREADS_PER_WORKER=1
+PAPERLESS_WEBSERVER_WORKERS=1
+PAPERLESS_WORKER_TIMEOUT=1800
+PAPERLESS_OCR_MODE=skip
+PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
+PAPERLESS_OCR_PAGES=3
+PAPERLESS_CONVERT_MEMORY_LIMIT=32
+PAPERLESS_ENABLE_NLTK=false
+PAPERLESS_OCR_CLEAN=none
+PAPERLESS_OCR_DESKEW=false
+PAPERLESS_OCR_ROTATE_PAGES=true
+PAPERLESS_OCR_OUTPUT_TYPE=pdf
+PAPERLESS_CONSUMER_RECURSIVE=true
+PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
+
+docker-compose up -d
+docker exec -it paperless_webserver_1 printenv
+```
+
+### 8.4. Nextcloud AIO _docker_ install
 
 ```bash
 sudo docker run \
@@ -508,11 +541,13 @@ sudo docker run \
 nextcloud/all-in-one:latest
 ```
 
-#### NextcloudPi install on Debian
+<details>
+<summary>Nextcloud<b>Pi</b> install on Debian.</summary>
 
 :information_source: Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
 
 :information_source: Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
+</details>
 
 #### Use External Storage app
 
@@ -562,39 +597,6 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
         "applicable_groups": []
     }
 ]
-```
-
-### 8.4. paperless-ngx install
-
-:information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
-
-#### TCP port
-
-8081
-
-#### Configuration in _docker-compose.env_
-
-```text
-nano /home/la_lukasz/paperless-ngx/docker-compose.env
-
-PAPERLESS_TASK_WORKERS=2
-PAPERLESS_THREADS_PER_WORKER=1
-PAPERLESS_WEBSERVER_WORKERS=1
-PAPERLESS_WORKER_TIMEOUT=1800
-PAPERLESS_OCR_MODE=skip
-PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
-PAPERLESS_OCR_PAGES=3
-PAPERLESS_CONVERT_MEMORY_LIMIT=32
-PAPERLESS_ENABLE_NLTK=false
-PAPERLESS_OCR_CLEAN=none
-PAPERLESS_OCR_DESKEW=false
-PAPERLESS_OCR_ROTATE_PAGES=true
-PAPERLESS_OCR_OUTPUT_TYPE=pdf
-PAPERLESS_CONSUMER_RECURSIVE=true
-PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
-
-docker-compose up -d
-docker exec -it paperless_webserver_1 printenv
 ```
 
 ### 8.5. Admining
