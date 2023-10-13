@@ -174,7 +174,7 @@ scp -Crp ./directory/ username@to_host:./directory/
 
 ## 4. REMOTE SYNCHRONIZE with rsync
 
-Re-synchronizes whole __Nextcloud__ into _Slonecznikowa_.
+Re-synchronizes __Nextcloud__ data into _Slonecznikowa_.
 
 ```bash
 ssh la_lukasz@192.168.2.120 \
@@ -195,7 +195,7 @@ ssh la_lukasz@192.168.2.120 \
   la_lukasz@lobocki.ddns.net:base/ster_nextcloud
 ```
 
-Re-synchronizes whole __Paperless__ into _Slonecznikowa_.
+Re-synchronizes __Paperless__ data into _Slonecznikowa_.
 
 ```bash
 ssh la_lukasz@192.168.2.120 \
