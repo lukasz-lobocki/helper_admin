@@ -176,10 +176,11 @@ scp -Crp ./directory/ username@to_host:./directory/
 
 ## 4. REMOTE SYNCHRONIZE with rsync
 
-Re-synchronizes all files repository into _Slonecznikowa_.
+Re-synchronizes whole __Nextcloud__ into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@192.168.2.120 rsync \
+ssh la_lukasz@192.168.2.120 \
+  rsync \
   --archive \
   --stats \
   --verbose \
@@ -196,11 +197,11 @@ ssh la_lukasz@192.168.2.120 rsync \
   la_lukasz@lobocki.ddns.net:base/ster_nextcloud
 ```
 
-<details>
-<summary>...with dry run.</summary>
+Re-synchronizes whole __Paperless__ into _Slonecznikowa_.
 
 ```bash
-rsync \
+ssh la_lukasz@192.168.2.120 \
+  rsync \
   --archive \
   --stats \
   --verbose \
@@ -211,14 +212,11 @@ rsync \
   --one-file-system \
   --itemize-changes \
   --progress \
-  --dry-run \
   --delete \
   -e ssh \
-  /mnt/btrfs/ncdata/data/lukasz/files \
-  la_lukasz@lobocki.ddns.net:base/ster_nextcloud
+  ~/paperless-ngx/media/documents/originals \
+  la_lukasz@lobocki.ddns.net:base/ster_paperless
 ```
-
-</details>
 
 ## 5. MOUNTING SAMBA
 
