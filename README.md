@@ -38,8 +38,6 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 
 :information_source: Check [Bash scripting cheatsheet](https://devhints.io/bash) and [how-to-use-double-or-single-brackets-parentheses-curly-braces](https://stackoverflow.com/a/2188223/4465044) pages.
 
-:information_source: Check [TOC generator](https://luciopaiva.com/markdown-toc/) page.
-
 ## 2. FILES HANDLING
 
 ### 2.1. Ownership
