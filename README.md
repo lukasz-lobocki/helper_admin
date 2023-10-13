@@ -393,7 +393,7 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 
 ### 8.1. Hardware
 
-Odroid only.
+:information_source: Odroid only.
 
 ```bash
 netboot_default
@@ -500,7 +500,7 @@ sudo apt install docker-compose
 
 #### TCP port
 
-:information_source: 8081
+:information_source: `8081`
 
 #### Configuration in _docker-compose.env_
 
