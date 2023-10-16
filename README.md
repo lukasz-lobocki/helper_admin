@@ -38,8 +38,6 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 
 :information_source: Check [Bash scripting cheatsheet](https://devhints.io/bash) and [how-to-use-double-or-single-brackets-parentheses-curly-braces](https://stackoverflow.com/a/2188223/4465044) pages.
 
-:information_source: Check [TOC generator](https://luciopaiva.com/markdown-toc/) page.
-
 ## 2. FILES HANDLING
 
 ### 2.1. Ownership
@@ -176,7 +174,7 @@ scp -Crp ./directory/ username@to_host:./directory/
 
 ## 4. REMOTE SYNCHRONIZE with rsync
 
-Re-synchronizes whole __Nextcloud__ into _Slonecznikowa_.
+Re-synchronizes __Nextcloud__ data into _Slonecznikowa_.
 
 ```bash
 ssh la_lukasz@192.168.2.139 \
@@ -197,7 +195,7 @@ ssh la_lukasz@192.168.2.139 \
   la_lukasz@lobocki.ddns.net:base/ster_nextcloud
 ```
 
-Re-synchronizes whole __Paperless__ into _Slonecznikowa_.
+Re-synchronizes __Paperless__ data into _Slonecznikowa_.
 
 ```bash
 ssh la_lukasz@192.168.2.139 \
