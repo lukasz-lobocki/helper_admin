@@ -190,7 +190,7 @@ ssh la_lukasz@192.168.2.139 \
     --itemize-changes \
     --progress \
     --delete \
-    -e ssh \
+    --rsh=ssh \
   /mnt/btrfs/lukasz/files \
   la_lukasz@lobocki.ddns.net:base/ster_nextcloud
 ```
@@ -211,7 +211,7 @@ ssh la_lukasz@192.168.2.139 \
     --itemize-changes \
     --progress \
     --delete \
-    -e ssh \
+    --rsh=ssh \
   /home/la_lukasz/paperless-ngx/media/documents/originals \
   la_lukasz@lobocki.ddns.net:base/ster_paperless
 ```
