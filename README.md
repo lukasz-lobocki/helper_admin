@@ -234,7 +234,39 @@ sudo mount \
 
 ### 6.1. Create _archive_
 
-#### Nextcloud
+#### From _NUC13_ to _odroid_
+
+```bash
+borg init \
+  --encryption repokey \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+
+borg key export \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13 \
+  ~/tmp/borg-key-nuc13
+
+borg create \
+  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
+  ~
+
+borg info \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+
+borg list \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+
+borg check \
+  --verbose --repository-only \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+
+  borg prune \
+    --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+    --verbose --list --dry-run \
+    la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+```
+
+DUPA
 
 From __Nextcloud__ to USB drive mounted on _DietPi_ (raspberry).
 
@@ -410,8 +442,8 @@ groups
 Adding user to _sudoers_ group.
 
 ```bash
-usermod --append --groups sudo la_lukasz
-usermod --append --groups root la_lukasz
+sudo usermod --append --groups sudo la_lukasz
+sudo usermod --append --groups root la_lukasz
 ```
 
 Copying the public key to _192.168.2.120_
@@ -419,6 +451,7 @@ Copying the public key to _192.168.2.120_
 ```bash
 ssh-copy-id -i ~/.ssh/id_ed25519.pub la_lukasz@192.168.2.120
 ```
+
 Turn off _Password authentication_.
 
 ```bash
@@ -433,8 +466,15 @@ Generating user key.
 
 ```bash
 ssh-keygen -t ed25519
-scp -Crp la_lukasz@192.168.2.120:/home/la_lukasz/.ssh/id_ed25519 ~/tmp
-scp -Crp la_lukasz@192.168.2.120:/home/la_lukasz/.ssh/id_ed25519.pub ~/tmp
+```
+
+```bash
+scp -Crp \
+  la_lukasz@192.168.2.120:/home/la_lukasz/.ssh/id_ed25519 \
+  ~/tmp
+scp -Crp \
+  la_lukasz@192.168.2.120:/home/la_lukasz/.ssh/id_ed25519.pub \
+  ~/tmp
 ```
 
 #### Better file system BTRFS
