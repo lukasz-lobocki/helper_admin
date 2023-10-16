@@ -419,6 +419,11 @@ Copying the public key to _192.168.2.120_
 ```bash
 ssh-copy-id -i ~/.ssh/id_ed25519.pub la_lukasz@192.168.2.120
 ```
+Generating user key.
+
+```bash
+ssh-keygen -t ed25519
+```
 
 Turn off _Password authentication_.
 
