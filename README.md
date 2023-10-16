@@ -682,7 +682,7 @@ sudo chown --recursive www-data:www-data \
     | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
-##### occ commands
+##### Commands occ list
 
 :information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
 
