@@ -268,7 +268,7 @@ borg list \
   la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
 ```
 
-Verify consistnecy of _repository_.
+Verify consistency of _repository_.
 
 ```bash
 borg check \
