@@ -728,8 +728,24 @@ What user/permissions should I have to the external USB drive mount point, the n
 cd /var/www/nextcloud
 ```
 
-#### 8.6. Ingest email
+#### Ingest email
 
-```text
-docker exec -it paperless_webserver_1 mail_fetcher
+```bash
+docker exec -it paperless_webserver_1 \
+  mail_fetcher
+```
+
+#### General maintenance
+
+```bash
+docker exec -it paperless_webserver_1 \
+  document_index reindex
+docker exec -it paperless_webserver_1 \
+  document_sanity_checker
+docker exec -it paperless_webserver_1 \
+  document_create_classifier
+docker exec -it paperless_webserver_1 \
+  document_retagger -c -t -T --use-first
+docker exec -it paperless_webserver_1 \
+  document_thumbnails
 ```
