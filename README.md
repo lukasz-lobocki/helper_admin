@@ -23,8 +23,8 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [5. MOUNTING SAMBA](#5-mounting-samba)
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. From _NUC13_ to _odroid_](#61-from-nuc13-to-odroid)
-  - [6.2. From __Nextcloud__ to _odroid_](#62-from-nextcloud-to-odroid)
-  - [6.3. From __paperless__ to _odroid_](#63-from-paperless-to-odroid)
+  - [6.2. From _Nextcloud_ to _odroid_](#62-from-nextcloud-to-odroid)
+  - [6.3. From _paperless_ to _odroid_](#63-from-paperless-to-odroid)
 - [7. SUDO-ing](#7-sudo-ing)
 - [8. PRIVATE CLOUD SETUP](#8-private-cloud-setup)
   - [8.1. Hardware](#81-hardware)
@@ -285,7 +285,7 @@ borg prune \
   la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
 ```
 
-### 6.2. From __Nextcloud__ to _odroid_
+### 6.2. From _Nextcloud_ to _odroid_
 
 ```bash
 borg create \
@@ -294,7 +294,7 @@ borg create \
   /mnt/btrfs/lukasz/files
 ```
 
-### 6.3. From __paperless__ to _odroid_
+### 6.3. From _paperless_ to _odroid_
 
 ```bash
 borg create \
