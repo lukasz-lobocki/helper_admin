@@ -22,10 +22,9 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [4. REMOTE SYNCHRONIZE with rsync](#4-remote-synchronize-with-rsync)
 - [5. MOUNTING SAMBA](#5-mounting-samba)
 - [6. BORG BACKUP](#6-borg-backup)
-  - [6.1. Create _archive_](#61-create-archive)
-  - [6.2. Get info](#62-get-info)
-  - [6.3. Prune](#63-prune)
-  - [6.4. Vorta to NextcloudPi backup](#64-vorta-to-nextcloudpi-backup)
+  - [6.1. From _NUC13_ to _odroid_](#61-from-nuc13-to-odroid)
+  - [6.2. From __Nextcloud__ to _odroid_](#62-from-nextcloud-to-odroid)
+  - [6.3. From __paperless__ to _odroid_](#63-from-paperless-to-odroid)
 - [7. SUDO-ing](#7-sudo-ing)
 - [8. PRIVATE CLOUD SETUP](#8-private-cloud-setup)
   - [8.1. Hardware](#81-hardware)
@@ -232,9 +231,9 @@ sudo mount \
 
 ## 6. BORG BACKUP
 
-### 6.1. Create _archive_
+### 6.1. From _NUC13_ to _odroid_
 
-#### From _NUC13_ to _odroid_
+Create _repository_.
 
 ```bash
 borg init \
@@ -244,97 +243,29 @@ borg init \
 borg key export \
   la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13 \
   ~/tmp/borg-key-nuc13
+```
 
+Create _archive_ (backup) in repository.
+
+```bash
 borg create \
   --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
-
-borg info \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
-
-borg list \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
-
-borg check \
-  --verbose --repository-only \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
-
-  borg prune \
-    --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-    --verbose --list --dry-run \
-    la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
 ```
-
-DUPA
-
-From __Nextcloud__ to USB drive mounted on _DietPi_ (raspberry).
-
-```bash
-borg create \
-  --stats \
-  root@192.168.2.145:/mnt/usb/nextcloudbackup::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/lukasz/files
-```
-
-<details>
-<summary>...with dry run.</summary>
-
-```bash
-borg create \
-  --list \
-  --dry-run \
-  --filter - \
-  root@192.168.2.145:/mnt/usb/nextcloudbackup::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/lukasz/files
-```
-
-</details>
-
-<details>
-<summary>...same for <b>NUC11</b>.</summary>
-
-From __NUC11__ to USB drive mounted on _DietPi_ (raspberry).
-
-```bash
-borg create \
-  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  root@192.168.2.145:/mnt/usb/nuc11backup::{hostname}-{now:%Y%m%dT%H%M} \
-  ~
-```
-
-</details>
-
-<details>
-<summary>...same for <b>NUC13</b>.</summary>
-
-From __NUC13__ to USB drive mounted on _DietPi_ (raspberry).
-
-```bash
-borg create \
-  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  root@192.168.2.145:/mnt/usb/nuc13backup::{hostname}-{now:%Y%m%dT%H%M} \
-  ~
-```
-
-</details>
-
-### 6.2. Get info
 
 Information on _repository_.
 
-#### Nextcloud
-
 ```bash
 borg info \
-  root@192.168.2.145:/mnt/usb/nextcloudbackup
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
 ```
 
 List _archives_ in repository.
 
 ```bash
 borg list \
-  root@192.168.2.145:/mnt/usb/nextcloudbackup
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
 ```
 
 Verify consistnecy of _repository_.
@@ -342,70 +273,35 @@ Verify consistnecy of _repository_.
 ```bash
 borg check \
   --verbose --repository-only \
-  root@192.168.2.145:/mnt/usb/nextcloudbackup
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
 ```
 
-<details>
-<summary>...same for <b>NUC</b>.</summary>
+Prune extra _archives_.
 
 ```bash
-borg info \
-  root@192.168.2.145:/mnt/usb/nucbackup
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list --dry-run \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
 ```
 
-List _archives_ in repository.
+### 6.2. From __Nextcloud__ to _odroid_
 
 ```bash
-borg list \
-  root@192.168.2.145:/mnt/usb/nucbackup
+borg create \
+  --stats --one-file-system \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
+  /mnt/btrfs/lukasz/files
 ```
 
-Verify consistnecy of _repository_.
+### 6.3. From __paperless__ to _odroid_
 
 ```bash
-borg check \
-  --verbose --repository-only \
-  root@192.168.2.145:/mnt/usb/nucbackup
+borg create \
+  --stats --one-file-system \
+  la_lukasz@192.168.2.120:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
+  /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
-
-</details>
-
-### 6.3. Prune
-
-Remove extra _archives_.
-
-#### Nextcloud
-
-```bash
-borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  root@192.168.2.145:/mnt/usb/nextcloudbackup
-```
-
-<details>
-<summary>...same for <b>NUC</b>.</summary>
-
-```bash
-borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  root@192.168.2.145:/mnt/usb/nucbackup
-```
-
-</details>
-
-### 6.4. Vorta to NextcloudPi backup
-
-<details>
-<summary>Not realy usefull. :warning:</summary>
-
-```bash
-source ~/homenv/bin/activate.fish
-```
-
-```bash
-set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
-  && vorta
-```
-
-</details>
 
 ## 7. SUDO-ing
 
