@@ -134,7 +134,7 @@ find . -type f -iname "*.xxhsum" -execdir \
 ```
 
 <details>
-<summary>:warning: Creation alternative with rhash.</summary>
+<summary>Creation alternative with rhash. :warning:</summary>
 
 ```bash
 rhash --sha256 --recursive \
@@ -363,7 +363,7 @@ borg prune -v --list --dry-run --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 
 ### 6.4. Vorta to NextcloudPi backup
 
 <details>
-<summary>Not realy usefull.</summary>
+<summary>Not realy usefull. :warning:</summary>
 
 ```bash
 source ~/homenv/bin/activate.fish
@@ -551,7 +551,7 @@ nextcloud/all-in-one:latest
 ```
 
 <details>
-<summary>Nextcloud<b>Pi</b> install on Debian.</summary>
+<summary>Nextcloud<b>Pi</b> install on Debian. :warning:</summary>
 
 :information_source: Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
 
