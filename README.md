@@ -30,9 +30,8 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [8. PRIVATE CLOUD SETUP](#8-private-cloud-setup)
   - [8.1. Hardware](#81-hardware)
   - [8.2. Debian](#82-debian)
-  - [8.3. paperless-ngx _docker_ install](#83-paperless-ngx-docker-install)
-  - [8.4. Nextcloud AIO _docker_ install](#84-nextcloud-aio-docker-install)
-  - [8.5. Admining](#85-admining)
+  - [8.3. paperless-ngx _docker_](#83-paperless-ngx-docker)
+  - [8.4. Nextcloud AIO _docker_](#84-nextcloud-aio-docker)
 
 ## 1. CHEATSHEET
 
@@ -49,7 +48,7 @@ sudo \
 
 ### 2.2. Permisions
 
-:information_source: Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions](#permisions) pages.
+:information_source: Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions](#permisions-warning) pages.
 
 #### Directories
 
@@ -493,15 +492,17 @@ sudo apt install docker-compose
 usermod --append --groups docker la_lukasz
 ```
 
-### 8.3. paperless-ngx _docker_ install
+### 8.3. paperless-ngx _docker_
+
+#### Install
 
 :information_source: Check [docs.paperless-ngx](https://docs.paperless-ngx.com/) site.
 
-#### TCP port
+##### TCP port
 
 :information_source: `8081`
 
-#### Configuration in _docker-compose.env_
+##### Configuration in _docker-compose.env_
 
 ```bash
 nano /home/la_lukasz/paperless-ngx/docker-compose.env
@@ -532,7 +533,44 @@ docker-compose up -d
 docker exec -it paperless_webserver_1 printenv
 ```
 
-### 8.4. Nextcloud AIO _docker_ install
+#### Admining
+
+##### Chown and chmod
+
+```bash
+sudo chown --recursive la_lukasz:la_lukasz \
+  /home/la_lukasz/paperless-ngx/consume \
+  && sudo find /home/la_lukasz/paperless-ngx/consume -type d -print0 \
+    | xargs -0 sudo -u la_lukasz chmod u=rwx,g=rx \
+  && sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
+    | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
+```
+
+##### Ingest email
+
+```bash
+docker exec -it paperless_webserver_1 \
+  mail_fetcher
+```
+
+##### General maintenance
+
+```bash
+docker exec -it paperless_webserver_1 \
+  document_index reindex
+docker exec -it paperless_webserver_1 \
+  document_sanity_checker
+docker exec -it paperless_webserver_1 \
+  document_create_classifier
+docker exec -it paperless_webserver_1 \
+  document_retagger -c -t -T --use-first
+docker exec -it paperless_webserver_1 \
+  document_thumbnails
+```
+
+### 8.4. Nextcloud AIO _docker_
+
+#### Install
 
 ```bash
 sudo docker run \
@@ -550,6 +588,10 @@ sudo docker run \
 nextcloud/all-in-one:latest
 ```
 
+```bash
+sudo usermod --append --groups www-data la_lukasz
+```
+
 <details>
 <summary>Nextcloud<b>Pi</b> install on Debian. :warning:</summary>
 
@@ -558,7 +600,7 @@ nextcloud/all-in-one:latest
 :information_source: Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
 </details>
 
-#### Use External Storage app
+##### Use External Storage app
 
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
@@ -608,7 +650,7 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 ]
 ```
 
-#### Brute force exemption
+##### Brute force exemption
 
 :information_source: See [this](https://mxtoolbox.com/subnetcalculator.aspx) toolbox.
 
@@ -627,15 +669,9 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 }
 ```
 
-### 8.5. Admining
+#### Admining
 
-```bash
-sudo usermod --append --groups www-data la_lukasz
-```
-
-#### Chown and chmod
-
-##### Nextcloud
+##### Chown and chmod
 
 ```bash
 sudo chown --recursive www-data:www-data \
@@ -646,18 +682,7 @@ sudo chown --recursive www-data:www-data \
     | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
-##### Paperless
-
-```bash
-sudo chown --recursive la_lukasz:la_lukasz \
-  /home/la_lukasz/paperless-ngx/consume \
-  && sudo find /home/la_lukasz/paperless-ngx/consume -type d -print0 \
-    | xargs -0 sudo -u la_lukasz chmod u=rwx,g=rx \
-  && sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
-    | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
-```
-
-#### occ commands
+##### occ commands
 
 :information_source: Check [occ command](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html) manual.
 
@@ -666,7 +691,7 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ list
 ```
 
-#### Rescan
+##### Rescan
 
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
@@ -688,7 +713,7 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   --no-interaction --no-warnings --no-readline
 ```
 
-#### Editting _config.php_
+##### Editting _config.php_
 
 ```bash
 sudo docker run \
@@ -701,7 +726,7 @@ sudo docker run \
 sudo nano /var/www/nextcloud/config/config.php
 ```
 
-#### Illegal filenames
+##### Illegal filenames
 
 :information_source: Check [detox](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjh1vPbi9mBAxUa4QIHHWD9CqoQFnoECBcQAQ&url=https%3A%2F%2Flinux.die.net%2Fman%2F1%2Fdetox&usg=AOvVaw0GGiH9PguA-A1-H4MWUF-o&opi=89978449) command.
 
@@ -712,7 +737,7 @@ detox -f ~/Code/helper/admin/other/detoxrc \
   -s lobo-uni -r -v -n ~/Code
 ```
 
-#### Permisions :warning:
+##### Permisions :warning:
 
 :information_source: Check [permissions](https://help.nextcloud.com/t/frequently-asked-questions-faq-ncp/126325#what-userpermissions-should-i-have-to-the-external-usb-drive-mount-point-the-ncdata-and-ncdatabase-directory-11).
 
@@ -726,26 +751,4 @@ What user/permissions should I have to the external USB drive mount point, the n
 
 ```bash
 cd /var/www/nextcloud
-```
-
-#### Ingest email
-
-```bash
-docker exec -it paperless_webserver_1 \
-  mail_fetcher
-```
-
-#### General maintenance
-
-```bash
-docker exec -it paperless_webserver_1 \
-  document_index reindex
-docker exec -it paperless_webserver_1 \
-  document_sanity_checker
-docker exec -it paperless_webserver_1 \
-  document_create_classifier
-docker exec -it paperless_webserver_1 \
-  document_retagger -c -t -T --use-first
-docker exec -it paperless_webserver_1 \
-  document_thumbnails
 ```
