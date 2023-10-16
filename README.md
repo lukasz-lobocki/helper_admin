@@ -212,7 +212,7 @@ ssh la_lukasz@192.168.2.139 \
   --progress \
   --delete \
   -e ssh \
-  ~/paperless-ngx/media/documents/originals \
+  /home/la_lukasz/paperless-ngx/media/documents/originals \
   la_lukasz@lobocki.ddns.net:base/ster_paperless
 ```
 
