@@ -179,7 +179,7 @@ scp -Crp ./directory/ username@to_host:./directory/
 Re-synchronizes whole __Nextcloud__ into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@192.168.2.120 \
+ssh la_lukasz@192.168.2.139 \
   rsync \
   --archive \
   --stats \
@@ -200,7 +200,7 @@ ssh la_lukasz@192.168.2.120 \
 Re-synchronizes whole __Paperless__ into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@192.168.2.120 \
+ssh la_lukasz@192.168.2.139 \
   rsync \
   --archive \
   --stats \
@@ -394,7 +394,9 @@ set -lx BORG_PASSCOMMAND "cat $HOME/.borg-nextcloud-passphrase" \
 :information_source: Odroid only.
 
 ```bash
+exit
 netboot_default
+exit
 ```
 
 ### 8.2. Debian
