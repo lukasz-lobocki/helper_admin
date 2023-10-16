@@ -608,6 +608,25 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 ]
 ```
 
+#### Brute force exemption
+
+:information_source: See [this](https://mxtoolbox.com/subnetcalculator.aspx) toolbox.
+
+```bash
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ config:list bruteForce
+```
+
+```json
+{
+    "apps": {
+        "bruteForce": {
+            "whitelist_1": "192.168.2.1\/32"
+        }
+    }
+}
+```
+
 ### 8.5. Admining
 
 ```bash
