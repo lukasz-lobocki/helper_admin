@@ -134,7 +134,7 @@ find . -type f -iname "*.xxhsum" -execdir \
 ```
 
 <details>
-<summary>Creation alternative with rhash.</summary>
+<summary>:warning: Creation alternative with rhash.</summary>
 
 ```bash
 rhash --sha256 --recursive \
