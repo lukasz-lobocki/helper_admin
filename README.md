@@ -179,18 +179,18 @@ Re-synchronizes __Nextcloud__ data into _Slonecznikowa_.
 ```bash
 ssh la_lukasz@192.168.2.139 \
   rsync \
-  --archive \
-  --stats \
-  --verbose \
-  --compress \
-  --bwlimit=2000 \
-  --partial \
-  --inplace \
-  --one-file-system \
-  --itemize-changes \
-  --progress \
-  --delete \
-  -e ssh \
+    --archive \
+    --stats \
+    --verbose \
+    --compress \
+    --bwlimit=2000 \
+    --partial \
+    --inplace \
+    --one-file-system \
+    --itemize-changes \
+    --progress \
+    --delete \
+    -e ssh \
   /mnt/btrfs/lukasz/files \
   la_lukasz@lobocki.ddns.net:base/ster_nextcloud
 ```
@@ -200,18 +200,18 @@ Re-synchronizes __Paperless__ data into _Slonecznikowa_.
 ```bash
 ssh la_lukasz@192.168.2.139 \
   rsync \
-  --archive \
-  --stats \
-  --verbose \
-  --compress \
-  --bwlimit=2000 \
-  --partial \
-  --inplace \
-  --one-file-system \
-  --itemize-changes \
-  --progress \
-  --delete \
-  -e ssh \
+    --archive \
+    --stats \
+    --verbose \
+    --compress \
+    --bwlimit=2000 \
+    --partial \
+    --inplace \
+    --one-file-system \
+    --itemize-changes \
+    --progress \
+    --delete \
+    -e ssh \
   /home/la_lukasz/paperless-ngx/media/documents/originals \
   la_lukasz@lobocki.ddns.net:base/ster_paperless
 ```
