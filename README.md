@@ -712,7 +712,7 @@ detox -f ~/Code/helper/admin/other/detoxrc \
   -s lobo-uni -r -v -n ~/Code
 ```
 
-#### Permisions
+#### Permisions :warning:
 
 :information_source: Check [permissions](https://help.nextcloud.com/t/frequently-asked-questions-faq-ncp/126325#what-userpermissions-should-i-have-to-the-external-usb-drive-mount-point-the-ncdata-and-ncdatabase-directory-11).
 
