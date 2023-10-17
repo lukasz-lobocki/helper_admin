@@ -430,6 +430,8 @@ UUID=0bcd6094-3899-488f-8733-19f824e3be8c /mnt/btrfs btrfs defaults 0 3
 
 #### Docker
 
+:information_source: Installation of _docker-compose_ contains _docker_ itself.
+
 ```bash
 sudo apt install docker-compose
 usermod --append --groups docker la_lukasz
