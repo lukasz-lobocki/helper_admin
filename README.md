@@ -249,7 +249,7 @@ Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
-  --stats --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
@@ -289,7 +289,7 @@ borg prune \
 
 ```bash
 borg create \
-  --stats --one-file-system \
+  --stats --list --one-file-system \
   la_lukasz@192.168.2.120:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 ```
@@ -298,7 +298,7 @@ borg create \
 
 ```bash
 borg create \
-  --stats --one-file-system \
+  --stats --list --one-file-system \
   la_lukasz@192.168.2.120:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
