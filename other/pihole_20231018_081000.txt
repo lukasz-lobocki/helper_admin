@@ -1,0 +1,443 @@
+*** [ INITIALIZING ]
+[i] 2023-10-18:08:11:58 debug log has been initialized.
+[i] System has been running for 0 days, 0 hours, 25 minutes
+
+*** [ INITIALIZING ] Sourcing setup variables
+[i] Sourcing /etc/pihole/setupVars.conf...
+
+*** [ DIAGNOSING ]: Core version
+[✓] Version: v5.17.1
+[i] Remotes: origin	https://github.com/pi-hole/pi-hole.git (fetch)
+             origin	https://github.com/pi-hole/pi-hole.git (push)
+[i] Branch: master
+[i] Commit: v5.17.1-0-g6a45c6a
+
+*** [ DIAGNOSING ]: Web version
+[✓] Version: v5.20.1
+[i] Remotes: origin	https://github.com/pi-hole/AdminLTE.git (fetch)
+             origin	https://github.com/pi-hole/AdminLTE.git (push)
+[i] Branch: master
+[i] Commit: v5.20.1-0-g3a11976
+
+*** [ DIAGNOSING ]: FTL version
+[✓] Version: v5.23
+[i] Branch: master
+[i] Commit: d201776e
+
+*** [ DIAGNOSING ]: lighttpd version
+[i] 1.4.59
+
+*** [ DIAGNOSING ]: php version
+[i] 7.4.33
+
+*** [ DIAGNOSING ]: Operating system
+[i] Pi-hole Docker Container: 2023.05.2
+[✓] Distro:  Debian
+[✓] Version: 11
+[✓] dig return code: 0
+[i] dig response: "Raspbian=10,11 Ubuntu=20,22,23 Debian=10,11,12 Fedora=36,37,38 CentOS=8,9"
+[✓] Distro and version supported
+
+*** [ DIAGNOSING ]: SELinux
+[i] SELinux not detected
+
+*** [ DIAGNOSING ]: FirewallD
+[✓] Firewalld service not detected
+
+*** [ DIAGNOSING ]: Processor
+[✓] aarch64
+
+*** [ DIAGNOSING ]: Disk usage
+   Filesystem                                              Size  Used Avail Use% Mounted on
+   overlay                                                 181G  2.5G  170G   2% /
+   tmpfs                                                    64M     0   64M   0% /dev
+   shm                                                      64M  1.1M   63M   2% /dev/shm
+   /dev/disk/by-uuid/98e62e21-90d2-4e9b-beec-14014ea4ccd6  181G  2.5G  170G   2% /etc/pihole
+   tmpfs                                                   1.8G     0  1.8G   0% /proc/asound
+   tmpfs                                                   1.8G     0  1.8G   0% /proc/scsi
+   tmpfs                                                   1.8G     0  1.8G   0% /sys/firmware
+
+*** [ DIAGNOSING ]: Network interfaces and addresses
+   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+       link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+       inet 127.0.0.1/8 scope host lo
+          valid_lft forever preferred_lft forever
+       inet6 ::1/128 scope host noprefixroute 
+          valid_lft forever preferred_lft forever
+   2: end0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+       link/ether 00:1e:06:49:20:b6 brd ff:ff:ff:ff:ff:ff
+       inet 192.168.2.2/24 brd 192.168.2.255 scope global end0
+          valid_lft forever preferred_lft forever
+       inet6 fe80::21e:6ff:fe49:20b6/64 scope link 
+          valid_lft forever preferred_lft forever
+   3: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+       link/ether 02:42:3c:5f:a9:3f brd ff:ff:ff:ff:ff:ff
+       inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+          valid_lft forever preferred_lft forever
+       inet6 fe80::42:3cff:fe5f:a93f/64 scope link 
+          valid_lft forever preferred_lft forever
+   5: veth44caba5@if4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default 
+       link/ether 5e:49:c9:79:96:43 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+       inet6 fe80::5c49:c9ff:fe79:9643/64 scope link 
+          valid_lft forever preferred_lft forever
+   7: veth30c44da@if6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default 
+       link/ether 36:62:b4:99:ec:06 brd ff:ff:ff:ff:ff:ff link-netnsid 1
+       inet6 fe80::3462:b4ff:fe99:ec06/64 scope link 
+          valid_lft forever preferred_lft forever
+
+*** [ DIAGNOSING ]: Network routing table
+   default via 192.168.2.1 dev end0 onlink 
+   172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 
+   192.168.2.0/24 dev end0 proto kernel scope link src 192.168.2.2 
+
+*** [ DIAGNOSING ]: Networking
+[✓] IPv4 address(es) bound to the end0 interface:
+    192.168.2.2/24
+
+[✓] IPv6 address(es) bound to the end0 interface:
+    fe80::21e:6ff:fe49:20b6/64
+
+[i] Default IPv4 gateway(s):
+     192.168.2.1
+   * Pinging first gateway 192.168.2.1...
+[✓] Gateway responded.
+[i] Default IPv6 gateway(s):
+
+*** [ DIAGNOSING ]: Name resolution (IPv4) using a random blocked domain and a known ad-serving domain
+[✓] spell.itim.vn is 0.0.0.0 on lo (127.0.0.1)
+[✓] spell.itim.vn is 0.0.0.0 on end0 (192.168.2.2)
+[✗] Failed to resolve spell.itim.vn on docker0 (172.17.0.1)
+[✓] doubleclick.com is 142.250.203.142 via a remote, public DNS server (8.8.8.8)
+
+*** [ DIAGNOSING ]: Name resolution (IPv6) using a random blocked domain and a known ad-serving domain
+[✓] findmystery.com is :: on lo (::1)
+[✓] findmystery.com is :: on end0 (fe80::21e:6ff:fe49:20b6)
+[✗] Failed to resolve findmystery.com on docker0 (fe80::42:3cff:fe5f:a93f)
+[✗] Failed to resolve doubleclick.com via a remote, public DNS server (2001:4860:4860::8888)
+
+*** [ DIAGNOSING ]: Discovering active DHCP servers (takes 10 seconds)
+   Scanning all your interfaces for DHCP servers
+   Timeout: 10 seconds
+   
+   * Received 300 bytes from end0:192.168.2.2
+     Offered IP address: 192.168.2.244
+     Server IP address: 192.168.2.2
+     Relay-agent IP address: N/A
+     BOOTP server: (empty)
+     BOOTP file: (empty)
+     DHCP options:
+      Message type: DHCPOFFER (2)
+      server-identifier: 192.168.2.2
+      lease-time: 86400 ( 1d )
+      renewal-time: 43200 ( 12h )
+      rebinding-time: 75600 ( 21h )
+      netmask: 255.255.255.0
+      broadcast: 192.168.2.255
+      dns-server: 192.168.2.2
+      domain-name: "lan"
+      router: 192.168.2.1
+      --- end of options ---
+   
+   DHCP packets received on interface docker0: 0
+   DHCP packets received on interface end0: 1
+
+*** [ DIAGNOSING ]: Pi-hole processes
+[✓] lighttpd daemon is active
+[✓] pihole-FTL daemon is active
+
+*** [ DIAGNOSING ]: Pi-hole-FTL full status
+[i] systemctl:  command not found
+
+*** [ DIAGNOSING ]: Lighttpd configuration test
+[✓] No error in lighttpd configuration
+
+*** [ DIAGNOSING ]: Setup variables
+    INSTALL_WEB_INTERFACE=true
+    PIHOLE_INTERFACE=end0
+    QUERY_LOGGING=true
+    BLOCKING_ENABLED=true
+    DHCP_ACTIVE=true
+    DHCP_START=192.168.2.201
+    DHCP_END=192.168.2.251
+    DHCP_ROUTER=192.168.2.1
+    DHCP_LEASETIME=24
+    PIHOLE_DOMAIN=lan
+    DHCP_IPv6=false
+    DHCP_rapid_commit=true
+    DNSMASQ_LISTENING=single
+    DNS_FQDN_REQUIRED=true
+    DNS_BOGUS_PRIV=true
+    DNSSEC=false
+    REV_SERVER=false
+    PIHOLE_DNS_1=8.8.8.8
+    PIHOLE_DNS_2=8.8.4.4
+    PIHOLE_DNS_3=208.67.222.222
+    PIHOLE_DNS_4=208.67.220.220
+    PIHOLE_DNS_5=194.153.119.3
+
+*** [ DIAGNOSING ]: Dashboard headers
+[✓] Web interface X-Header: X-Pi-hole: The Pi-hole Web interface is working!
+
+*** [ DIAGNOSING ]: Pi-hole FTL Query Database
+-rw-rw-r-- 1 pihole pihole 412K Oct 18 08:12 /etc/pihole/pihole-FTL.db
+
+*** [ DIAGNOSING ]: Gravity Database
+-rw-rw-r-- 1 pihole pihole 8.5M Oct 18 07:47 /etc/pihole/gravity.db
+
+*** [ DIAGNOSING ]: Info table
+   property              value                                   
+   --------------------  ----------------------------------------
+   version               15                                      
+   updated               1697608049                              
+   gravity_count         144153                                  
+   Last gravity run finished at: Wed Oct 18 07:47:29 CEST 2023
+
+   ----- First 10 Gravity Domains -----
+   localhost.localdomain
+   ck.getcookiestxt.com
+   eu1.clevertap-prod.com
+   wizhumpgyros.com
+   coccyxwickimp.com
+   webmail-who-int.000webhostapp.com
+   010sec.com
+   01mspmd5yalky8.com
+   0byv9mgbn0.com
+   ns6.0pendns.org
+
+
+*** [ DIAGNOSING ]: Groups
+   id    enabled  name                                                date_added           date_modified        description                                       
+   ----  -------  --------------------------------------------------  -------------------  -------------------  --------------------------------------------------
+   0           1  Default                                             2023-10-18 05:17:57  2023-10-18 05:17:57  The default group                                 
+
+*** [ DIAGNOSING ]: Domainlist (0/1 = exact white-/blacklist, 2/3 = regex white-/blacklist)
+
+*** [ DIAGNOSING ]: Clients
+
+*** [ DIAGNOSING ]: Adlists
+   id     enabled  group_ids     address                                                                                               date_added           date_modified        comment                                           
+   -----  -------  ------------  ----------------------------------------------------------------------------------------------------  -------------------  -------------------  --------------------------------------------------
+   1            1  0             https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts                                      2023-10-18 05:17:58  2023-10-18 05:17:58  Migrated from /etc/pihole/adlists.list            
+
+*** [ DIAGNOSING ]: contents of /etc/pihole
+
+-rw-r--r-- 1 root root 0 Oct 18 05:17 /etc/pihole/custom.list
+
+-rw-r--r-- 1 root root 65 Oct 18 07:47 /etc/pihole/local.list
+
+-rw-r--r-- 1 root root 241 Oct 18 05:17 /etc/pihole/logrotate
+   /var/log/pihole/pihole.log {
+   	su root root
+   	daily
+   	copytruncate
+   	rotate 5
+   	compress
+   	delaycompress
+   	notifempty
+   	nomail
+   }
+   /var/log/pihole/FTL.log {
+   	su root root
+   	weekly
+   	copytruncate
+   	rotate 3
+   	compress
+   	delaycompress
+   	notifempty
+   	nomail
+   }
+
+-rw-rw-r-- 1 pihole root 180 Oct 18 07:47 /etc/pihole/pihole-FTL.conf
+   MACVENDORDB=/macvendor.db
+   LOCAL_IPV4=192.168.2.2
+   RATE_LIMIT=1000/60
+
+-rw-r--r-- 1 root root 379 Oct 18 07:47 /etc/pihole/versions
+   CORE_VERSION=v5.17.1
+   CORE_BRANCH=master
+   CORE_HASH=6a45c6a8
+   GITHUB_CORE_VERSION=v5.17.2
+   GITHUB_CORE_HASH=60b6a101
+   WEB_VERSION=v5.20.1
+   WEB_BRANCH=master
+   WEB_HASH=3a11976e
+   GITHUB_WEB_VERSION=null
+   GITHUB_WEB_HASH=3dd57522
+   FTL_VERSION=v5.23
+   FTL_BRANCH=master
+   FTL_HASH=d201776e
+   GITHUB_FTL_VERSION=v5.23
+   GITHUB_FTL_HASH=1a114133
+   DOCKER_VERSION=2023.05.2
+   GITHUB_DOCKER_VERSION=2023.05.2
+
+*** [ DIAGNOSING ]: contents of /etc/dnsmasq.d
+
+-rw-r--r-- 1 root root 1.5K Oct 18 07:47 /etc/dnsmasq.d/01-pihole.conf
+   addn-hosts=/etc/pihole/local.list
+   addn-hosts=/etc/pihole/custom.list
+   localise-queries
+   no-resolv
+   log-queries
+   log-facility=/var/log/pihole/pihole.log
+   log-async
+   cache-size=10000
+   server=8.8.8.8
+   server=8.8.4.4
+   server=208.67.222.222
+   server=208.67.220.220
+   server=194.153.119.3
+   domain-needed
+   expand-hosts
+   bogus-priv
+   interface=end0
+
+-rw-r--r-- 1 root root 513 Oct 18 07:47 /etc/dnsmasq.d/02-pihole-dhcp.conf
+   dhcp-authoritative
+   dhcp-range=192.168.2.201,192.168.2.251,24h
+   dhcp-option=option:router,192.168.2.1
+   dhcp-leasefile=/etc/pihole/dhcp.leases
+   domain=lan
+   local=/lan/
+   dhcp-rapid-commit
+
+-rw-r--r-- 1 root root 49 Oct 18 07:02 /etc/dnsmasq.d/04-pihole-static-dhcp.conf
+   dhcp-host=88:AE:DD:0F:06:60,192.168.2.3,NUC11ATK
+
+-rw-r--r-- 1 root root 2.2K Oct 18 07:47 /etc/dnsmasq.d/06-rfc6761.conf
+   server=/test/
+   server=/localhost/
+   server=/invalid/
+   server=/bind/
+   server=/onion/
+
+*** [ DIAGNOSING ]: contents of /etc/lighttpd
+
+-rw-r--r-- 1 root root 2.3K Oct 18 05:17 /etc/lighttpd/lighttpd.conf
+   server.modules = (
+   	"mod_indexfile",
+   	"mod_access",
+   	"mod_alias",
+    	"mod_redirect",
+   )
+   server.document-root        = "/var/www/html"
+   server.upload-dirs          = ( "/var/cache/lighttpd/uploads" )
+   server.errorlog             = "/var/log/lighttpd/error.log"
+   server.pid-file             = "/run/lighttpd.pid"
+   server.username             = "www-data"
+   server.groupname            = "www-data"
+   server.bind		 = "192.168.2.2"
+   server.port		 = 80
+   $SERVER["socket"] == "127.0.0.1:80" {}
+   server.feature-flags       += ("server.h2proto" => "enable")
+   server.feature-flags       += ("server.h2c"     => "enable")
+   server.feature-flags       += ("server.graceful-shutdown-timeout" => 5)
+   server.http-parseopts = (
+     "header-strict"           => "enable",# default
+     "host-strict"             => "enable",# default
+     "host-normalize"          => "enable",# default
+     "url-normalize-unreserved"=> "enable",# recommended highly
+     "url-normalize-required"  => "enable",# recommended
+     "url-ctrls-reject"        => "enable",# recommended
+     "url-path-2f-decode"      => "enable",# recommended highly (unless breaks app)
+     "url-path-dotseg-remove"  => "enable",# recommended highly (unless breaks app)
+   )
+   index-file.names            = ( "index.php", "index.html" )
+   url.access-deny             = ( "~", ".inc" )
+   static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
+   include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
+   include_shell "/usr/share/lighttpd/create-mime.conf.pl"
+   include "/etc/lighttpd/conf-enabled/*.conf"
+   server.modules += (
+   	"mod_dirlisting",
+   	"mod_staticfile",
+   )
+
+*** [ DIAGNOSING ]: contents of /etc/lighttpd/conf.d
+/etc/lighttpd/conf.d does not exist.
+
+*** [ DIAGNOSING ]: contents of /etc/lighttpd/conf-enabled
+total 4.0K
+lrwxrwxrwx 1 root root  32 May 30 20:53 05-setenv.conf -> ../conf-available/05-setenv.conf
+lrwxrwxrwx 1 root root  35 May 30 20:53 10-accesslog.conf -> ../conf-available/10-accesslog.conf
+lrwxrwxrwx 1 root root  33 May 30 20:53 10-fastcgi.conf -> ../conf-available/10-fastcgi.conf
+-rw-r--r-- 1 root root 219 Oct 18 07:47 15-pihole-admin-redirect-docker.conf
+lrwxrwxrwx 1 root root  38 May 30 20:53 15-pihole-admin.conf -> ../conf-available/15-pihole-admin.conf
+
+lrwxrwxrwx 1 root root 38 May 30 20:53 /etc/lighttpd/conf-enabled/15-pihole-admin.conf -> ../conf-available/15-pihole-admin.conf
+   server.errorlog := "/var/log/lighttpd/error-pihole.log"
+   $HTTP["url"] =~ "^/admin/" {
+       server.document-root = "/var/www/html"
+       server.stream-response-body = 1
+       accesslog.filename = "/var/log/lighttpd/access-pihole.log"
+       accesslog.format = "%{%s}t|%h|%V|%r|%s|%b"
+       fastcgi.server = (
+           ".php" => (
+               "localhost" => (
+                   "socket" => "/run/lighttpd/pihole-php-fastcgi.socket",
+                   "bin-path" => "/usr/bin/php-cgi",
+                   "min-procs" => 1,
+                   "max-procs" => 1,
+                   "bin-environment" => (
+                       "TZ" => "Europe/Berlin",
+                       "PIHOLE_DOCKER_TAG" => "",
+                       "PHP_ERROR_LOG" => "/var/log/lighttpd/error-pihole.log",
+                       "CORS_HOSTS" => "",
+                       "VIRTUAL_HOST" => "odroid",
+                       "PHP_FCGI_CHILDREN" => "4",
+                       "PHP_FCGI_MAX_REQUESTS" => "10000",
+                   ),
+                   "bin-copy-environment" => (
+                       "PATH", "SHELL", "USER"
+                   ),
+                   "broken-scriptfilename" => "enable",
+               )
+           )
+       )
+       setenv.add-response-header = (
+           "X-Pi-hole" => "The Pi-hole Web interface is working!",
+           "X-Frame-Options" => "DENY",
+           "X-XSS-Protection" => "0",
+           "X-Content-Type-Options" => "nosniff",
+           "Content-Security-Policy" => "default-src 'self' 'unsafe-inline';",
+           "X-Permitted-Cross-Domain-Policies" => "none",
+           "Referrer-Policy" => "same-origin"
+       )
+       $HTTP["url"] =~ "^/admin/\." {
+           url.access-deny = ("")
+       }
+       $HTTP["url"] =~ "/(teleporter|api_token)\.php$" {
+           $HTTP["referer"] =~ "/admin/settings\.php" {
+               setenv.set-response-header = ( "X-Frame-Options" => "SAMEORIGIN" )
+           }
+       }
+   }
+   else $HTTP["url"] == "/admin" {
+       url.redirect = ("" => "/admin/")
+   }
+   $HTTP["host"] == "pi.hole" {
+       $HTTP["url"] == "/" {
+           url.redirect = ("" => "/admin/")
+       }
+   }
+   server.modules += ( "mod_access", "mod_accesslog", "mod_redirect", "mod_fastcgi", "mod_setenv" )
+
+*** [ DIAGNOSING ]: contents of /etc/cron.d
+
+-rw-r--r-- 1 root root 1.7K Oct 18 07:47 /etc/cron.d/pihole
+   30 3   * * 7   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updateGravity >/var/log/pihole/pihole_updateGravity.log || cat /var/log/pihole/pihole_updateGravity.log
+   00 00   * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole flush once quiet
+   @reboot root /usr/sbin/logrotate --state /var/lib/logrotate/pihole /etc/pihole/logrotate
+   37 15  * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker
+   @reboot root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker reboot
+
+(...)
+
+********************************************
+********************************************
+[✓] ** FINISHED DEBUGGING! **
+
+   * The debug log can be uploaded to tricorder.pi-hole.net for sharing with developers only.
+   * A local copy of the debug log can be found at: /var/log/pihole/pihole_debug.log
+
+
