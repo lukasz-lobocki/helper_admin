@@ -31,6 +31,9 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
   - [8.2. Debian](#82-debian)
   - [8.3. paperless-ngx _docker_](#83-paperless-ngx-docker)
   - [8.4. Nextcloud AIO _docker_](#84-nextcloud-aio-docker)
+- [PiHole on Docker at odroid](#pihole-on-docker-at-odroid)
+  - [Static IP](#static-ip)
+  - [docker-compose.yml](#docker-composeyml)
 
 ## 1. CHEATSHEET
 
@@ -175,7 +178,7 @@ scp -Crp ./directory/ username@to_host:./directory/
 Re-synchronizes __Nextcloud__ data into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@192.168.2.139 \
+ssh la_lukasz@NUC11ATK \
   rsync \
     --archive \
     --stats \
@@ -196,7 +199,7 @@ ssh la_lukasz@192.168.2.139 \
 Re-synchronizes __Paperless__ data into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@192.168.2.139 \
+ssh la_lukasz@NUC11ATK \
   rsync \
     --archive \
     --stats \
@@ -238,10 +241,10 @@ Create _repository_.
 ```bash
 borg init \
   --encryption repokey \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
 
 borg key export \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13 \
+  la_lukasz@odroid:/mnt/btrfs/backup/nuc13 \
   ~/tmp/borg-key-nuc13
 ```
 
@@ -250,7 +253,7 @@ Create _archive_ (backup) in repository.
 ```bash
 borg create \
   --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
+  la_lukasz@odroid:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
 
@@ -258,14 +261,14 @@ Information on _repository_.
 
 ```bash
 borg info \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
 ```
 
 List _archives_ in repository.
 
 ```bash
 borg list \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
 ```
 
 Verify consistency of _repository_.
@@ -273,7 +276,7 @@ Verify consistency of _repository_.
 ```bash
 borg check \
   --verbose --repository-only \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
 ```
 
 Prune extra _archives_.
@@ -282,7 +285,7 @@ Prune extra _archives_.
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
   --verbose --list --dry-run \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
 ```
 
 ### 6.2. From _Nextcloud_ to _odroid_
@@ -290,7 +293,7 @@ borg prune \
 ```bash
 borg create \
   --stats --list --one-file-system \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
+  la_lukasz@odroid:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 ```
 
@@ -299,7 +302,7 @@ borg create \
 ```bash
 borg create \
   --stats --list --one-file-system \
-  la_lukasz@192.168.2.120:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
+  la_lukasz@odroid:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
 
@@ -342,10 +345,10 @@ sudo usermod --append --groups sudo la_lukasz
 sudo usermod --append --groups root la_lukasz
 ```
 
-Copying the public key to _192.168.2.120_
+Copying the public key to _odroid_
 
 ```bash
-ssh-copy-id -i ~/.ssh/id_ed25519.pub la_lukasz@192.168.2.120
+ssh-copy-id -i ~/.ssh/id_ed25519.pub la_lukasz@odroid
 ```
 
 Turn off _Password authentication_.
@@ -366,10 +369,10 @@ ssh-keygen -t ed25519
 
 ```bash
 scp -Crp \
-  la_lukasz@192.168.2.120:/home/la_lukasz/.ssh/id_ed25519 \
+  la_lukasz@odroid:/home/la_lukasz/.ssh/id_ed25519 \
   ~/tmp
 scp -Crp \
-  la_lukasz@192.168.2.120:/home/la_lukasz/.ssh/id_ed25519.pub \
+  la_lukasz@odroid:/home/la_lukasz/.ssh/id_ed25519.pub \
   ~/tmp
 ```
 
@@ -694,4 +697,65 @@ What user/permissions should I have to the external USB drive mount point, the n
 
 ```bash
 cd /var/www/nextcloud
+```
+
+## PiHole on Docker at odroid
+
+### Static IP
+
+```bash
+sudo nano /etc/network/interfaces.d/end0
+```
+
+```text
+allow-hotplug end0
+iface end0 inet static
+address 192.168.2.2
+netmask 255.255.255.0
+gateway 192.168.2.1
+dns-nameservers 127.0.0.1
+dns-nameservers 8.8.8.8
+```
+
+```bash
+sudo systemctl restart networking
+ip -c addr show
+```
+
+### docker-compose.yml
+
+```text
+version: "3"
+
+# More info at https://github.com/pi-hole/docker-pi-hole/
+# and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    # For DHCP it is recommended to remove these ports
+    # and instead add: network_mode: "host"
+    # ports:
+      # - "53:53/tcp"
+      # - "53:53/udp"
+      # - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      # - "80:80/tcp"
+    network_mode: host
+    environment:
+      TZ: 'Europe/Berlin'
+      WEBPASSWORD: '****'
+      INTERFACE: end0
+      FTLCONF_LOCAL_IPV4: 192.168.2.2
+    # Volumes store your data between container upgrades
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+    restart: unless-stopped
+```
+
+```bash
+docker compose up -d
 ```
