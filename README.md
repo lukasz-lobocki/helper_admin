@@ -707,7 +707,12 @@ cd /var/www/nextcloud
 
 ## PiHole on Docker at odroid
 
-:information_source: Please note `end0` interface.
+```bash
+ip --color route | grep default
+ip --color addr show
+```
+
+:information_source: Please note if `end0` is the interface.
 
 ### Static IP
 
