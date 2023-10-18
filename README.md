@@ -291,6 +291,8 @@ borg prune \
 ### 6.2. From _Nextcloud_ to _odroid_
 
 ```bash
+ssh la_lukasz@nuc11atk
+
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
@@ -300,6 +302,8 @@ borg create \
 ### 6.3. From _paperless_ to _odroid_
 
 ```bash
+ssh la_lukasz@nuc11atk
+
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
