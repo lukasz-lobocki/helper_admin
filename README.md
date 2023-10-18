@@ -716,7 +716,6 @@ ip --color addr show
 
 ### Static IP
 
-
 ```bash
 sudo nano /etc/network/interfaces.d/end0
 ```

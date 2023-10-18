@@ -1,6 +1,12 @@
+This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
+
+The intent of this script is to allow users to self-diagnose their installations.  This is accomplished by running tests against our software and providing the user with links to FAQ articles when a problem is detected.  Since we are a small team and Pi-hole has been growing steadily, it is our hope that this will help us spend more time on development.
+
+NOTE: All log files auto-delete after 48 hours and ONLY the Pi-hole developers can access your data via the given token. We have taken these extra steps to secure your data and will work to further reduce any personal information gathered.
+
 *** [ INITIALIZING ]
-[i] 2023-10-18:08:11:58 debug log has been initialized.
-[i] System has been running for 0 days, 0 hours, 25 minutes
+[i] 2023-10-18:09:55:17 debug log has been initialized.
+[i] System has been running for 0 days, 2 hours, 8 minutes
 
 *** [ INITIALIZING ] Sourcing setup variables
 [i] Sourcing /etc/pihole/setupVars.conf...
@@ -51,7 +57,7 @@
    Filesystem                                              Size  Used Avail Use% Mounted on
    overlay                                                 181G  2.5G  170G   2% /
    tmpfs                                                    64M     0   64M   0% /dev
-   shm                                                      64M  1.1M   63M   2% /dev/shm
+   shm                                                      64M  1.2M   63M   2% /dev/shm
    /dev/disk/by-uuid/98e62e21-90d2-4e9b-beec-14014ea4ccd6  181G  2.5G  170G   2% /etc/pihole
    tmpfs                                                   1.8G     0  1.8G   0% /proc/asound
    tmpfs                                                   1.8G     0  1.8G   0% /proc/scsi
@@ -104,15 +110,15 @@
 [i] Default IPv6 gateway(s):
 
 *** [ DIAGNOSING ]: Name resolution (IPv4) using a random blocked domain and a known ad-serving domain
-[✓] spell.itim.vn is 0.0.0.0 on lo (127.0.0.1)
-[✓] spell.itim.vn is 0.0.0.0 on end0 (192.168.2.2)
-[✗] Failed to resolve spell.itim.vn on docker0 (172.17.0.1)
+[✓] analytics-chi-nfl.yinzcam.com is 0.0.0.0 on lo (127.0.0.1)
+[✓] analytics-chi-nfl.yinzcam.com is 0.0.0.0 on end0 (192.168.2.2)
+[✓] analytics-chi-nfl.yinzcam.com is 0.0.0.0 on docker0 (172.17.0.1)
 [✓] doubleclick.com is 142.250.203.142 via a remote, public DNS server (8.8.8.8)
 
 *** [ DIAGNOSING ]: Name resolution (IPv6) using a random blocked domain and a known ad-serving domain
-[✓] findmystery.com is :: on lo (::1)
-[✓] findmystery.com is :: on end0 (fe80::21e:6ff:fe49:20b6)
-[✗] Failed to resolve findmystery.com on docker0 (fe80::42:3cff:fe5f:a93f)
+[✓] 953232222.xyz is :: on lo (::1)
+[✓] 953232222.xyz is :: on end0 (fe80::21e:6ff:fe49:20b6)
+[✓] 953232222.xyz is :: on docker0 (fe80::42:3cff:fe5f:a93f)
 [✗] Failed to resolve doubleclick.com via a remote, public DNS server (2001:4860:4860::8888)
 
 *** [ DIAGNOSING ]: Discovering active DHCP servers (takes 10 seconds)
@@ -164,7 +170,7 @@
     PIHOLE_DOMAIN=lan
     DHCP_IPv6=false
     DHCP_rapid_commit=true
-    DNSMASQ_LISTENING=single
+    DNSMASQ_LISTENING=local
     DNS_FQDN_REQUIRED=true
     DNS_BOGUS_PRIV=true
     DNSSEC=false
@@ -179,7 +185,7 @@
 [✓] Web interface X-Header: X-Pi-hole: The Pi-hole Web interface is working!
 
 *** [ DIAGNOSING ]: Pi-hole FTL Query Database
--rw-rw-r-- 1 pihole pihole 412K Oct 18 08:12 /etc/pihole/pihole-FTL.db
+-rw-rw-r-- 1 pihole pihole 576K Oct 18 09:55 /etc/pihole/pihole-FTL.db
 
 *** [ DIAGNOSING ]: Gravity Database
 -rw-rw-r-- 1 pihole pihole 8.5M Oct 18 07:47 /etc/pihole/gravity.db
@@ -247,7 +253,7 @@
    	nomail
    }
 
--rw-rw-r-- 1 pihole root 180 Oct 18 07:47 /etc/pihole/pihole-FTL.conf
+-rw-rw-r-- 1 pihole root 180 Oct 18 09:51 /etc/pihole/pihole-FTL.conf
    MACVENDORDB=/macvendor.db
    LOCAL_IPV4=192.168.2.2
    RATE_LIMIT=1000/60
@@ -273,7 +279,7 @@
 
 *** [ DIAGNOSING ]: contents of /etc/dnsmasq.d
 
--rw-r--r-- 1 root root 1.5K Oct 18 07:47 /etc/dnsmasq.d/01-pihole.conf
+-rw-r--r-- 1 root root 1.5K Oct 18 09:51 /etc/dnsmasq.d/01-pihole.conf
    addn-hosts=/etc/pihole/local.list
    addn-hosts=/etc/pihole/custom.list
    localise-queries
@@ -290,9 +296,9 @@
    domain-needed
    expand-hosts
    bogus-priv
-   interface=end0
+   local-service
 
--rw-r--r-- 1 root root 513 Oct 18 07:47 /etc/dnsmasq.d/02-pihole-dhcp.conf
+-rw-r--r-- 1 root root 513 Oct 18 09:51 /etc/dnsmasq.d/02-pihole-dhcp.conf
    dhcp-authoritative
    dhcp-range=192.168.2.201,192.168.2.251,24h
    dhcp-option=option:router,192.168.2.1
@@ -430,14 +436,3 @@ lrwxrwxrwx 1 root root 38 May 30 20:53 /etc/lighttpd/conf-enabled/15-pihole-admi
    @reboot root /usr/sbin/logrotate --state /var/lib/logrotate/pihole /etc/pihole/logrotate
    37 15  * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker
    @reboot root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker reboot
-
-(...)
-
-********************************************
-********************************************
-[✓] ** FINISHED DEBUGGING! **
-
-   * The debug log can be uploaded to tricorder.pi-hole.net for sharing with developers only.
-   * A local copy of the debug log can be found at: /var/log/pihole/pihole_debug.log
-
-
