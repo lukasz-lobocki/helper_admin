@@ -707,7 +707,10 @@ cd /var/www/nextcloud
 
 ## PiHole on Docker at odroid
 
+:information_source: Please note `end0` interface.
+
 ### Static IP
+
 
 ```bash
 sudo nano /etc/network/interfaces.d/end0
