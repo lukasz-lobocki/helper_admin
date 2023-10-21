@@ -42,7 +42,7 @@ sudo \
 
 ### 2.2. Permisions
 
-:information_source: Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions](#permisions-warning) pages.
+:information_source: Check [nextcloud permisions](https://docs.nextcloud.com/server/13/admin_manual/maintenance/manual_upgrade.html) and [gist permisions]([#permisions-warning](https://github.com/lukasz-lobocki/helper_admin/tree/main/homelab#permisions-warning)) pages.
 
 #### Directories
 
