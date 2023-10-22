@@ -170,7 +170,7 @@ scp -Crp ./directory/ username@to_host:./directory/
 Re-synchronizes __Nextcloud__ data into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@NUC11ATK \
+ssh la_lukasz@nuc11atk.lan \
   rsync \
     --archive \
     --stats \
@@ -191,7 +191,7 @@ ssh la_lukasz@NUC11ATK \
 Re-synchronizes __Paperless__ data into _Slonecznikowa_.
 
 ```bash
-ssh la_lukasz@NUC11ATK \
+ssh la_lukasz@nuc11atk.lan \
   rsync \
     --archive \
     --stats \
@@ -233,10 +233,10 @@ Create _repository_.
 ```bash
 borg init \
   --encryption repokey \
-  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 
 borg key export \
-  la_lukasz@odroid:/mnt/btrfs/backup/nuc13 \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13 \
   ~/tmp/borg-key-nuc13
 ```
 
@@ -245,7 +245,7 @@ Create _archive_ (backup) in repository.
 ```bash
 borg create \
   --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  la_lukasz@odroid:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
 
@@ -253,14 +253,14 @@ Information on _repository_.
 
 ```bash
 borg info \
-  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
 List _archives_ in repository.
 
 ```bash
 borg list \
-  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
 Verify consistency of _repository_.
@@ -268,7 +268,7 @@ Verify consistency of _repository_.
 ```bash
 borg check \
   --verbose --repository-only \
-  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
 Prune extra _archives_.
@@ -277,28 +277,28 @@ Prune extra _archives_.
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
   --verbose --list --dry-run \
-  la_lukasz@odroid:/mnt/btrfs/backup/nuc13
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
 ### 6.2. From _Nextcloud_ to _odroid_
 
 ```bash
-ssh la_lukasz@nuc11atk
+ssh la_lukasz@nuc11atk.lan
 
 borg create \
   --stats --list --one-file-system \
-  la_lukasz@odroid:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 ```
 
 ### 6.3. From _paperless_ to _odroid_
 
 ```bash
-ssh la_lukasz@nuc11atk
+ssh la_lukasz@nuc11atk.lan
 
 borg create \
   --stats --list --one-file-system \
-  la_lukasz@odroid:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
 

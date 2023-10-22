@@ -46,7 +46,7 @@ sudo usermod --append --groups root la_lukasz
 Copying the public key to _odroid_
 
 ```bash
-ssh-copy-id -i ~/.ssh/id_ed25519.pub la_lukasz@odroid
+ssh-copy-id -i ~/.ssh/id_ed25519.pub la_lukasz@odroid.lan
 ```
 
 Turn off _Password authentication_.
@@ -67,10 +67,10 @@ ssh-keygen -t ed25519
 
 ```bash
 scp -Crp \
-  la_lukasz@odroid:/home/la_lukasz/.ssh/id_ed25519 \
+  la_lukasz@odroid.lan:/home/la_lukasz/.ssh/id_ed25519 \
   ~/tmp
 scp -Crp \
-  la_lukasz@odroid:/home/la_lukasz/.ssh/id_ed25519.pub \
+  la_lukasz@odroid.lan:/home/la_lukasz/.ssh/id_ed25519.pub \
   ~/tmp
 ```
 
