@@ -286,12 +286,16 @@ borg prune \
 ssh la_lukasz@nuc11atk.lan
 ```
 
+Create _archive_ (backup) in repository.
+
 ```bash
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 ```
+
+List _archives_ in repository.
 
 ```bash
 borg list \
@@ -304,12 +308,16 @@ borg list \
 ssh la_lukasz@nuc11atk.lan
 ```
 
+Create _archive_ (backup) in repository.
+
 ```bash
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
+
+List _archives_ in repository.
 
 ```bash
 borg list \
