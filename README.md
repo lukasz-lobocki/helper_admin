@@ -284,22 +284,36 @@ borg prune \
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
+```
 
+```bash
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 ```
 
+```bash
+borg list \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud
+```
+
 ### 6.3. From _paperless_ to _odroid_
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
+```
 
+```bash
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
+```
+
+```bash
+borg list \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless
 ```
 
 ## 7. SUDO-ing
