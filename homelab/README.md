@@ -341,19 +341,33 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ files:scan --all
+  php occ files:scan --all \
+  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+    php occ files:scan-app-data
+```
+
+```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ files:scan-app-data
+  php occ maps:scan-photos \
+  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+    php occ photos:map-media-to-place \
+  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+    php occ preview:generate
+```
+
+```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ maps:scan-photos
+  php occ trashbin:cleanup --all-users \
+  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+    php occ versions:cleanup
+```
+
+```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ photos:map-media-to-place
-sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ preview:generate
-sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ trashbin:cleanup --all-users
-sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ versions:cleanup
+  php occ memories:index
+```
+
+```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php -d memory_limit=2G occ fulltextsearch:index \
   --no-interaction --no-warnings --no-readline
