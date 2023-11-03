@@ -11,7 +11,7 @@
 - [4. Nextcloud AIO _docker_](#4-nextcloud-aio-docker)
   - [4.1. Install](#41-install)
   - [4.2. Admining](#42-admining)
-- [5. PiHole on Docker at odroid](#5-pihole-on-docker-at-odroid)
+- [5. PiHole on _docker_ at _odroid_](#5-pihole-on-docker-at-odroid)
   - [5.1. Static IP](#51-static-ip)
   - [5.2. docker-compose.yml](#52-docker-composeyml)
 
@@ -413,7 +413,7 @@ What user/permissions should I have to the external USB drive mount point, the n
 cd /var/www/nextcloud
 ```
 
-## 5. PiHole on Docker at odroid
+## 5. PiHole on _docker_ at _odroid_
 
 ```bash
 ip --color route | grep default
