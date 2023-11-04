@@ -6,9 +6,9 @@
 
 sequence "lobo-uni" {
 	utf_8 {
-             filename "/home/lukasz/Code/helper/admin/other/detox_lobo_uni.tbl";
+             filename "/home/lukasz-lobocki/Code/helper/admin/other/detox_lobo_uni.tbl";
         };
         safe {
-             filename "/home/lukasz/Code/helper/admin/other/detox_lobo_safe.tbl";
+             filename "/home/lukasz-lobocki/Code/helper/admin/other/detox_lobo_safe.tbl";
         };
 };
