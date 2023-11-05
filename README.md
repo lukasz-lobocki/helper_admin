@@ -23,8 +23,8 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [5. MOUNTING SAMBA](#5-mounting-samba)
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. From _NUC13_ to _odroid_](#61-from-nuc13-to-odroid)
-  - [6.2. From _Nextcloud_ to _odroid_](#62-from-nextcloud-to-odroid)
-  - [6.3. From _paperless_ to _odroid_](#63-from-paperless-to-odroid)
+  - [6.2. From _Nextcloud_](#62-from-nextcloud)
+  - [6.3. From _paperless_](#63-from-paperless)
 - [7. SUDO-ing](#7-sudo-ing)
 
 ## 1. CHEATSHEET
@@ -280,11 +280,13 @@ borg prune \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
-### 6.2. From _Nextcloud_ to _odroid_
+### 6.2. From _Nextcloud_
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
 ```
+
+#### to _odroid_
 
 Create _archive_ (backup) in repository.
 
@@ -302,11 +304,22 @@ borg list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud
 ```
 
-### 6.3. From _paperless_ to _odroid_
+#### to _Konwaliowa_
+
+```bash
+borg create \
+  --stats --list --one-file-system \
+  la_lukasz@lobocki.ddns.net:base/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
+  /mnt/btrfs/lukasz/files
+```
+
+### 6.3. From _paperless_
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
 ```
+
+#### to _odroid_
 
 Create _archive_ (backup) in repository.
 
@@ -322,6 +335,15 @@ List _archives_ in repository.
 ```bash
 borg list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless
+```
+
+#### to _Konwaliowa_
+
+```bash
+borg create \
+  --stats --list --one-file-system \
+  la_lukasz@lobocki.ddns.net:base/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
+  /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
 
 ## 7. SUDO-ing
