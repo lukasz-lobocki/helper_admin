@@ -464,7 +464,7 @@ services:
     network_mode: host
     environment:
       TZ: 'Europe/Berlin'
-      WEBPASSWORD: '****'
+      WEBPASSWORD: '***[redacted]***'
       INTERFACE: end0
       FTLCONF_LOCAL_IPV4: 192.168.2.2
     # Volumes store your data between container upgrades
