@@ -22,7 +22,7 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [4. REMOTE SYNCHRONIZE with rsync](#4-remote-synchronize-with-rsync)
 - [5. MOUNTING SAMBA](#5-mounting-samba)
 - [6. BORG BACKUP](#6-borg-backup)
-  - [6.1. From _NUC13_ to _odroid_](#61-from-nuc13-to-odroid)
+  - [6.1. From _NUC13_](#61-from-nuc13)
   - [6.2. From _Nextcloud_](#62-from-nextcloud)
   - [6.3. From _paperless_](#63-from-paperless)
 - [7. SUDO-ing](#7-sudo-ing)
@@ -226,8 +226,6 @@ sudo mount \
 
 ## 6. BORG BACKUP
 
-### 6.1. From _NUC13_ to _odroid_
-
 Create _repository_.
 
 ```bash
@@ -236,30 +234,13 @@ borg init \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 
 borg key export \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13 \
-  ~/tmp/borg-key-nuc13
-```
-
-Create _archive_ (backup) in repository.
-
-```bash
-borg create \
-  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
-  ~
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
 Information on _repository_.
 
 ```bash
 borg info \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
-```
-
-List _archives_ in repository.
-
-```bash
-borg list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
@@ -278,6 +259,35 @@ borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
   --verbose --list --dry-run \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
+```
+
+### 6.1. From _NUC13_
+
+#### to _odroid_
+
+Create _archive_ (backup) in repository.
+
+```bash
+borg create \
+  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
+  ~
+```
+
+List _archives_ in repository.
+
+```bash
+borg list \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
+```
+
+#### to _Konwaliowa_
+
+```bash
+borg create \
+  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  la_lukasz@lobocki.ddns.net:base/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
+  ~
 ```
 
 ### 6.2. From _Nextcloud_
