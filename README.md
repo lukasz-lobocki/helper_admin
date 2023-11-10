@@ -252,18 +252,7 @@ borg check \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
-Prune extra _archives_.
-
-```bash
-borg prune \
-  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list --dry-run \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
-```
-
 ### 6.1. From _NUC13_
-
-#### to _odroid_
 
 Create _archive_ (backup) in repository.
 
@@ -272,6 +261,11 @@ borg create \
   --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
+
+borg create \
+  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  la_lukasz@lobocki.ddns.net:base/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
+  ~
 ```
 
 List _archives_ in repository.
@@ -279,15 +273,23 @@ List _archives_ in repository.
 ```bash
 borg list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
+
+borg list \
+  la_lukasz@lobocki.ddns.net:base/backup/nuc13
 ```
 
-#### to _Konwaliowa_
+Prune extra _archives_.
 
 ```bash
-borg create \
-  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
-  la_lukasz@lobocki.ddns.net:base/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
-  ~
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list --dry-run \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
+
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list --dry-run \
+  la_lukasz@lobocki.ddns.net:base/backup/nuc13
 ```
 
 ### 6.2. From _Nextcloud_
@@ -296,14 +298,17 @@ borg create \
 ssh la_lukasz@nuc11atk.lan
 ```
 
-#### to _odroid_
-
 Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
+  /mnt/btrfs/lukasz/files
+
+borg create \
+  --stats --list --one-file-system \
+  la_lukasz@lobocki.ddns.net:base/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 ```
 
@@ -312,15 +317,23 @@ List _archives_ in repository.
 ```bash
 borg list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud
+
+borg list \
+  la_lukasz@lobocki.ddns.net:base/backup/nextcloud
 ```
 
-#### to _Konwaliowa_
+Prune extra _archives_.
 
 ```bash
-borg create \
-  --stats --list --one-file-system \
-  la_lukasz@lobocki.ddns.net:base/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/lukasz/files
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list --dry-run \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud
+
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list --dry-run \
+  la_lukasz@lobocki.ddns.net:base/backup/nextcloud
 ```
 
 ### 6.3. From _paperless_
@@ -329,14 +342,17 @@ borg create \
 ssh la_lukasz@nuc11atk.lan
 ```
 
-#### to _odroid_
-
 Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
   --stats --list --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
+  /home/la_lukasz/paperless-ngx/media/documents/originals
+
+borg create \
+  --stats --list --one-file-system \
+  la_lukasz@lobocki.ddns.net:base/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
 
@@ -345,15 +361,23 @@ List _archives_ in repository.
 ```bash
 borg list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless
+
+borg list \
+  la_lukasz@lobocki.ddns.net:base/backup/paperless
 ```
 
-#### to _Konwaliowa_
+Prune extra _archives_.
 
 ```bash
-borg create \
-  --stats --list --one-file-system \
-  la_lukasz@lobocki.ddns.net:base/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
-  /home/la_lukasz/paperless-ngx/media/documents/originals
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list --dry-run \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless
+
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list --dry-run \
+  la_lukasz@lobocki.ddns.net:base/backup/paperless
 ```
 
 ## 7. SUDO-ing
