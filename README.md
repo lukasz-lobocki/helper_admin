@@ -1,9 +1,9 @@
 # ADMIN
 
 ```bash
-sudo apt update && sudo apt upgrade \
-  && sudo apt autoclean && sudo apt clean \
-  && sudo apt autoremove
+sudo apt update ; sudo apt upgrade \
+  ; sudo apt autoclean ; sudo apt clean \
+  ; sudo apt autoremove
 ```
 
 ```bash
