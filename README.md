@@ -248,7 +248,7 @@ Verify consistency of _repository_.
 
 ```bash
 borg check \
-  --verbose --repository-only \
+  --progress --verbose --repository-only \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 ```
 
