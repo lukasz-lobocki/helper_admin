@@ -258,12 +258,14 @@ Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
-  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  --noacls --files-cache mtime,size \
+  --stats --progress --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 
 borg create \
-  --stats --list --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  --noacls --files-cache mtime,size \
+  --stats --progress --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@lobocki.ddns.net:base/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
@@ -283,12 +285,12 @@ Prune extra _archives_.
 ```bash
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list --dry-run \
+  --verbose --list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13
 
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list --dry-run \
+  --verbose --list \
   la_lukasz@lobocki.ddns.net:base/backup/nuc13
 ```
 
@@ -302,12 +304,14 @@ Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
-  --stats --list --one-file-system \
+  --noacls --files-cache mtime,size \
+  --stats --progress --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 
 borg create \
-  --stats --list --one-file-system \
+  --noacls --files-cache mtime,size \
+  --stats --progress --one-file-system \
   la_lukasz@lobocki.ddns.net:base/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/lukasz/files
 ```
@@ -327,12 +331,12 @@ Prune extra _archives_.
 ```bash
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list --dry-run \
+  --verbose --list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud
 
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list --dry-run \
+  --verbose --list \
   la_lukasz@lobocki.ddns.net:base/backup/nextcloud
 ```
 
@@ -346,12 +350,14 @@ Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
-  --stats --list --one-file-system \
+  --noacls --files-cache mtime,size \
+  --stats --progress --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
 
 borg create \
-  --stats --list --one-file-system \
+  --noacls --files-cache mtime,size \
+  --stats --progress --one-file-system \
   la_lukasz@lobocki.ddns.net:base/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /home/la_lukasz/paperless-ngx/media/documents/originals
 ```
@@ -371,12 +377,12 @@ Prune extra _archives_.
 ```bash
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list --dry-run \
+  --verbose --list \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless
 
 borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list --dry-run \
+  --verbose --list \
   la_lukasz@lobocki.ddns.net:base/backup/paperless
 ```
 
