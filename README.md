@@ -258,13 +258,13 @@ Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
-  --noacls --files-cache mtime,size \
+  --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 
 borg create \
-  --noacls --files-cache mtime,size \
+  --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@lobocki.ddns.net:base/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
