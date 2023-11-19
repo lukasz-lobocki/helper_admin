@@ -234,20 +234,25 @@ services:
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    
     depends_on:
       - caddy
+    
     ports:
       - 8080:8080
       # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
       # - 80:80      
       # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
       # - 8443:8443      
+    
     networks:
       # Is needed when you want to create the nextcloud-aio network with ipv6-support using this file, see the network config at the bottom of the file
       - nextcloud-aio
+    
     environment:
       # Allows to set the host directory for Nextcloud's datadir. Warning: do not set or adjust this value after the initial Nextcloud installation is done! See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
       - NEXTCLOUD_DATADIR=/mnt/btrfs/nextcloud
+
       # Allows the Nextcloud container to access the chosen directory on the host. See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
       - NEXTCLOUD_MOUNT=/home/la_lukasz/paperless-ngx
       
