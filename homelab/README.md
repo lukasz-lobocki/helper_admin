@@ -157,6 +157,11 @@ nano /home/la_lukasz/paperless-ngx/docker-compose.env
 Append following lines.
 
 ```text
+PAPERLESS_URL=https://paperless.lobocki.duckdns.org
+PAPERLESS_TIME_ZONE=Europe/Warsaw
+PAPERLESS_OCR_LANGUAGE=pol+eng
+PAPERLESS_SECRET_KEY=***[redacted]***
+PAPERLESS_OCR_LANGUAGES=pol eng
 PAPERLESS_TASK_WORKERS=2
 PAPERLESS_THREADS_PER_WORKER=1
 PAPERLESS_WEBSERVER_WORKERS=1
@@ -165,13 +170,71 @@ PAPERLESS_OCR_MODE=skip
 PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
 PAPERLESS_OCR_PAGES=3
 PAPERLESS_CONVERT_MEMORY_LIMIT=32
-PAPERLESS_ENABLE_NLTK=false
+PAPERLESS_ENABLE_NLTK=true
 PAPERLESS_OCR_CLEAN=none
 PAPERLESS_OCR_DESKEW=false
 PAPERLESS_OCR_ROTATE_PAGES=true
 PAPERLESS_OCR_OUTPUT_TYPE=pdf
 PAPERLESS_CONSUMER_RECURSIVE=true
 PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
+PAPERLESS_PRE_CONSUME_SCRIPT=/usr/src/paperless/scripts/removepassword.py
+```
+
+#### Configruration in docker-compose-yml
+
+```text
+# To install and update paperless with this file, do the following:
+#
+# - Copy this file as 'docker-compose.yml' and the files docker-compose.env' and '.env' into a folder.
+# - Run 'docker-compose up -d'
+#
+# For more extensive installation and update instructions, refer to the
+# documentation.
+
+version: "3.4"
+services:
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  db:
+    image: docker.io/library/postgres:15
+    restart: unless-stopped
+    volumes:
+      - /home/la_lukasz/paperless-ngx/dbase:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperless
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    ports:
+      - "8081:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /home/la_lukasz/paperless-ngx/data:/usr/src/paperless/data
+      - /home/la_lukasz/paperless-ngx/media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - /home/la_lukasz/paperless-ngx/consume:/usr/src/paperless/consume
+      - /home/la_lukasz/paperless-ngx/scripts:/usr/src/paperless/scripts
+    env_file: docker-compose.env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+
+volumes:
+  redisdata:
 ```
 
 ```bash
@@ -327,9 +390,18 @@ docker compose up -d
 #### Caddyfile
 
 ```text
-https://lobocki.duckdns.org:443 {
-    header Strict-Transport-Security max-age=31536000;
+https://lobocki.duckdns.org {
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    }
     reverse_proxy localhost:11000
+}
+
+https://pihole.lobocki.duckdns.org {
+    reverse_proxy 192.168.2.2:80
+    redir / /admin{uri}
+    encode gzip
+    tls lukasz.lobocki@googlemail.com
 }
 ```
 
