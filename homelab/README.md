@@ -186,10 +186,10 @@ docker exec -it paperless_webserver_1 printenv
 ```bash
 sudo chown --recursive la_lukasz:la_lukasz \
   /home/la_lukasz/paperless-ngx/consume \
-  && sudo find /home/la_lukasz/paperless-ngx/consume -type d -print0 \
-    | xargs -0 sudo -u la_lukasz chmod u=rwx,g=rx \
-  && sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
-    | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
+&& sudo find /home/la_lukasz/paperless-ngx/consume -type d -print0 \
+  | xargs -0 sudo -u la_lukasz chmod u=rwx,g=rx \
+&& sudo find /home/la_lukasz/paperless-ngx/consume -type f -print0 \
+  | xargs -0 sudo -u la_lukasz chmod u=rw,g=r
 ```
 
 #### Ingest email
@@ -217,6 +217,10 @@ docker exec -it paperless_webserver_1 \
 ## 4. Nextcloud AIO _docker_
 
 ### 4.1. Install
+
+```bash
+sudo usermod --append --groups www-data la_lukasz
+```
 
 #### docker-compose.yml
 
@@ -290,6 +294,10 @@ networks:
         # - subnet: fd12:3456:789a:2::/64 # IPv6 subnet to use
 ```
 
+```bash
+docker compose up -d
+```
+
 #### docker run - alternative
 
 ```bash
@@ -306,10 +314,6 @@ sudo docker run \
 -e NEXTCLOUD_DATADIR="/mnt/btrfs/nextcloud" \
 -e NEXTCLOUD_MOUNT="/home/la_lukasz/paperless-ngx" \
 nextcloud/all-in-one:latest
-```
-
-```bash
-sudo usermod --append --groups www-data la_lukasz
 ```
 
 <details>
@@ -396,10 +400,10 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 ```bash
 sudo chown --recursive www-data:www-data \
   /mnt/btrfs/nextcloud \
-  && sudo find /mnt/btrfs/nextcloud -type d -print0 \
-    | xargs -0 sudo -u www-data chmod u=rwx,g=rx \
-  && sudo find /mnt/btrfs/nextcloud -type f -print0 \
-    | xargs -0 sudo -u www-data chmod u=rw,g=r
+&& sudo find /mnt/btrfs/nextcloud -type d -print0 \
+  | xargs -0 sudo -u www-data chmod u=rwx,g=rx \
+&& sudo find /mnt/btrfs/nextcloud -type f -print0 \
+  | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
 #### Commands occ list
@@ -416,24 +420,24 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ files:scan --all \
-  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-    php occ files:scan-app-data
+; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ files:scan-app-data
 ```
 
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ maps:scan-photos \
-  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-    php occ photos:map-media-to-place \
-  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-    php occ preview:generate
+; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ photos:map-media-to-place \
+; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ preview:generate
 ```
 
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ trashbin:cleanup --all-users \
-  ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-    php occ versions:cleanup
+; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ versions:cleanup
 ```
 
 ```bash
@@ -453,7 +457,7 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 sudo docker run \
   -it --rm --volume nextcloud_aio_nextcloud:/var/www/html:rw alpine \
   sh -c "apk add --no-cache nano \
-  && nano /var/www/html/config/config.php"
+&& nano /var/www/html/config/config.php"
 ```
 
 ```bash
