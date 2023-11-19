@@ -237,30 +237,68 @@ services:
     depends_on:
       - caddy
     ports:
-      # - 80:80 # Can be removed when running behind a web server or reverse proxy
       - 8080:8080
-      # - 8443:8443 # Can be removed when running behind a web server or reverse proxy
+      # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      # - 80:80      
+      # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      # - 8443:8443      
     networks:
+      # Is needed when you want to create the nextcloud-aio network with ipv6-support using this file, see the network config at the bottom of the file
       - nextcloud-aio
     environment:
+      # Allows to set the host directory for Nextcloud's datadir. Warning: do not set or adjust this value after the initial Nextcloud installation is done! See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
       - NEXTCLOUD_DATADIR=/mnt/btrfs/nextcloud
+      # Allows the Nextcloud container to access the chosen directory on the host. See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
       - NEXTCLOUD_MOUNT=/home/la_lukasz/paperless-ngx
-      - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.>
-      - APACHE_IP_BINDING=127.0.0.1 # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that i>
-      # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all->
-      # - BORG_RETENTION_POLICY=--keep-within=7d --keep-weekly=4 --keep-monthly=6 # Allows to adjust borgs retention policy. See https://github.com/nextcloud/a>
-      # - COLLABORA_SECCOMP_DISABLED=false # Setting this to true allows to disable Collabora's Seccomp feature. See https://github.com/nextcloud/all-in-one#ho>
-      # - NEXTCLOUD_UPLOAD_LIMIT=10G # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-upload-limit-for-nextclo>
-      # - NEXTCLOUD_MAX_TIME=3600 # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-max-execution-time-for-next>
-      # - NEXTCLOUD_MEMORY_LIMIT=512M # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-php-memory-limit-for-ne>
-      # - NEXTCLOUD_TRUSTED_CACERTS_DIR=/path/to/my/cacerts # CA certificates in this directory will be trusted by the OS of the nexcloud container (Useful e.g>
-      # - NEXTCLOUD_STARTUP_APPS=deck twofactor_totp tasks calendar contacts notes # Allows to modify the Nextcloud apps that are installed on starting AIO the>
-      # - NEXTCLOUD_ADDITIONAL_APKS=imagemagick # This allows to add additional packages to the Nextcloud container permanently. Default is imagemagick but can>
-      # - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick # This allows to add additional php extensions to the Nextcloud container permanently. Default is imagick>
-      # - NEXTCLOUD_ENABLE_DRI_DEVICE=true # This allows to enable the /dev/dri device in the Nextcloud container.  ^z   ^o ^z   ^o ^z   ^o Warning: this only >
-      # - NEXTCLOUD_KEEP_DISABLED_APPS=false # Setting this to true will keep Nextcloud apps that are disabled in the AIO interface and not uninstall them if t>
-      # - TALK_PORT=3478 # This allows to adjust the port that the talk container is using. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-talk->
-      # - WATCHTOWER_DOCKER_SOCKET_PATH=/var/run/docker.sock # Needs to be specified if the docker socket on the host is not located in the default '/var/run/d>
+      
+      # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      - APACHE_PORT=11000
+      
+      # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that is running on the same host. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      - APACHE_IP_BINDING=127.0.0.1
+      
+      # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all-in-one#how-to-disable-the-backup-section
+      # - AIO_DISABLE_BACKUP_SECTION=false
+      
+      # Allows to adjust borgs retention policy. See https://github.com/nextcloud/all-in-one#how-to-adjust-borgs-retention-policy
+      # - BORG_RETENTION_POLICY=--keep-within=7d --keep-weekly=4 --keep-monthly=6
+      
+      # Setting this to true allows to disable Collabora's Seccomp feature. See https://github.com/nextcloud/all-in-one#how-to-disable-collaboras-seccomp-feature
+      # - COLLABORA_SECCOMP_DISABLED=false
+      
+      # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-upload-limit-for-nextcloud
+      # - NEXTCLOUD_UPLOAD_LIMIT=10G
+      
+      # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-max-execution-time-for-nextcloud
+      # - NEXTCLOUD_MAX_TIME=3600
+      
+      # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-php-memory-limit-for-nextcloud
+      # - NEXTCLOUD_MEMORY_LIMIT=512M
+
+      # CA certificates in this directory will be trusted by the OS of the nexcloud container (Useful e.g. for LDAPS) See See https://github.com/nextcloud/all-in-one#how-to-trust-user-defined-certification-authorities-ca
+      # - NEXTCLOUD_TRUSTED_CACERTS_DIR=/path/to/my/cacerts
+
+      # Allows to modify the Nextcloud apps that are installed on starting AIO the first time. See https://github.com/nextcloud/all-in-one#how-to-change-the-nextcloud-apps-that-are-installed-on-the-first-startup
+      # - NEXTCLOUD_STARTUP_APPS=deck twofactor_totp tasks calendar contacts notes
+
+      # This allows to add additional packages to the Nextcloud container permanently. Default is imagemagick but can be overwritten by modifying this value. See https://github.com/nextcloud/all-in-one#how-to-add-os-packages-permanently-to-the-nextcloud-container
+      # - NEXTCLOUD_ADDITIONAL_APKS=imagemagick
+
+      # This allows to add additional php extensions to the Nextcloud container permanently. Default is imagick but can be overwritten by modifying this value. See https://github.com/nextcloud/all-in-one#how-to-add-php-extensions-permanently-to-the-nextcloud-container
+      # - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick
+
+      # This allows to enable the /dev/dri device in the Nextcloud container. Warning: this only works if the '/dev/dri' device is present on the host! If it should not exist on your host, don't set this to true as otherwise the Nextcloud container will fail to start! See https://github.com/nextcloud/all-in-one#how-to-enable-hardware-transcoding-for-nextcloud
+      # - NEXTCLOUD_ENABLE_DRI_DEVICE=true
+
+      # Setting this to true will keep Nextcloud apps that are disabled in the AIO interface and not uninstall them if they should be installed. See https://github.com/nextcloud/all-in-one#how-to-keep-disabled-apps
+      # - NEXTCLOUD_KEEP_DISABLED_APPS=false
+
+      # This allows to adjust the port that the talk container is using. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-talk-port
+      # - TALK_PORT=3478
+
+      # Needs to be specified if the docker socket on the host is not located in the default '/var/run/docker.sock'. Otherwise mastercontainer updates will fail. For macos it needs to be '/var/run/docker.sock'
+      # - WATCHTOWER_DOCKER_SOCKET_PATH=/var/run/docker.sock
+
     # # Uncomment the following line when using SELinux
     # security_opt: ["label:disable"]
 
@@ -280,20 +318,23 @@ services:
 
 volumes:
   nextcloud_aio_mastercontainer:
+    # Below line is not allowed to be changed as otherwise the built-in backup solution will not work
     name: nextcloud_aio_mastercontainer
 
-# # Optional: If you need ipv6, follow step 1 and 2 of https://github.com/nextcloud/all-in-one/blob/main/docker-ipv6-support.md first and then uncomment the be>
-# # Please make sure to uncomment also the networking lines of the mastercontainer above in order to actually create the network with docker-compose
+# Optional: If you need ipv6, follow step 1 and 2 of https://github.com/nextcloud/all-in-one/blob/main/docker-ipv6-support.md first and then uncomment...
+# Please make sure to uncomment also the networking lines of the mastercontainer above in order to actually create the network with docker-compose
 networks:
   nextcloud-aio:
-    name: nextcloud-aio # This line is not allowed to be changed as otherwise the created network will not be used by the other containers of AIO
-    external: true # use if there is an existing network. Else, comment it and uncomment below.
+    # Next line is not allowed to be changed as otherwise the created network will not be used by the other containers of AIO
+    name: nextcloud-aio
+    # use next line if there is an existing network. Else, comment it and uncomment below.
+    external: true
     # driver: bridge
     # enable_ipv6: true
     # ipam:
-      # driver: default
-      # config:
-        # - subnet: fd12:3456:789a:2::/64 # IPv6 subnet to use
+    #   driver: default
+    #   config:
+    #     - subnet: fd12:3456:789a:2::/64 # IPv6 subnet to use
 ```
 
 ```bash
@@ -309,7 +350,10 @@ https://lobocki.duckdns.org:443 {
 }
 ```
 
-#### docker run - alternative
+<details>
+<summary>docker run - alternative</summary>
+
+:warning: but without Caddy.
 
 ```bash
 sudo docker run \
@@ -326,6 +370,8 @@ sudo docker run \
 -e NEXTCLOUD_MOUNT="/home/la_lukasz/paperless-ngx" \
 nextcloud/all-in-one:latest
 ```
+
+</details>
 
 <details>
 <summary>Nextcloud<b>Pi</b> install on Debian. :warning:</summary>
