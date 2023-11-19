@@ -234,17 +234,19 @@ services:
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - caddy
     ports:
-      - 80:80 # Can be removed when running behind a web server or reverse proxy
+      # - 80:80 # Can be removed when running behind a web server or reverse proxy
       - 8080:8080
-      - 8443:8443 # Can be removed when running behind a web server or reverse proxy
+      # - 8443:8443 # Can be removed when running behind a web server or reverse proxy
     networks:
       - nextcloud-aio
     environment:
       - NEXTCLOUD_DATADIR=/mnt/btrfs/nextcloud
       - NEXTCLOUD_MOUNT=/home/la_lukasz/paperless-ngx
-      # - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.>
-      # - APACHE_IP_BINDING=127.0.0.1 # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that i>
+      - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.>
+      - APACHE_IP_BINDING=127.0.0.1 # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that i>
       # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all->
       # - BORG_RETENTION_POLICY=--keep-within=7d --keep-weekly=4 --keep-monthly=6 # Allows to adjust borgs retention policy. See https://github.com/nextcloud/a>
       # - COLLABORA_SECCOMP_DISABLED=false # Setting this to true allows to disable Collabora's Seccomp feature. See https://github.com/nextcloud/all-in-one#ho>
@@ -262,19 +264,19 @@ services:
     # # Uncomment the following line when using SELinux
     # security_opt: ["label:disable"]
 
-  # # Optional: Caddy reverse proxy. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-  # # You can find further examples here: https://github.com/nextcloud/all-in-one/discussions/588
-  # caddy:
-  #   image: caddy:alpine
-  #   restart: always
-  #   container_name: caddy
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile
-  #     - ./certs:/certs
-  #     - ./config:/config
-  #     - ./data:/data
-  #     - ./sites:/srv
-  #   network_mode: "host"
+  # Optional: Caddy reverse proxy. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+  # You can find further examples here: https://github.com/nextcloud/all-in-one/discussions/588
+  caddy:
+    image: caddy:latest
+    restart: always
+    container_name: caddy
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./certs:/certs
+      - ./config:/config
+      - ./data:/data
+      - ./sites:/srv
+    network_mode: host
 
 volumes:
   nextcloud_aio_mastercontainer:
@@ -296,6 +298,15 @@ networks:
 
 ```bash
 docker compose up -d
+```
+
+#### Caddyfile
+
+```text
+https://lobocki.duckdns.org:443 {
+    header Strict-Transport-Security max-age=31536000;
+    reverse_proxy localhost:11000
+}
 ```
 
 #### docker run - alternative
