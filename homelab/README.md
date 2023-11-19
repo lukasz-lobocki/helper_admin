@@ -180,9 +180,9 @@ PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
 PAPERLESS_PRE_CONSUME_SCRIPT=/usr/src/paperless/scripts/removepassword.py
 ```
 
-#### Configruration in docker-compose-yml
+#### Configruration in _docker-compose.yml_
 
-```text
+```yaml
 # To install and update paperless with this file, do the following:
 #
 # - Copy this file as 'docker-compose.yml' and the files docker-compose.env' and '.env' into a folder.
@@ -287,7 +287,7 @@ sudo usermod --append --groups www-data,docker,root,sudo la_lukasz
 
 #### docker-compose.yml
 
-```text
+```yaml
 services:
   nextcloud-aio-mastercontainer:
     image: nextcloud/all-in-one:latest
@@ -395,11 +395,18 @@ https://lobocki.duckdns.org {
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
     }
     reverse_proxy localhost:11000
+    tls lukasz.lobocki@googlemail.com
 }
 
 https://pihole.lobocki.duckdns.org {
     reverse_proxy 192.168.2.2:80
     redir / /admin{uri}
+    encode gzip
+    tls lukasz.lobocki@googlemail.com
+}
+
+https://paperless.lobocki.duckdns.org {
+    reverse_proxy localhost:8081
     encode gzip
     tls lukasz.lobocki@googlemail.com
 }
@@ -454,11 +461,11 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
             "datadir": "\/home\/la_lukasz\/paperless-ngx\/media\/documents\/originals"
         },
         "options": {
-            "enable_sharing": false,
-            "encoding_compatibility": false,
             "encrypt": true,
-            "filesystem_check_changes": 1,
             "previews": true,
+            "enable_sharing": false,
+            "filesystem_check_changes": 1,
+            "encoding_compatibility": false,
             "readonly": true
         },
         "applicable_users": [],
@@ -473,12 +480,12 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
             "datadir": "\/home\/la_lukasz\/paperless-ngx\/consume"
         },
         "options": {
-            "enable_sharing": false,
-            "encoding_compatibility": false,
             "encrypt": true,
+            "enable_sharing": false,
             "filesystem_check_changes": 1,
-            "previews": false,
-            "readonly": false
+            "encoding_compatibility": false,
+            "readonly": false,
+            "previews": false
         },
         "applicable_users": [],
         "applicable_groups": []
