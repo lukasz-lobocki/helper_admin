@@ -37,7 +37,7 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 
 ```bash
 sudo \
-  chown --recursive www-data:www-data /mnt/btrfs
+  chown --recursive www-data:www-data /mnt/btrfs/nextcloud
 ```
 
 ### 2.2. Permisions
@@ -48,7 +48,7 @@ sudo \
 
 ```bash
 sudo \
-  find /mnt/btrfs -type d -print0 \
+  find /mnt/btrfs/nextcloud -type d -print0 \
   | xargs -0 sudo -u www-data \
     chmod u=rwx,g=rx
 ```
@@ -57,7 +57,7 @@ sudo \
 
 ```bash
 sudo \
-  find /mnt/btrfs -type f -print0 \
+  find /mnt/btrfs/nextcloud -type f -print0 \
   | xargs -0 sudo -u www-data \
     chmod u=rw,g=r
 ```
@@ -184,7 +184,7 @@ ssh la_lukasz@nuc11atk.lan \
     --progress \
     --delete \
     --rsh=ssh \
-  /mnt/btrfs/lukasz/files \
+  /mnt/btrfs/nextcloud/lukasz/files \
   la_lukasz@lobocki.ddns.net:base/ster_nextcloud
 ```
 
@@ -307,13 +307,13 @@ borg create \
   --noacls --files-cache mtime,size \
   --stats --progress --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/lukasz/files
+  /mnt/btrfs/nextcloud/lukasz/files
 
 borg create \
   --noacls --files-cache mtime,size \
   --stats --progress --one-file-system \
   la_lukasz@lobocki.ddns.net:base/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/lukasz/files
+  /mnt/btrfs/nextcloud/lukasz/files
 ```
 
 List _archives_ in repository.

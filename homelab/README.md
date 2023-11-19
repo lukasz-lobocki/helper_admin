@@ -218,9 +218,9 @@ docker exec -it paperless_webserver_1 \
 
 ### 4.1. Install
 
-```text
-# Currently not used in production. Only for doc purposes.
+#### docker-compose.yml
 
+```text
 services:
   nextcloud-aio-mastercontainer:
     image: nextcloud/all-in-one:latest
@@ -234,14 +234,16 @@ services:
       - 80:80 # Can be removed when running behind a web server or reverse proxy
       - 8080:8080
       - 8443:8443 # Can be removed when running behind a web server or reverse proxy
+    networks:
+      - nextcloud-aio
     environment:
-      # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all->
-      # - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.>
-      # - APACHE_IP_BINDING=127.0.0.1 # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that i>
-      # - BORG_RETENTION_POLICY=--keep-within=7d --keep-weekly=4 --keep-monthly=6 # Allows to adjust borgs retention policy. See https://github.com/nextcloud/a>
-      # - COLLABORA_SECCOMP_DISABLED=false # Setting this to true allows to disable Collabora's Seccomp feature. See https://github.com/nextcloud/all-in-one#ho>
       - NEXTCLOUD_DATADIR=/mnt/btrfs/nextcloud
       - NEXTCLOUD_MOUNT=/home/la_lukasz/paperless-ngx
+      # - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.>
+      # - APACHE_IP_BINDING=127.0.0.1 # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that i>
+      # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all->
+      # - BORG_RETENTION_POLICY=--keep-within=7d --keep-weekly=4 --keep-monthly=6 # Allows to adjust borgs retention policy. See https://github.com/nextcloud/a>
+      # - COLLABORA_SECCOMP_DISABLED=false # Setting this to true allows to disable Collabora's Seccomp feature. See https://github.com/nextcloud/all-in-one#ho>
       # - NEXTCLOUD_UPLOAD_LIMIT=10G # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-upload-limit-for-nextclo>
       # - NEXTCLOUD_MAX_TIME=3600 # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-max-execution-time-for-next>
       # - NEXTCLOUD_MEMORY_LIMIT=512M # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-php-memory-limit-for-ne>
@@ -253,8 +255,6 @@ services:
       # - NEXTCLOUD_KEEP_DISABLED_APPS=false # Setting this to true will keep Nextcloud apps that are disabled in the AIO interface and not uninstall them if t>
       # - TALK_PORT=3478 # This allows to adjust the port that the talk container is using. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-talk->
       # - WATCHTOWER_DOCKER_SOCKET_PATH=/var/run/docker.sock # Needs to be specified if the docker socket on the host is not located in the default '/var/run/d>
-    networks:
-      - nextcloud-aio
     # # Uncomment the following line when using SELinux
     # security_opt: ["label:disable"]
 
@@ -288,9 +288,9 @@ networks:
       # driver: default
       # config:
         # - subnet: fd12:3456:789a:2::/64 # IPv6 subnet to use
-
-
 ```
+
+#### docker run - alternative
 
 ```bash
 sudo docker run \
@@ -395,10 +395,10 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 
 ```bash
 sudo chown --recursive www-data:www-data \
-  /mnt/btrfs \
-  && sudo find /mnt/btrfs -type d -print0 \
+  /mnt/btrfs/nextcloud \
+  && sudo find /mnt/btrfs/nextcloud -type d -print0 \
     | xargs -0 sudo -u www-data chmod u=rwx,g=rx \
-  && sudo find /mnt/btrfs -type f -print0 \
+  && sudo find /mnt/btrfs/nextcloud -type f -print0 \
     | xargs -0 sudo -u www-data chmod u=rw,g=r
 ```
 
