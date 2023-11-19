@@ -389,7 +389,7 @@ docker compose up -d
 
 #### Caddyfile
 
-```properties
+```apache
 https://lobocki.duckdns.org {
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
