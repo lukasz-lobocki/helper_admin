@@ -398,6 +398,12 @@ https://lobocki.duckdns.org {
     tls lukasz.lobocki@googlemail.com
 }
 
+https://paperless.lobocki.duckdns.org {
+    reverse_proxy localhost:8081
+    encode gzip
+    tls lukasz.lobocki@googlemail.com
+}
+
 https://pihole.lobocki.duckdns.org {
     reverse_proxy 192.168.2.2:80
     redir / /admin{uri}
@@ -405,8 +411,8 @@ https://pihole.lobocki.duckdns.org {
     tls lukasz.lobocki@googlemail.com
 }
 
-https://paperless.lobocki.duckdns.org {
-    reverse_proxy localhost:8081
+https://dash.lobocki.duckdns.org {
+    reverse_proxy odroid.lan:3001
     encode gzip
     tls lukasz.lobocki@googlemail.com
 }
