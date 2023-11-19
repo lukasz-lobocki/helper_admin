@@ -219,7 +219,7 @@ docker exec -it paperless_webserver_1 \
 ### 4.1. Install
 
 ```bash
-sudo usermod --append --groups www-data la_lukasz
+sudo usermod --append --groups www-data docker root sudo la_lukasz
 ```
 
 #### docker-compose.yml
