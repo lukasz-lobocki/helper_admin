@@ -146,7 +146,7 @@ usermod --append --groups docker la_lukasz
 
 #### TCP port
 
-:information_source: `8081`
+:information_source: `:8081`
 
 #### Configuration in _docker-compose.env_
 
@@ -156,7 +156,7 @@ nano /home/la_lukasz/paperless-ngx/docker-compose.env
 
 Append following lines.
 
-```text
+```ini
 PAPERLESS_URL=https://paperless.lobocki.duckdns.org
 PAPERLESS_TIME_ZONE=Europe/Warsaw
 PAPERLESS_OCR_LANGUAGE=pol+eng
@@ -389,7 +389,7 @@ docker compose up -d
 
 #### Caddyfile
 
-```text
+```properties
 https://lobocki.duckdns.org {
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
@@ -625,7 +625,7 @@ ip --color addr show
 sudo nano /etc/network/interfaces.d/end0
 ```
 
-```text
+```properties
 allow-hotplug end0
 iface end0 inet static
 address 192.168.2.2
@@ -642,7 +642,7 @@ ip -c addr show
 
 ### 5.2. docker-compose.yml
 
-```text
+```yaml
 version: "3"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/
@@ -656,7 +656,7 @@ services:
     # ports:
       # - "53:53/tcp"
       # - "53:53/udp"
-      # - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      # - "67:67/udp" # Only required if using Pi-hole as DHCP server
       # - "80:80/tcp"
     network_mode: host
     environment:
@@ -670,7 +670,8 @@ services:
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
-      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+      # Required if using Pi-hole as DHCP server, else not needed
+      - NET_ADMIN
     restart: unless-stopped
 ```
 
