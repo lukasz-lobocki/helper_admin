@@ -240,8 +240,10 @@ services:
     
     ports:
       - 8080:8080
+
       # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
       # - 80:80      
+      
       # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
       # - 8443:8443      
     
@@ -358,7 +360,7 @@ https://lobocki.duckdns.org:443 {
 <details>
 <summary>docker run - alternative</summary>
 
-:warning: but without Caddy.
+:warning: This is without Caddy.
 
 ```bash
 sudo docker run \
