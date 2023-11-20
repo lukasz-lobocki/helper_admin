@@ -160,6 +160,7 @@ Append following lines.
 PAPERLESS_URL=https://paperless.lobocki.duckdns.org
 PAPERLESS_SECRET_KEY=***[redacted]***
 PAPERLESS_TRUSTED_PROXIES=localhost
+PAPERLESS_ALLOWED_HOSTS=localhost # use only with caddy
 PAPERLESS_TIME_ZONE=Europe/Warsaw
 PAPERLESS_OCR_LANGUAGE=pol+eng
 PAPERLESS_OCR_LANGUAGES=pol eng
