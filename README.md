@@ -162,7 +162,7 @@ rhash --check --skip-ok \
 With <u>__C__</u>ompression in transit, <u>__r__</u>ecursively, <u>__p__</u>reserving modification timestamps.
 
 ```bash
-scp -Crp ./directory/ username@to_host:./directory/
+scp -Crp ./directory/ username@hostname:./directory/
 ```
 
 ## 4. REMOTE SYNCHRONIZE with rsync

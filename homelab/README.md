@@ -185,8 +185,11 @@ PAPERLESS_PRE_CONSUME_SCRIPT=/usr/src/paperless/scripts/removepassword.py
 ```yaml
 # To install and update paperless with this file, do the following:
 #
-# - Copy this file as 'docker-compose.yml' and the files docker-compose.env' and '.env' into a folder.
-# - Run 'docker-compose up -d'
+# - Copy this file as 'docker-compose.yml' and the files 'docker-compose.env'
+#   and '.env' into a folder.
+# - Run 'docker-compose pull'.
+# - Run 'docker-compose run --rm webserver createsuperuser' to create a user.
+# - Run 'docker-compose up -d'.
 #
 # For more extensive installation and update instructions, refer to the
 # documentation.
@@ -232,6 +235,7 @@ services:
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
+
 
 volumes:
   redisdata:
@@ -413,6 +417,9 @@ https://pihole.lobocki.duckdns.org {
 
 https://dash.lobocki.duckdns.org {
     reverse_proxy odroid.lan:3001
+    basicauth {
+        la_lukasz ***[redacted]***
+    }
     encode gzip
     tls lukasz.lobocki@googlemail.com
 }
