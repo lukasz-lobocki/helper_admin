@@ -159,7 +159,7 @@ Append following lines.
 ```ini
 PAPERLESS_URL=https://paperless.lobocki.duckdns.org
 PAPERLESS_SECRET_KEY=***[redacted]***
-PAPERLESS_TRUSTED_PROXIES=localhost
+PAPERLESS_TRUSTED_PROXIES=127.0.0.1
 PAPERLESS_ALLOWED_HOSTS=localhost # use only with caddy
 PAPERLESS_TIME_ZONE=Europe/Warsaw
 PAPERLESS_OCR_LANGUAGE=pol+eng
