@@ -228,16 +228,15 @@ services:
       timeout: 10s
       retries: 5
     volumes:
-      - /home/la_lukasz/paperless-ngx/data:/usr/src/paperless/data
-      - /home/la_lukasz/paperless-ngx/media:/usr/src/paperless/media
+      - ./data:/usr/src/paperless/data
+      - ./media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
-      - /home/la_lukasz/paperless-ngx/consume:/usr/src/paperless/consume
-      - /home/la_lukasz/paperless-ngx/scripts:/usr/src/paperless/scripts
+      - ./consume:/usr/src/paperless/consume
+      - ./scripts:/usr/src/paperless/scripts
     env_file: docker-compose.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
-
 
 volumes:
   redisdata:
@@ -487,7 +486,7 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
         "applicable_groups": []
     },
     {
-        "mount_id": 2,
+        "mount_id": 3,
         "mount_point": "\/Consume",
         "storage": "\\OC\\Files\\Storage\\Local",
         "authentication_type": "null::null",
