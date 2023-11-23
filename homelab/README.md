@@ -1,21 +1,20 @@
 # PRIVATE CLOUD SETUP
 
 - [1. Hardware](#1-hardware)
-- [2. Debian](#2-debian)
+- [2. Install Debian](#2-install-debian)
   - [2.1. ssh for user](#21-ssh-for-user)
   - [2.2. Better file system BTRFS](#22-better-file-system-btrfs)
   - [2.3. Docker](#23-docker)
-- [3. paperless-ngx on _docker_ at _NUC11ATK_](#3-paperless-ngx-on-docker-at-nuc11atk)
+- [3. Setup _paperless-ngx_ on _docker_ at _NUC11ATK_](#3-setup-paperless-ngx-on-docker-at-nuc11atk)
   - [3.1. Install](#31-install)
   - [3.2. Admining](#32-admining)
-- [4. Nextcloud AIO \& caddy on _docker_ at _NUC11ATK_](#4-nextcloud-aio--caddy-on-docker-at-nuc11atk)
+- [4. Setup _Nextcloud AIO_ and _caddy_ on _docker_ at _NUC11ATK_](#4-setup-nextcloud-aio-and-caddy-on-docker-at-nuc11atk)
   - [4.1. Install](#41-install)
   - [4.2. Admining](#42-admining)
-- [5. PiHole on _docker_ at _odroid_](#5-pihole-on-docker-at-odroid)
-  - [5.1. Static IP](#51-static-ip)
-  - [5.2. docker-compose.yml](#52-docker-composeyml)
+- [5. Setup _PiHole_ on _docker_ at _odroid_](#5-setup-pihole-on-docker-at-odroid)
+  - [5.1. Install](#51-install)
 - [6. Vaultwarden on _docker_ at _NUC11ATK_](#6-vaultwarden-on-docker-at-nuc11atk)
-  - [6.1. docker-compose.yml](#61-docker-composeyml)
+  - [6.1. Install](#61-install)
 
 ## 1. Hardware
 
@@ -27,9 +26,7 @@ netboot_default
 exit
 ```
 
-## 2. Debian
-
-Install _Debian_.
+## 2. Install Debian
 
 ### 2.1. ssh for user
 
@@ -140,7 +137,7 @@ sudo apt install docker-compose
 usermod --append --groups docker la_lukasz
 ```
 
-## 3. paperless-ngx on _docker_ at _NUC11ATK_
+## 3. Setup _paperless-ngx_ on _docker_ at _NUC11ATK_
 
 ### 3.1. Install
 
@@ -150,42 +147,7 @@ usermod --append --groups docker la_lukasz
 
 :information_source: `:8081`
 
-#### Configuration in _docker-compose.env_
-
-```bash
-nano /home/la_lukasz/paperless-ngx/docker-compose.env
-```
-
-Append following lines.
-
-```ini
-PAPERLESS_URL=https://paperless.lobocki.duckdns.org
-PAPERLESS_SECRET_KEY=***[redacted]***
-PAPERLESS_TRUSTED_PROXIES=127.0.0.1
-PAPERLESS_ALLOWED_HOSTS=localhost # use only with caddy
-PAPERLESS_TIME_ZONE=Europe/Warsaw
-PAPERLESS_OCR_LANGUAGE=pol+eng
-PAPERLESS_OCR_LANGUAGES=pol eng
-PAPERLESS_TASK_WORKERS=2
-PAPERLESS_THREADS_PER_WORKER=1
-PAPERLESS_WEBSERVER_WORKERS=1
-PAPERLESS_WORKER_TIMEOUT=1800
-PAPERLESS_OCR_MODE=skip
-PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
-PAPERLESS_OCR_PAGES=3
-PAPERLESS_CONVERT_MEMORY_LIMIT=32
-PAPERLESS_ENABLE_NLTK=true
-PAPERLESS_OCR_CLEAN=none
-PAPERLESS_OCR_DESKEW=false
-PAPERLESS_OCR_ROTATE_PAGES=true
-PAPERLESS_OCR_OUTPUT_TYPE=pdf
-PAPERLESS_CONSUMER_RECURSIVE=true
-PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
-PAPERLESS_DATE_ORDER=YMD
-PAPERLESS_PRE_CONSUME_SCRIPT=/usr/src/paperless/scripts/removepassword.py
-```
-
-#### Configruration in _docker-compose.yml_
+#### _docker-compose.yml_
 
 ```yaml
 # To install and update paperless with this file, do the following:
@@ -245,6 +207,35 @@ volumes:
   redisdata:
 ```
 
+#### _docker-compose.env_
+
+```ini
+PAPERLESS_URL=https://paperless.lobocki.duckdns.org
+PAPERLESS_SECRET_KEY=***[redacted]***
+PAPERLESS_TRUSTED_PROXIES=127.0.0.1
+PAPERLESS_ALLOWED_HOSTS=localhost # use only with caddy
+PAPERLESS_TIME_ZONE=Europe/Warsaw
+PAPERLESS_OCR_LANGUAGE=pol+eng
+PAPERLESS_OCR_LANGUAGES=pol eng
+PAPERLESS_TASK_WORKERS=2
+PAPERLESS_THREADS_PER_WORKER=1
+PAPERLESS_WEBSERVER_WORKERS=1
+PAPERLESS_WORKER_TIMEOUT=1800
+PAPERLESS_OCR_MODE=skip
+PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text
+PAPERLESS_OCR_PAGES=3
+PAPERLESS_CONVERT_MEMORY_LIMIT=32
+PAPERLESS_ENABLE_NLTK=true
+PAPERLESS_OCR_CLEAN=none
+PAPERLESS_OCR_DESKEW=false
+PAPERLESS_OCR_ROTATE_PAGES=true
+PAPERLESS_OCR_OUTPUT_TYPE=pdf
+PAPERLESS_CONSUMER_RECURSIVE=true
+PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
+PAPERLESS_DATE_ORDER=YMD
+PAPERLESS_PRE_CONSUME_SCRIPT=/usr/src/paperless/scripts/removepassword.py
+```
+
 ```bash
 docker-compose up -d
 docker exec -it paperless_webserver_1 printenv
@@ -285,7 +276,7 @@ docker exec -it paperless_webserver_1 \
   document_thumbnails
 ```
 
-## 4. Nextcloud AIO & caddy on _docker_ at _NUC11ATK_
+## 4. Setup _Nextcloud AIO_ and _caddy_ on _docker_ at _NUC11ATK_
 
 ### 4.1. Install
 
@@ -391,10 +382,6 @@ networks:
     #     - subnet: fd12:3456:789a:2::/64 # IPv6 subnet to use
 ```
 
-```bash
-docker compose up -d
-```
-
 #### Caddyfile
 
 ```properties
@@ -438,36 +425,9 @@ https://vaultwarden.lobocki.duckdns.org {
 }
 ```
 
-<details>
-<summary>docker run - alternative</summary>
-
-:warning: This is without Caddy.
-
 ```bash
-sudo docker run \
---init \
---sig-proxy=false \
---name nextcloud-aio-mastercontainer \
---restart always \
---publish 80:80 \
---publish 8080:8080 \
---publish 8443:8443 \
---volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
---volume /var/run/docker.sock:/var/run/docker.sock:ro \
--e NEXTCLOUD_DATADIR="/mnt/btrfs/nextcloud" \
--e NEXTCLOUD_MOUNT="/home/la_lukasz/paperless-ngx" \
-nextcloud/all-in-one:latest
+docker compose up -d
 ```
-
-</details>
-
-<details>
-<summary>Nextcloud<b>Pi</b> install on Debian. :warning:</summary>
-
-:information_source: Check [curl-installer-debian](https://help.nextcloud.com/t/curl-installer-debian/126327) script.
-
-:information_source: Check [move-data-directory](https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170) page.
-</details>
 
 #### Use External Storage app
 
@@ -636,7 +596,9 @@ What user/permissions should I have to the external USB drive mount point, the n
 cd /var/www/nextcloud
 ```
 
-## 5. PiHole on _docker_ at _odroid_
+## 5. Setup _PiHole_ on _docker_ at _odroid_
+
+### 5.1. Install
 
 ```bash
 ip --color route | grep default
@@ -645,7 +607,7 @@ ip --color addr show
 
 :information_source: Please note if `end0` is the interface.
 
-### 5.1. Static IP
+#### Static IP
 
 ```bash
 sudo nano /etc/network/interfaces.d/end0
@@ -666,7 +628,7 @@ sudo systemctl restart networking
 ip -c addr show
 ```
 
-### 5.2. docker-compose.yml
+#### docker-compose.yml
 
 ```yaml
 version: "3"
@@ -707,9 +669,11 @@ docker compose up -d
 
 ## 6. Vaultwarden on _docker_ at _NUC11ATK_
 
-### 6.1. docker-compose.yml
+### 6.1. Install
 
 Use portainer stacks.
+
+#### docker-compose.yml
 
 ```yml
 name: vaultwarden
