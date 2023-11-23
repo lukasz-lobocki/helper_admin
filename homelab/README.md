@@ -5,15 +5,17 @@
   - [2.1. ssh for user](#21-ssh-for-user)
   - [2.2. Better file system BTRFS](#22-better-file-system-btrfs)
   - [2.3. Docker](#23-docker)
-- [3. paperless-ngx _docker_](#3-paperless-ngx-docker)
+- [3. paperless-ngx on _docker_ at _NUC11ATK_](#3-paperless-ngx-on-docker-at-nuc11atk)
   - [3.1. Install](#31-install)
   - [3.2. Admining](#32-admining)
-- [4. Nextcloud AIO _docker_](#4-nextcloud-aio-docker)
+- [4. Nextcloud AIO _docker_ at _NUC11ATK_](#4-nextcloud-aio-docker-at-nuc11atk)
   - [4.1. Install](#41-install)
   - [4.2. Admining](#42-admining)
 - [5. PiHole on _docker_ at _odroid_](#5-pihole-on-docker-at-odroid)
   - [5.1. Static IP](#51-static-ip)
   - [5.2. docker-compose.yml](#52-docker-composeyml)
+- [6. Vaultwarden on _docker_ at _NUC11ATK_](#6-vaultwarden-on-docker-at-nuc11atk)
+  - [6.1. docker-compose.yml](#61-docker-composeyml)
 
 ## 1. Hardware
 
@@ -138,7 +140,7 @@ sudo apt install docker-compose
 usermod --append --groups docker la_lukasz
 ```
 
-## 3. paperless-ngx _docker_
+## 3. paperless-ngx on _docker_ at _NUC11ATK_
 
 ### 3.1. Install
 
@@ -283,7 +285,7 @@ docker exec -it paperless_webserver_1 \
   document_thumbnails
 ```
 
-## 4. Nextcloud AIO _docker_
+## 4. Nextcloud AIO _docker_ at _NUC11ATK_
 
 ### 4.1. Install
 
@@ -692,4 +694,25 @@ services:
 
 ```bash
 docker compose up -d
+```
+
+## 6. Vaultwarden on _docker_ at _NUC11ATK_
+
+### 6.1. docker-compose.yml
+
+Use portainer stacks.
+
+```yml
+name: vaultwarden
+services:
+    server:
+        container_name: vaultwarden
+        volumes:
+            - /mnt/btrfs/vw-data/:/data/
+        environment:
+            - ADMIN_TOKEN=***[redacted]***
+        restart: unless-stopped
+        ports:
+            - 8082:80
+        image: vaultwarden/server:latest
 ```
