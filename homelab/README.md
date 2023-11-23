@@ -137,6 +137,12 @@ sudo apt install docker-compose
 usermod --append --groups docker la_lukasz
 ```
 
+#### Portainer
+
+```bash
+docker run -d -p 9443:9443 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+```
+
 ## 3. Setup _paperless-ngx_ on _docker_ at _NUC11ATK_
 
 ### 3.1. Install
