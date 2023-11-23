@@ -8,7 +8,7 @@
 - [3. paperless-ngx on _docker_ at _NUC11ATK_](#3-paperless-ngx-on-docker-at-nuc11atk)
   - [3.1. Install](#31-install)
   - [3.2. Admining](#32-admining)
-- [4. Nextcloud AIO _docker_ at _NUC11ATK_](#4-nextcloud-aio-docker-at-nuc11atk)
+- [4. Nextcloud AIO \& caddy on _docker_ at _NUC11ATK_](#4-nextcloud-aio--caddy-on-docker-at-nuc11atk)
   - [4.1. Install](#41-install)
   - [4.2. Admining](#42-admining)
 - [5. PiHole on _docker_ at _odroid_](#5-pihole-on-docker-at-odroid)
@@ -232,7 +232,7 @@ services:
       retries: 5
     volumes:
       - ./data:/usr/src/paperless/data
-      - ./media:/usr/src/paperless/media
+      - /mnt/btrfs/paperless/media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
       - ./scripts:/usr/src/paperless/scripts
@@ -285,7 +285,7 @@ docker exec -it paperless_webserver_1 \
   document_thumbnails
 ```
 
-## 4. Nextcloud AIO _docker_ at _NUC11ATK_
+## 4. Nextcloud AIO & caddy on _docker_ at _NUC11ATK_
 
 ### 4.1. Install
 
@@ -401,6 +401,8 @@ docker compose up -d
 https://lobocki.duckdns.org {
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Robots-Tag "noindex, nofollow"
+        X-Content-Type-Options "nosniff"
     }
     reverse_proxy localhost:11000
     tls lukasz.lobocki@googlemail.com
@@ -425,6 +427,13 @@ https://dash.lobocki.duckdns.org {
         la_lukasz ***[redacted]***
     }
     encode gzip
+    tls lukasz.lobocki@googlemail.com
+}
+
+https://vaultwarden.lobocki.duckdns.org {
+    reverse_proxy localhost:8082 {
+        header_up X-Real-IP {remote_host}
+    }
     tls lukasz.lobocki@googlemail.com
 }
 ```

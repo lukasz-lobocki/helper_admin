@@ -353,13 +353,13 @@ borg create \
   --noacls --files-cache mtime,size \
   --stats --progress --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
-  /home/la_lukasz/paperless-ngx/media/documents/originals
+  /mnt/btrfs/paperless/media/documents/originals
 
 borg create \
   --noacls --files-cache mtime,size \
   --stats --progress --one-file-system \
   la_lukasz@lobocki.ddns.net:base/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
-  /home/la_lukasz/paperless-ngx/media/documents/originals
+  /mnt/btrfs/paperless/media/documents/originals
 ```
 
 List _archives_ in repository.
