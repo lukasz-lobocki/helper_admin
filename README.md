@@ -23,8 +23,9 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [5. MOUNTING SAMBA](#5-mounting-samba)
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. From _NUC13_](#61-from-nuc13)
-  - [6.2. From _Nextcloud_](#62-from-nextcloud)
-  - [6.3. From _paperless_](#63-from-paperless)
+  - [6.2. From _NUC11_](#62-from-nuc11)
+  - [6.3. From _Nextcloud_](#63-from-nextcloud)
+  - [6.4. From _paperless_](#64-from-paperless)
 - [7. SUDO-ing](#7-sudo-ing)
 
 ## 1. CHEATSHEET
@@ -294,7 +295,7 @@ borg prune \
   la_lukasz@lobocki.ddns.net:base/backup/nuc13
 ```
 
-### 6.2. From _Nextcloud_
+### 6.2. From _NUC11_
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
@@ -303,7 +304,45 @@ borg create \
   --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --one-file-system \
   --patterns-from=${HOME}/.borg-paths \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M}
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc11::{hostname}-{now:%Y%m%dT%H%M}
+
+borg create \
+  --noacls --files-cache mtime,size --exclude-caches \
+  --stats --progress --one-file-system \
+  --patterns-from=${HOME}/.borg-paths \
+  la_lukasz@lobocki.ddns.net:base/backup/nuc11::{hostname}-{now:%Y%m%dT%H%M}
+```
+List _archives_ in repository.
+
+```bash
+borg list \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc11
+
+borg list \
+  la_lukasz@lobocki.ddns.net:base/backup/nuc11
+```
+
+Prune extra _archives_.
+
+```bash
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc11
+
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list \
+  la_lukasz@lobocki.ddns.net:base/backup/nuc11
+```
+
+<details>
+<summary>Older approach.</summary>
+
+### 6.3. From _Nextcloud_
+
+```bash
+ssh la_lukasz@nuc11atk.lan
 ```
 
 Create _archive_ (backup) in repository.
@@ -346,7 +385,7 @@ borg prune \
   la_lukasz@lobocki.ddns.net:base/backup/nextcloud
 ```
 
-### 6.3. From _paperless_
+### 6.4. From _paperless_
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
@@ -391,6 +430,7 @@ borg prune \
   --verbose --list \
   la_lukasz@lobocki.ddns.net:base/backup/paperless
 ```
+</details>
 
 ## 7. SUDO-ing
 
