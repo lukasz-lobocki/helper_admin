@@ -298,19 +298,25 @@ borg prune \
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
+
+borg create \
+  --noacls --files-cache mtime,size --exclude-caches \
+  --stats --progress --one-file-system \
+  --patterns-from=${HOME}/.borg-paths \
+  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M}
 ```
 
 Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
-  --noacls --files-cache mtime,size \
+  --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/nextcloud/lukasz/files
 
 borg create \
-  --noacls --files-cache mtime,size \
+  --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --one-file-system \
   la_lukasz@lobocki.ddns.net:base/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/nextcloud/lukasz/files
@@ -350,13 +356,13 @@ Create _archive_ (backup) in repository.
 
 ```bash
 borg create \
-  --noacls --files-cache mtime,size \
+  --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --one-file-system \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/paperless/media/documents/originals
 
 borg create \
-  --noacls --files-cache mtime,size \
+  --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --one-file-system \
   la_lukasz@lobocki.ddns.net:base/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
   /mnt/btrfs/paperless/media/documents/originals
