@@ -312,6 +312,7 @@ borg create \
   --patterns-from=${HOME}/.borg-paths \
   la_lukasz@lobocki.ddns.net:base/backup/nuc11::{hostname}-{now:%Y%m%dT%H%M}
 ```
+
 List _archives_ in repository.
 
 ```bash
@@ -430,6 +431,7 @@ borg prune \
   --verbose --list \
   la_lukasz@lobocki.ddns.net:base/backup/paperless
 ```
+
 </details>
 
 ## 7. SUDO-ing
