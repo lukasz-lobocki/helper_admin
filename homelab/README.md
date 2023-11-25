@@ -393,43 +393,51 @@ networks:
 #### Caddyfile
 
 ```properties
-https://lobocki.duckdns.org {
+(header_snippet) {
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        X-Robots-Tag "noindex, nofollow"
-        X-Content-Type-Options "nosniff"
+        X-XSS-Protection "1; mode=block"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Content-Security-Policy "upgrade-insecure-requests"
+        -Server
+        -X-Powered-By
     }
-    reverse_proxy localhost:11000
     tls lukasz.lobocki@googlemail.com
+}
+
+https://lobocki.duckdns.org {
+    import header_snippet
+    reverse_proxy localhost:11000
 }
 
 https://paperless.lobocki.duckdns.org {
+    import header_snippet
     reverse_proxy localhost:8081
     encode gzip
-    tls lukasz.lobocki@googlemail.com
 }
 
 https://pihole.lobocki.duckdns.org {
+    import header_snippet
     reverse_proxy 192.168.2.2:80
     redir / /admin{uri}
     encode gzip
-    tls lukasz.lobocki@googlemail.com
 }
 
 https://dash.lobocki.duckdns.org {
+    import header_snippet
     reverse_proxy odroid.lan:3001
     basicauth {
-        la_lukasz ***[redacted]***
+        la_lukasz $2a$14$roVhEbB2eGXc1fKwkU5BCetFy7v/ki6tshJ8zzFTOhYVvS2jQ1.8G
     }
     encode gzip
-    tls lukasz.lobocki@googlemail.com
 }
 
 https://vaultwarden.lobocki.duckdns.org {
+    import header_snippet
     reverse_proxy localhost:8082 {
         header_up X-Real-IP {remote_host}
     }
-    tls lukasz.lobocki@googlemail.com
 }
 ```
 
