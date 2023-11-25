@@ -428,7 +428,7 @@ https://dash.lobocki.duckdns.org {
     import header_snippet
     reverse_proxy odroid.lan:3001
     basicauth {
-        la_lukasz $2a$14$roVhEbB2eGXc1fKwkU5BCetFy7v/ki6tshJ8zzFTOhYVvS2jQ1.8G
+        la_lukasz ***[redacted]***
     }
     encode gzip
 }
