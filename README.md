@@ -299,7 +299,9 @@ borg prune \
 
 ```bash
 ssh la_lukasz@nuc11atk.lan
+```
 
+```bash
 borg create \
   --noacls --files-cache mtime,size --exclude-caches \
   --stats --progress --one-file-system \
