@@ -588,7 +588,7 @@ sudo nano /var/www/nextcloud/config/config.php
 
 #### Illegal filenames
 
-:information_source: Check [detox](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjh1vPbi9mBAxUa4QIHHWD9CqoQFnoECBcQAQ&url=https%3A%2F%2Flinux.die.net%2Fman%2F1%2Fdetox&usg=AOvVaw0GGiH9PguA-A1-H4MWUF-o&opi=89978449) command.
+:information_source: Check [detox](https://linux.die.net/man/1/detox) command.
 
 :information_source: Check [this](other/detoxrc) out.
 
