@@ -24,8 +24,6 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. From _NUC13_](#61-from-nuc13)
   - [6.2. From _NUC11_](#62-from-nuc11)
-  - [6.3. From _Nextcloud_](#63-from-nextcloud)
-  - [6.4. From _paperless_](#64-from-paperless)
 - [7. SUDO-ing](#7-sudo-ing)
 
 ## 1. CHEATSHEET
@@ -260,13 +258,15 @@ Create _archive_ (backup) in repository.
 ```bash
 borg create \
   --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  --stats --list --filter=AMEx --one-file-system \
+  --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 
 borg create \
   --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
+  --stats --list --filter=AMEx --one-file-system \
+  --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@lobocki.ddns.net:base/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
 ```
@@ -304,13 +304,13 @@ ssh la_lukasz@nuc11atk.lan
 ```bash
 borg create \
   --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --one-file-system \
+  --stats --list --filter=AMEx --one-file-system \
   --patterns-from=${HOME}/.borg-paths \
   la_lukasz@odroid.lan:/mnt/btrfs/backup/nuc11::{hostname}-{now:%Y%m%dT%H%M}
 
 borg create \
   --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --one-file-system \
+  --stats --list --filter=AMEx --one-file-system \
   --patterns-from=${HOME}/.borg-paths \
   la_lukasz@lobocki.ddns.net:base/backup/nuc11::{hostname}-{now:%Y%m%dT%H%M}
 ```
@@ -338,103 +338,6 @@ borg prune \
   --verbose --list \
   la_lukasz@lobocki.ddns.net:base/backup/nuc11
 ```
-
-<details>
-<summary>Older approach.</summary>
-
-### 6.3. From _Nextcloud_
-
-```bash
-ssh la_lukasz@nuc11atk.lan
-```
-
-Create _archive_ (backup) in repository.
-
-```bash
-borg create \
-  --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --one-file-system \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/nextcloud/lukasz/files
-
-borg create \
-  --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --one-file-system \
-  la_lukasz@lobocki.ddns.net:base/backup/nextcloud::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/nextcloud/lukasz/files
-```
-
-List _archives_ in repository.
-
-```bash
-borg list \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud
-
-borg list \
-  la_lukasz@lobocki.ddns.net:base/backup/nextcloud
-```
-
-Prune extra _archives_.
-
-```bash
-borg prune \
-  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/nextcloud
-
-borg prune \
-  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list \
-  la_lukasz@lobocki.ddns.net:base/backup/nextcloud
-```
-
-### 6.4. From _paperless_
-
-```bash
-ssh la_lukasz@nuc11atk.lan
-```
-
-Create _archive_ (backup) in repository.
-
-```bash
-borg create \
-  --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --one-file-system \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/paperless/media/documents/originals
-
-borg create \
-  --noacls --files-cache mtime,size --exclude-caches \
-  --stats --progress --one-file-system \
-  la_lukasz@lobocki.ddns.net:base/backup/paperless::{hostname}-{now:%Y%m%dT%H%M} \
-  /mnt/btrfs/paperless/media/documents/originals
-```
-
-List _archives_ in repository.
-
-```bash
-borg list \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless
-
-borg list \
-  la_lukasz@lobocki.ddns.net:base/backup/paperless
-```
-
-Prune extra _archives_.
-
-```bash
-borg prune \
-  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list \
-  la_lukasz@odroid.lan:/mnt/btrfs/backup/paperless
-
-borg prune \
-  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-  --verbose --list \
-  la_lukasz@lobocki.ddns.net:base/backup/paperless
-```
-
-</details>
 
 ## 7. SUDO-ing
 
