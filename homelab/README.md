@@ -446,6 +446,27 @@ https://vaultwarden.lobocki.duckdns.org {
 docker compose up -d
 ```
 
+##### Logging TMP jTKrL4avfVhRAwxPUVYpUcMLvCeUpgu2w2bRSr5e
+
+```properties
+log {
+        output file /data/caddy.log {
+            roll_size 1gb
+            roll_keep 5
+            roll_keep_for 720h
+            roll_uncompressed
+        }
+    }
+```
+
+```bash
+sudo cat caddy.log | docker run --rm -i -e LANG=$LANG allinurl/goaccess -a -o html --log-format CADDY - > ../report.html
+```
+
+```bash
+scp -Crp la_lukasz@nuc11atk.lan:./nextcloud-aio/report.html ./tmp/
+```
+
 #### Use External Storage app
 
 ```bash
