@@ -460,7 +460,9 @@ log {
 ```
 
 ```bash
-sudo cat caddy.log | docker run --rm -i -e LANG=$LANG allinurl/goaccess -a -o html --log-format CADDY - > ../report.html
+sudo cat ~/nextcloud-aio/data/caddy.log \
+  | docker run --rm -i -e LANG=$LANG allinurl/goaccess -a -o html --log-format CADDY - \
+  > ~/nextcloud-aio/report.html
 ```
 
 ```bash
