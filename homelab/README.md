@@ -447,20 +447,6 @@ https://dash.lobocki.duckdns.org {
 docker compose up -d
 ```
 
-##### Log retrieval
-
-```bash
-cat ~/nextcloud-aio/data/caddylog.json \
-  | docker run --rm -i -e LANG=$LANG allinurl/goaccess \
-  --log-format CADDY --with-output-resolver --agent-list \
-  --output=html --html-report-title="Caddy log" --tz="Europe/Berlin" - \
-  > ~/tmp/caddylog.html
-```
-
-```bash
-scp -Crp la_lukasz@nuc11atk.lan:./tmp/caddylog.html ./tmp/
-```
-
 #### Use External Storage app
 
 ```bash
@@ -531,6 +517,21 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 ```
 
 ### 4.2. Admining
+
+#### Caddy log retrieval
+
+```bash
+cat ~/nextcloud-aio/data/caddylog.json \
+  | docker run --rm -i -e LANG=$LANG allinurl/goaccess \
+  --log-format CADDY --with-output-resolver --agent-list \
+  --output=html --html-report-title="Caddy log" --tz="Europe/Berlin" - \
+  > ~/tmp/caddylog.html
+```
+
+```bash
+scp -Crp la_lukasz@nuc11atk.lan:./tmp/caddylog.html ./tmp/ \
+  && firefox ./tmp/caddylog.html
+```
 
 #### Chown and chmod
 
