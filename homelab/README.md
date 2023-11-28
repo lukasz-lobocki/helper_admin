@@ -404,6 +404,14 @@ networks:
         -X-Powered-By
     }
     tls lukasz.lobocki@googlemail.com
+    log {
+        output file /data/caddylog.json {
+            roll_size 1gb
+            roll_keep 5
+            roll_keep_for 720h
+            roll_uncompressed
+        }
+    }
 }
 
 # Nextcloud
@@ -429,16 +437,9 @@ https://dash.lobocki.duckdns.org {
     import header_snippet
     reverse_proxy odroid.lan:3001
     basicauth {
-        la_lukasz ***[redacted]***
+        la_lukasz **[redacted]**
     }
     encode gzip
-}
-
-https://vaultwarden.lobocki.duckdns.org {
-    import header_snippet
-    reverse_proxy localhost:8082 {
-        header_up X-Real-IP {remote_host}
-    }
 }
 ```
 
@@ -446,27 +447,18 @@ https://vaultwarden.lobocki.duckdns.org {
 docker compose up -d
 ```
 
-##### Logging TMP jTKrL4avfVhRAwxPUVYpUcMLvCeUpgu2w2bRSr5e
+##### Log retrieval
 
-```properties
-log {
-        output file /data/caddy.log {
-            roll_size 1gb
-            roll_keep 5
-            roll_keep_for 720h
-            roll_uncompressed
-        }
-    }
+```bash
+cat ~/nextcloud-aio/data/caddylog.json \
+  | docker run --rm -i -e LANG=$LANG allinurl/goaccess \
+  --log-format CADDY --with-output-resolver --agent-list \
+  --output=html --html-report-title="Caddy log" --tz="Europe/Berlin" - \
+  > ~/tmp/caddylog.html
 ```
 
 ```bash
-sudo cat ~/nextcloud-aio/data/caddy.log \
-  | docker run --rm -i -e LANG=$LANG allinurl/goaccess -a -o html --log-format CADDY - \
-  > ~/nextcloud-aio/report.html
-```
-
-```bash
-scp -Crp la_lukasz@nuc11atk.lan:./nextcloud-aio/report.html ./tmp/
+scp -Crp la_lukasz@nuc11atk.lan:./tmp/caddylog.html ./tmp/
 ```
 
 #### Use External Storage app
