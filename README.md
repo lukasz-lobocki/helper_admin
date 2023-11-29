@@ -265,7 +265,7 @@ borg create \
 
 borg create \
   --noacls --files-cache mtime,size --exclude-caches \
-  --stats --list --filter=AMEx --one-file-system \
+  --stats --list --filter=AME --one-file-system \
   --patterns-from ~/Code/helper/admin/other/backup_patt.txt \
   la_lukasz@lobocki.ddns.net:base/backup/nuc13::{hostname}-{now:%Y%m%dT%H%M} \
   ~
@@ -310,7 +310,7 @@ borg create \
 
 borg create \
   --noacls --files-cache mtime,size --exclude-caches \
-  --stats --list --filter=AMEx --one-file-system \
+  --stats --list --filter=AME --one-file-system \
   --patterns-from=${HOME}/.borg-paths \
   la_lukasz@lobocki.ddns.net:base/backup/nuc11::{hostname}-{now:%Y%m%dT%H%M}
 ```
