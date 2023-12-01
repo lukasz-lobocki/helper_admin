@@ -406,11 +406,22 @@ networks:
     tls lukasz.lobocki@googlemail.com
     log {
         output file /data/caddylog.json {
-            roll_size 1gb
-            roll_keep 5
-            roll_keep_for 720h
+            roll_size 150MiB
+            roll_keep 10
+            roll_keep_for 42d
             roll_uncompressed
         }
+    }
+}
+
+https://caddylog.lobocki.duckdns.org {
+    import header_snippet
+    root * /srv/goaccess_caddy
+    file_server {
+        index caddylog.html
+    }
+    basicauth {
+        la_lukasz **[redacted]**
     }
 }
 
@@ -519,6 +530,14 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 ### 4.2. Admining
 
 #### Caddy log retrieval
+
+```bash
+cat ~/nextcloud-aio/data/caddylog.json \
+  | docker run --rm -i -e LANG=$LANG allinurl/goaccess \
+  --log-format CADDY --with-output-resolver --agent-list \
+  --output=html --html-report-title="Caddy log" --tz="Europe/Berlin" - \
+  | sudo tee /home/la_lukasz/nextcloud-aio/sites/goaccess_caddy/caddylog.html &>/dev/null
+```
 
 ```bash
 cat ~/nextcloud-aio/data/caddylog.json \
