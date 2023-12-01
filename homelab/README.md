@@ -532,24 +532,15 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 #### Caddy log retrieval
 
 ```bash
-cat ~/nextcloud-aio/data/caddylog.json \
-  | docker run --rm -i -e LANG=$LANG allinurl/goaccess \
+ssh la_lukasz@nuc11atk.lan \
+docker run --rm \
+  -v /home/la_lukasz/nextcloud-aio/data:/input \
+  -v /home/la_lukasz/nextcloud-aio/sites/goaccess_caddy:/output \
+  -e LANG=$LANG \
+  allinurl/goaccess /input/caddylog.json  \
   --log-format CADDY --with-output-resolver --agent-list \
-  --output=html --html-report-title="Caddy log" --tz="Europe/Berlin" - \
-  | sudo tee /home/la_lukasz/nextcloud-aio/sites/goaccess_caddy/caddylog.html &>/dev/null
-```
-
-```bash
-cat ~/nextcloud-aio/data/caddylog.json \
-  | docker run --rm -i -e LANG=$LANG allinurl/goaccess \
-  --log-format CADDY --with-output-resolver --agent-list \
-  --output=html --html-report-title="Caddy log" --tz="Europe/Berlin" - \
-  > ~/tmp/caddylog.html
-```
-
-```bash
-scp -Crp la_lukasz@nuc11atk.lan:./tmp/caddylog.html ./tmp/ \
-  && firefox ./tmp/caddylog.html
+  --html-report-title="Caddylog" --tz="Europe/Berlin" \
+  --output=/output/caddylog.html 
 ```
 
 #### Chown and chmod
