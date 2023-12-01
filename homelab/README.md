@@ -533,14 +533,12 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 
 ```bash
 ssh la_lukasz@nuc11atk.lan \
-docker run --rm \
-  -v /home/la_lukasz/nextcloud-aio/data:/input \
+'cat ~/nextcloud-aio/data/caddylog*.json \
+  | docker run --rm -i -e LANG=$LANG \
   -v /home/la_lukasz/nextcloud-aio/sites/goaccess_caddy:/output \
-  -e LANG=$LANG \
-  allinurl/goaccess /input/caddylog.json  \
-  --log-format CADDY --with-output-resolver --agent-list \
-  --html-report-title="Caddylog" --tz="Europe/Berlin" \
-  --output=/output/caddylog.html 
+  allinurl/goaccess --log-format CADDY \
+  --with-output-resolver --agent-list --tz="Europe/Berlin" \
+  --html-report-title="Caddylog" --output=/output/caddylog.html -'
 ```
 
 #### Chown and chmod
