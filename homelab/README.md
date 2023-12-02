@@ -532,12 +532,28 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 #### Caddy log retrieval
 
 ```bash
+curl -s 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&license_key=**[redact]**&suffix=tar.gz' \
+  --output - \
+| sudo tar --wildcards --strip-components=1 --overwrite \
+  -C ~/nextcloud-aio/data -xvzf - '*.mmdb'
+
+curl -s 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=**[redact]**&suffix=tar.gz' \
+  --output - \
+| sudo tar --wildcards --strip-components=1 --overwrite \
+  -C ~/nextcloud-aio/data -xvzf - '*.mmdb'
+```
+
+```bash
 ssh la_lukasz@nuc11atk.lan \
 'cat ~/nextcloud-aio/data/caddylog*.json \
   | docker run --rm -i -e LANG=$LANG \
+  -v /home/la_lukasz/nextcloud-aio/data:/input \
   -v /home/la_lukasz/nextcloud-aio/sites/goaccess_caddy:/output \
   allinurl/goaccess --log-format CADDY \
   --with-output-resolver --agent-list --tz="Europe/Berlin" \
+  --ignore-panel=TLS_TYPE --no-query-string --unknowns-as-crawlers \
+  --geoip-database=/input/GeoLite2-Country.mmdb \
+  --geoip-database=/input/GeoLite2-ASN.mmdb \
   --html-report-title="Caddylog" --output=/output/caddylog.html -'
 ```
 
