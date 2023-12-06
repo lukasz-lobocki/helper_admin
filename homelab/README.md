@@ -783,7 +783,7 @@ On client
 ```bash
 step ca bootstrap --ca-url=odroid:9000 --fingerprint=**[redacted]**
 
-step certificate install --all /root/.step/certs/root_ca.crt
+step certificate install --all ~/.step/certs/root_ca.crt
 ```
 
 defaults.json
@@ -828,16 +828,16 @@ ca.json
   "enableAdmin": true,
   "claims": {
     "minTLSCertDuration": "5m",
-    "maxTLSCertDuration": "24h",
-    "defaultTLSCertDuration": "24h",
+    "maxTLSCertDuration": "1680h",
+    "defaultTLSCertDuration": "720h",
     "disableRenewal": false,
     "allowRenewalAfterExpiry": false,
     "minHostSSHCertDuration": "5m",
     "maxHostSSHCertDuration": "1680h",
     "defaultHostSSHCertDuration": "720h",
     "minUserSSHCertDuration": "5m",
-    "maxUserSSHCertDuration": "24h",
-    "defaultUserSSHCertDuration": "16h"
+    "maxUserSSHCertDuration": "1680h",
+    "defaultUserSSHCertDuration": "720h"
   }
 },
  "tls": {
