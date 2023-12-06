@@ -24,6 +24,7 @@ sudo apt --with-new-pkgs upgrade <pckgs-lst>
 - [6. BORG BACKUP](#6-borg-backup)
   - [6.1. From _NUC13_](#61-from-nuc13)
   - [6.2. From _NUC11_](#62-from-nuc11)
+  - [6.3. From _odroid_](#63-from-odroid)
 - [7. SUDO-ing](#7-sudo-ing)
 
 ## 1. CHEATSHEET
@@ -337,6 +338,36 @@ borg prune \
   --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
   --verbose --list \
   la_lukasz@lobocki.ddns.net:base/backup/nuc11
+```
+
+### 6.3. From _odroid_
+
+```bash
+ssh la_lukasz@odroid.lan
+```
+
+```bash
+borg create \
+  --noacls --files-cache mtime,size --exclude-caches \
+  --stats --list --filter=AME --one-file-system \
+  --patterns-from=${HOME}/.borg-paths \
+  la_lukasz@lobocki.ddns.net:base/backup/odroid::{hostname}-{now:%Y%m%dT%H%M}
+```
+
+List _archives_ in repository.
+
+```bash
+borg list \
+  la_lukasz@lobocki.ddns.net:base/backup/odroid
+```
+
+Prune extra _archives_.
+
+```bash
+borg prune \
+  --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
+  --verbose --list \
+  la_lukasz@lobocki.ddns.net:base/backup/odroid
 ```
 
 ## 7. SUDO-ing
