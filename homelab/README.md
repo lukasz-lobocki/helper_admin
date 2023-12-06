@@ -778,12 +778,10 @@ docker run -it --name "smallstep-odroid-pki" \
   -p 9000:9000 \
   -e "DOCKER_STEPCA_INIT_NAME=odroid-pki" \
   -e "DOCKER_STEPCA_INIT_DNS_NAMES=localhost,odroid,odroid.lan" \
-  -e "DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT=true" \
   -e "DOCKER_STEPCA_INIT_PROVISIONER_NAME=lukasz.lobocki@googlemail.com" \
-  -e "DOCKER_STEPCA_INIT_SSH=true" \
   -e "DOCKER_STEPCA_INIT_PASSWORD_FILE=/home/step/secrets/password" \
   smallstep/step-ca \
-  2>&1 | tee -a step-ca.init
+2>&1 | tee -a step-ca.init
 ```
 
 On client
@@ -809,107 +807,85 @@ ca.json
 
 ```json
 {
- "root": "/home/step/certs/Absolute_Trust_Global_Root_CA_-_G2.crt",
- "federatedRoots": null,
- "crt": "/home/step/certs/Absolute_Trust_ID_Assurance_PKI.crt",
- "key": "/home/step/secrets/Absolute_Trust_ID_Assurance_PKI_key",
- "address": ":9000",
- "insecureAddress": "",
- "dnsNames": [
-  "localhost",
-  "odroid",
-  "odroid.lan"
- ],
- "ssh": {
-  "hostKey": "/home/step/secrets/ssh_host_ca_key",
-  "userKey": "/home/step/secrets/ssh_user_ca_key"
- },
- "logger": {
-  "format": "text"
- },
- "db": {
-  "type": "badgerv2",
-  "dataSource": "/home/step/db",
-  "badgerFileLoadingMode": ""
- },
- "authority": {
-  "enableAdmin": true,
-  "claims": {
-    "minTLSCertDuration": "5m",
-    "maxTLSCertDuration": "8760h",
-    "defaultTLSCertDuration": "720h",
-    "disableRenewal": false,
-    "allowRenewalAfterExpiry": false,
-    "minHostSSHCertDuration": "5m",
-    "maxHostSSHCertDuration": "8760h",
-    "defaultHostSSHCertDuration": "720h",
-    "minUserSSHCertDuration": "5m",
-    "maxUserSSHCertDuration": "8760h",
-    "defaultUserSSHCertDuration": "720h"
-  }
-},
- "tls": {
-  "cipherSuites": [
-   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
-   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+  "root":"/home/step/certs/Absolute_Trust_Global_Root_CA_-_G2.crt",
+  "federatedRoots":null,
+  "crt":"/home/step/certs/Absolute_Trust_ID_Assurance_PKI.crt",
+  "key":"/home/step/secrets/Absolute_Trust_ID_Assurance_PKI_key",
+  "address":":9000",
+  "insecureAddress":"",
+  "dnsNames":[
+    "localhost",
+    "odroid",
+    "odroid.lan"
   ],
-  "minVersion": 1.2,
-  "maxVersion": 1.3,
-  "renegotiation": false
- },
- "templates": {
-  "ssh": {
-   "user": [
-    {
-     "name": "config.tpl",
-     "type": "snippet",
-     "template": "templates/ssh/config.tpl",
-     "path": "~/.ssh/config",
-     "comment": "#"
-    },
-    {
-     "name": "step_includes.tpl",
-     "type": "prepend-line",
-     "template": "templates/ssh/step_includes.tpl",
-     "path": "${STEPPATH}/ssh/includes",
-     "comment": "#"
-    },
-    {
-     "name": "step_config.tpl",
-     "type": "file",
-     "template": "templates/ssh/step_config.tpl",
-     "path": "ssh/config",
-     "comment": "#"
-    },
-    {
-     "name": "known_hosts.tpl",
-     "type": "file",
-     "template": "templates/ssh/known_hosts.tpl",
-     "path": "ssh/known_hosts",
-     "comment": "#"
-    }
-   ],
-   "host": [
-    {
-     "name": "sshd_config.tpl",
-     "type": "snippet",
-     "template": "templates/ssh/sshd_config.tpl",
-     "path": "/etc/ssh/sshd_config",
-     "comment": "#",
-     "requires": [
-      "Certificate",
-      "Key"
-     ]
-    },
-    {
-     "name": "ca.tpl",
-     "type": "snippet",
-     "template": "templates/ssh/ca.tpl",
-     "path": "/etc/ssh/ca.pub",
-     "comment": "#"
-    }
-   ]
+  "logger":{
+    "format":"text"
+  },
+  "db":{
+    "type":"badgerv2",
+    "dataSource":"/home/step/db",
+    "badgerFileLoadingMode":""
+  },
+  "authority":{
+    "provisioners":[
+      {
+        "type":"JWK",
+        "name":"lukasz.lobocki@googlemail.com",
+        "key":{
+          "use":"sig",
+          "kty":"EC",
+          "kid":"**[redacted]**",
+          "crv":"P-256",
+          "alg":"ES256",
+          "x":"**[redacted]**",
+          "y":"**[redacted]**"
+        },
+        "encryptedKey":"**[redacted]**",
+        "claims":{
+          "minTLSCertDuration":"5m",
+          "maxTLSCertDuration":"8760h",
+          "defaultTLSCertDuration":"720h",
+          "disableRenewal":false,
+          "minHostSSHCertDuration":"5m",
+          "maxHostSSHCertDuration":"8760h",
+          "minUserSSHCertDuration":"5m",
+          "maxUserSSHCertDuration":"8760h",
+          "enableSSHCA":true
+        },
+        "options":{
+          "x509":{
+            "templateFile":"templates/certs/x509/leaf.tpl",
+            "templateData":{
+              "OrganizationalUnit":"Sternicza"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "tls":{
+    "cipherSuites":[
+      "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+      "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+    ],
+    "minVersion":1.2,
+    "maxVersion":1.3,
+    "renegotiation":false
   }
- }
+}
+```
+
+leaf.tpl
+
+```json
+{
+ "subject": {{ toJson .Subject }},
+ "sans": {{ toJson .SANs }},
+{{- if typeIs "*rsa.PublicKey" .Insecure.CR.PublicKey }}
+ "keyUsage": ["keyEncipherment", "digitalSignature"],
+{{- else }}
+ "keyUsage": ["digitalSignature"],
+{{- end }}
+ "extKeyUsage": ["serverAuth", "clientAuth"]
 }
 ```
