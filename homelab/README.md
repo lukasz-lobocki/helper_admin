@@ -779,12 +779,11 @@ docker run -it --name "smallstep-odroid-pki" \
   -e "DOCKER_STEPCA_INIT_NAME=odroid-pki" \
   -e "DOCKER_STEPCA_INIT_DNS_NAMES=localhost,odroid,odroid.lan" \
   -e "DOCKER_STEPCA_INIT_PROVISIONER_NAME=lukasz.lobocki@googlemail.com" \
-  -e "DOCKER_STEPCA_INIT_PASSWORD_FILE=/home/step/secrets/password" \
   smallstep/step-ca \
 2>&1 | tee -a step-ca.init
 ```
 
-On client
+On client:
 
 ```bash
 step ca bootstrap --ca-url=odroid:9000 --fingerprint=**[redacted]**
@@ -792,7 +791,7 @@ step ca bootstrap --ca-url=odroid:9000 --fingerprint=**[redacted]**
 step certificate install --all ~/.step/certs/root_ca.crt
 ```
 
-defaults.json
+~/smallstep/config/defaults.json
 
 ```json
 {
@@ -803,79 +802,79 @@ defaults.json
 }
 ```
 
-ca.json
+~/smallstep/config/ca.json
 
 ```json
 {
-  "root":"/home/step/certs/Absolute_Trust_Global_Root_CA_-_G2.crt",
-  "federatedRoots":null,
-  "crt":"/home/step/certs/Absolute_Trust_ID_Assurance_PKI.crt",
-  "key":"/home/step/secrets/Absolute_Trust_ID_Assurance_PKI_key",
-  "address":":9000",
-  "insecureAddress":"",
-  "dnsNames":[
+  "root": "/home/step/certs/Absolute_Trust_Global_Root_CA_-_G2.crt",
+  "federatedRoots": null,
+  "crt": "/home/step/certs/Absolute_Trust_ID_Assurance_PKI.crt",
+  "key": "/home/step/secrets/Absolute_Trust_ID_Assurance_PKI_key",
+  "address": ":9000",
+  "insecureAddress": "",
+  "dnsNames": [
     "localhost",
     "odroid",
     "odroid.lan"
   ],
-  "logger":{
-    "format":"text"
+  "logger": {
+    "format": "text"
   },
-  "db":{
-    "type":"badgerv2",
-    "dataSource":"/home/step/db",
-    "badgerFileLoadingMode":""
+  "db": {
+    "type": "badgerv2",
+    "dataSource": "/home/step/db",
+    "badgerFileLoadingMode": ""
   },
-  "authority":{
-    "provisioners":[
+  "authority": {
+    "provisioners": [
       {
-        "type":"JWK",
-        "name":"lukasz.lobocki@googlemail.com",
-        "key":{
-          "use":"sig",
-          "kty":"EC",
-          "kid":"**[redacted]**",
-          "crv":"P-256",
-          "alg":"ES256",
-          "x":"**[redacted]**",
-          "y":"**[redacted]**"
+        "type": "JWK",
+        "name": "lukasz.lobocki@googlemail.com",
+        "key": {
+          "use": "sig",
+          "kty": "EC",
+          "kid": "**[redacted]**",
+          "crv": "P-256",
+          "alg": "ES256",
+          "x": "**[redacted]**",
+          "y": "**[redacted]**"
         },
-        "encryptedKey":"**[redacted]**",
-        "claims":{
-          "minTLSCertDuration":"5m",
-          "maxTLSCertDuration":"8760h",
-          "defaultTLSCertDuration":"720h",
-          "disableRenewal":false,
-          "minHostSSHCertDuration":"5m",
-          "maxHostSSHCertDuration":"8760h",
-          "minUserSSHCertDuration":"5m",
-          "maxUserSSHCertDuration":"8760h",
-          "enableSSHCA":true
+        "encryptedKey": "**[redacted]**",
+        "claims": {
+          "minTLSCertDuration": "5m",
+          "maxTLSCertDuration": "8760h",
+          "defaultTLSCertDuration": "720h",
+          "disableRenewal": false,
+          "minHostSSHCertDuration": "5m",
+          "maxHostSSHCertDuration": "8760h",
+          "minUserSSHCertDuration": "5m",
+          "maxUserSSHCertDuration": "8760h",
+          "enableSSHCA": true
         },
-        "options":{
-          "x509":{
-            "templateFile":"templates/certs/x509/leaf.tpl",
-            "templateData":{
-              "OrganizationalUnit":"Sternicza"
+        "options": {
+          "x509": {
+            "templateFile": "templates/certs/x509/leaf.tpl",
+            "templateData": {
+              "OrganizationalUnit": "Sternicza"
             }
           }
         }
       }
     ]
   },
-  "tls":{
-    "cipherSuites":[
+  "tls": {
+    "cipherSuites": [
       "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
       "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
     ],
-    "minVersion":1.2,
-    "maxVersion":1.3,
-    "renegotiation":false
+    "minVersion": 1.2,
+    "maxVersion": 1.3,
+    "renegotiation": false
   }
 }
 ```
 
-leaf.tpl
+~/smallstep/templates/certs/x509/leaf.tpl
 
 ```json
 {
