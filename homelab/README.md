@@ -17,6 +17,7 @@
   - [6.1. Install](#61-install)
 - [7. Setup _smallstep_ on _docker_ at _odroid_](#7-setup-smallstep-on-docker-at-odroid)
   - [7.1. Install](#71-install)
+  - [7.2. Admining](#72-admining)
 
 ## 1. Hardware
 
@@ -785,21 +786,13 @@ docker run -it --name "smallstep-odroid-pki" \
 
 :information_source: Check [this](https://smallstep.com/docs/tutorials/intermediate-ca-new-ca/#the-medium-way) on swapping CA certs.
 
-On client:
-
-```bash
-step ca bootstrap --ca-url=odroid:9000 --fingerprint=**[redacted]**
-
-step certificate install --all ~/.step/certs/root_ca.crt
-```
-
 ~/smallstep/config/defaults.json
 
 ```json
 {
   "ca-url": "https://localhost:9000",
   "ca-config": "/home/step/config/ca.json",
-  "fingerprint": "***[redacted]***",
+  "fingerprint": "159289cc4715bebbd2f1f7156883580ce9de7162576140f2a4621b91858c7ddc",
   "root": "/home/step/certs/Absolute_Trust_Global_Root_CA_-_G2.crt"
 }
 ```
@@ -889,4 +882,24 @@ step certificate install --all ~/.step/certs/root_ca.crt
 {{- end }}
   "extKeyUsage": ["serverAuth", "clientAuth"]
 }
+```
+
+### 7.2. Admining
+
+On client
+
+```bash
+step ca bootstrap --ca-url=odroid:9000 \
+  --fingerprint=159289cc4715bebbd2f1f7156883580ce9de7162576140f2a4621b91858c7ddc
+```
+
+```bash
+step certificate install --all ~/.step/certs/root_ca.crt
+```
+
+```bash
+step ca certificate lobocki.duckdns.org \
+  lobocki.duckdns.org.crt lobocki.duckdns.org.key \
+  --san lobocki.duckdns.org --san lukasz.lobocki@googlemail.com \
+  --kty EC --curve P-256 --not-after 8760h
 ```
