@@ -429,6 +429,7 @@ networks:
 }
 
 https://caddylog.lobocki.duckdns.org {
+    import tls_snippet
     import header_snippet
     root * /srv/goaccess_caddy
     file_server {
@@ -441,17 +442,20 @@ https://caddylog.lobocki.duckdns.org {
 
 # Nextcloud
 https://lobocki.duckdns.org {
+    # import tls_snippet
     import header_snippet
     reverse_proxy localhost:11000
 }
 
 https://paperless.lobocki.duckdns.org {
+    import tls_snippet
     import header_snippet
     reverse_proxy localhost:8081
     encode gzip
 }
 
 https://pihole.lobocki.duckdns.org {
+    import tls_snippet
     import header_snippet
     reverse_proxy 192.168.2.2:80
     redir / /admin{uri}
@@ -459,6 +463,7 @@ https://pihole.lobocki.duckdns.org {
 }
 
 https://dash.lobocki.duckdns.org {
+    # import tls_snippet
     import header_snippet
     reverse_proxy odroid.lan:3001
     basicauth {
