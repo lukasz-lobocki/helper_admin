@@ -879,13 +879,13 @@ leaf.tpl
 
 ```json
 {
- "subject": {{ toJson .Subject }},
- "sans": {{ toJson .SANs }},
+  "subject": {{ toJson .Subject }},
+  "sans": {{ toJson .SANs }},
 {{- if typeIs "*rsa.PublicKey" .Insecure.CR.PublicKey }}
- "keyUsage": ["keyEncipherment", "digitalSignature"],
+  "keyUsage": ["keyEncipherment", "digitalSignature"],
 {{- else }}
- "keyUsage": ["digitalSignature"],
+  "keyUsage": ["digitalSignature"],
 {{- end }}
- "extKeyUsage": ["serverAuth", "clientAuth"]
+  "extKeyUsage": ["serverAuth", "clientAuth"]
 }
 ```
