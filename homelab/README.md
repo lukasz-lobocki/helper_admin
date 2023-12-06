@@ -768,6 +768,8 @@ services:
 
 ## 7. Setup _smallstep_ on _docker_ at _odroid_
 
+:information_source: Check [this](https://smallstep.com/blog/everything-pki) out.
+
 ### 7.1. Install
 
 ```bash
