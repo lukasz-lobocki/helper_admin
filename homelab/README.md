@@ -783,6 +783,8 @@ docker run -it --name "smallstep-odroid-pki" \
 2>&1 | tee -a step-ca.init
 ```
 
+:information_source: Check [this](https://smallstep.com/docs/tutorials/intermediate-ca-new-ca/#the-medium-way) on swapping CA certs.
+
 On client:
 
 ```bash
