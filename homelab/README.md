@@ -834,15 +834,15 @@ ca.json
   "enableAdmin": true,
   "claims": {
     "minTLSCertDuration": "5m",
-    "maxTLSCertDuration": "1680h",
+    "maxTLSCertDuration": "8760h",
     "defaultTLSCertDuration": "720h",
     "disableRenewal": false,
     "allowRenewalAfterExpiry": false,
     "minHostSSHCertDuration": "5m",
-    "maxHostSSHCertDuration": "1680h",
+    "maxHostSSHCertDuration": "8760h",
     "defaultHostSSHCertDuration": "720h",
     "minUserSSHCertDuration": "5m",
-    "maxUserSSHCertDuration": "1680h",
+    "maxUserSSHCertDuration": "8760h",
     "defaultUserSSHCertDuration": "720h"
   }
 },
