@@ -401,6 +401,7 @@ networks:
       mode require_and_verify
       trusted_ca_cert_file /certs/Absolute_Trust_Global_Root_CA_-_G2.crt
       trusted_ca_cert_file /certs/Absolute_Trust_ID_Assurance_-_G2.crt
+      trusted_ca_cert_file /certs/Absolute_Trust_ID_Assurance_PKI.crt
       trusted_ca_cert_file /certs/LOBOCKI-PIEKARNIK-CA.crt
     }
   }
