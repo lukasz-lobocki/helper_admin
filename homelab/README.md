@@ -408,68 +408,68 @@ networks:
 }
 
 (header_snippet) {
-    header {
-        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        X-XSS-Protection "1; mode=block"
-        X-Frame-Options "SAMEORIGIN"
-        Referrer-Policy "strict-origin-when-cross-origin"
-        Content-Security-Policy "upgrade-insecure-requests"
-        -Server
-        -X-Powered-By
+  header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    X-XSS-Protection "1; mode=block"
+    X-Frame-Options "SAMEORIGIN"
+    Referrer-Policy "strict-origin-when-cross-origin"
+    Content-Security-Policy "upgrade-insecure-requests"
+    -Server
+    -X-Powered-By
+  }
+  tls lukasz.lobocki@googlemail.com
+  log {
+    output file /data/caddylog.json {
+      roll_size 150MiB
+      roll_keep 10
+      roll_keep_for 42d
+      roll_uncompressed
     }
-    tls lukasz.lobocki@googlemail.com
-    log {
-        output file /data/caddylog.json {
-            roll_size 150MiB
-            roll_keep 10
-            roll_keep_for 42d
-            roll_uncompressed
-        }
-    }
+  }
 }
 
 https://caddylog.lobocki.duckdns.org {
-    import tls_snippet
-    import header_snippet
-    root * /srv/goaccess_caddy
-    file_server {
-        index caddylog.html
-    }
-    basicauth {
-        la_lukasz **[redacted]**
-    }
+  import tls_snippet
+  import header_snippet
+  root * /srv/goaccess_caddy
+  file_server {
+    index caddylog.html
+  }
+  basicauth {
+    la_lukasz **[redacted]**
+  }
 }
 
 # Nextcloud
 https://lobocki.duckdns.org {
-    # import tls_snippet
-    import header_snippet
-    reverse_proxy localhost:11000
+  # import tls_snippet
+  import header_snippet
+  reverse_proxy localhost:11000
 }
 
 https://paperless.lobocki.duckdns.org {
-    import tls_snippet
-    import header_snippet
-    reverse_proxy localhost:8081
-    encode gzip
+  import tls_snippet
+  import header_snippet
+  reverse_proxy localhost:8081
+  encode gzip
 }
 
 https://pihole.lobocki.duckdns.org {
-    import tls_snippet
-    import header_snippet
-    reverse_proxy 192.168.2.2:80
-    redir / /admin{uri}
-    encode gzip
+  import tls_snippet
+  import header_snippet
+  reverse_proxy 192.168.2.2:80
+  redir / /admin{uri}
+  encode gzip
 }
 
 https://dash.lobocki.duckdns.org {
-    # import tls_snippet
-    import header_snippet
-    reverse_proxy odroid.lan:3001
-    basicauth {
-        la_lukasz **[redacted]**
-    }
-    encode gzip
+  # import tls_snippet
+  import header_snippet
+  reverse_proxy odroid.lan:3001
+  basicauth {
+    la_lukasz **[redacted]**
+  }
+  encode gzip
 }
 ```
 
@@ -486,44 +486,44 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 
 ```json
 [
-    {
-        "mount_id": 1,
-        "mount_point": "\/Paperless",
-        "storage": "\\OC\\Files\\Storage\\Local",
-        "authentication_type": "null::null",
-        "configuration": {
-            "datadir": "\/home\/la_lukasz\/paperless-ngx\/media\/documents\/originals"
-        },
-        "options": {
-            "encrypt": true,
-            "previews": true,
-            "enable_sharing": false,
-            "filesystem_check_changes": 1,
-            "encoding_compatibility": false,
-            "readonly": true
-        },
-        "applicable_users": [],
-        "applicable_groups": []
+  {
+    "mount_id": 1,
+    "mount_point": "\/Paperless",
+    "storage": "\\OC\\Files\\Storage\\Local",
+    "authentication_type": "null::null",
+    "configuration": {
+      "datadir": "\/home\/la_lukasz\/paperless-ngx\/media\/documents\/originals"
     },
-    {
-        "mount_id": 3,
-        "mount_point": "\/Consume",
-        "storage": "\\OC\\Files\\Storage\\Local",
-        "authentication_type": "null::null",
-        "configuration": {
-            "datadir": "\/home\/la_lukasz\/paperless-ngx\/consume"
-        },
-        "options": {
-            "encrypt": true,
-            "enable_sharing": false,
-            "filesystem_check_changes": 1,
-            "encoding_compatibility": false,
-            "readonly": false,
-            "previews": false
-        },
-        "applicable_users": [],
-        "applicable_groups": []
-    }
+    "options": {
+      "encrypt": true,
+      "previews": true,
+      "enable_sharing": false,
+      "filesystem_check_changes": 1,
+      "encoding_compatibility": false,
+      "readonly": true
+    },
+    "applicable_users": [],
+    "applicable_groups": []
+  },
+  {
+    "mount_id": 3,
+    "mount_point": "\/Consume",
+    "storage": "\\OC\\Files\\Storage\\Local",
+    "authentication_type": "null::null",
+    "configuration": {
+      "datadir": "\/home\/la_lukasz\/paperless-ngx\/consume"
+    },
+    "options": {
+      "encrypt": true,
+      "enable_sharing": false,
+      "filesystem_check_changes": 1,
+      "encoding_compatibility": false,
+      "readonly": false,
+      "previews": false
+    },
+    "applicable_users": [],
+    "applicable_groups": []
+  }
 ]
 ```
 
@@ -538,11 +538,11 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 
 ```json
 {
-    "apps": {
-        "bruteForce": {
-            "whitelist_1": "192.168.2.1\/32"
-        }
+  "apps": {
+    "bruteForce": {
+      "whitelist_1": "192.168.2.1\/32"
     }
+  }
 }
 ```
 
@@ -754,16 +754,16 @@ Use portainer stacks.
 ```yml
 name: vaultwarden
 services:
-    server:
-        container_name: vaultwarden
-        volumes:
-            - /mnt/btrfs/vw-data/:/data/
-        environment:
-            - ADMIN_TOKEN=***[redacted]***
-        restart: unless-stopped
-        ports:
-            - 8082:80
-        image: vaultwarden/server:latest
+  server:
+    container_name: vaultwarden
+    volumes:
+      - /mnt/btrfs/vw-data/:/data/
+    environment:
+      - ADMIN_TOKEN=***[redacted]***
+    restart: unless-stopped
+    ports:
+      - 8082:80
+    image: vaultwarden/server:latest
 ```
 
 ## 7. Setup _smallstep_ on _docker_ at _odroid_
@@ -772,16 +772,16 @@ services:
 
 ```bash
 docker run -it --name "smallstep-odroid-pki" \
-    -v /home/la_lukasz/smallstep:/home/step \
-    -p 9000:9000 \
-    -e "DOCKER_STEPCA_INIT_NAME=odroid-pki" \
-    -e "DOCKER_STEPCA_INIT_DNS_NAMES=localhost,odroid,odroid.lan" \
-    -e "DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT=true" \
-    -e "DOCKER_STEPCA_INIT_PROVISIONER_NAME=lukasz.lobocki@googlemail.com" \
-    -e "DOCKER_STEPCA_INIT_SSH=true" \
-    -e "DOCKER_STEPCA_INIT_PASSWORD_FILE=/home/step/secrets/password" \
-    smallstep/step-ca \
-    2>&1 | tee -a step-ca.init
+  -v /home/la_lukasz/smallstep:/home/step \
+  -p 9000:9000 \
+  -e "DOCKER_STEPCA_INIT_NAME=odroid-pki" \
+  -e "DOCKER_STEPCA_INIT_DNS_NAMES=localhost,odroid,odroid.lan" \
+  -e "DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT=true" \
+  -e "DOCKER_STEPCA_INIT_PROVISIONER_NAME=lukasz.lobocki@googlemail.com" \
+  -e "DOCKER_STEPCA_INIT_SSH=true" \
+  -e "DOCKER_STEPCA_INIT_PASSWORD_FILE=/home/step/secrets/password" \
+  smallstep/step-ca \
+  2>&1 | tee -a step-ca.init
 ```
 
 On client
