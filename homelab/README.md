@@ -8,14 +8,14 @@
 - [3. Setup _paperless-ngx_ on _docker_ at _NUC11ATK_](#3-setup-paperless-ngx-on-docker-at-nuc11atk)
   - [3.1. Install](#31-install)
   - [3.2. Admining](#32-admining)
-- [4. Setup _Nextcloud AIO_ and _caddy_ on _docker_ at _NUC11ATK_](#4-setup-nextcloud-aio-and-caddy-on-docker-at-nuc11atk)
+- [4. Setup _Nextcloud AIO_ and _caddy_ reverse-proxy on _docker_ at _NUC11ATK_](#4-setup-nextcloud-aio-and-caddy-reverse-proxy-on-docker-at-nuc11atk)
   - [4.1. Install](#41-install)
   - [4.2. Admining](#42-admining)
 - [5. Setup _PiHole_ on _docker_ at _odroid_](#5-setup-pihole-on-docker-at-odroid)
   - [5.1. Install](#51-install)
 - [6. Setup _Vaultwarden_ on _docker_ at _NUC11ATK_](#6-setup-vaultwarden-on-docker-at-nuc11atk)
   - [6.1. Install](#61-install)
-- [7. Setup _smallstep_ on _docker_ at _odroid_](#7-setup-smallstep-on-docker-at-odroid)
+- [7. Setup _smallstep_ CA PKI on _docker_ at _odroid_](#7-setup-smallstep-ca-pki-on-docker-at-odroid)
   - [7.1. Install](#71-install)
   - [7.2. Admining](#72-admining)
 
@@ -287,7 +287,7 @@ docker exec -it paperless_webserver_1 \
   document_thumbnails
 ```
 
-## 4. Setup _Nextcloud AIO_ and _caddy_ on _docker_ at _NUC11ATK_
+## 4. Setup _Nextcloud AIO_ and _caddy_ reverse-proxy on _docker_ at _NUC11ATK_
 
 ### 4.1. Install
 
@@ -767,7 +767,7 @@ services:
     image: vaultwarden/server:latest
 ```
 
-## 7. Setup _smallstep_ on _docker_ at _odroid_
+## 7. Setup _smallstep_ CA PKI on _docker_ at _odroid_
 
 :information_source: Check [this](https://smallstep.com/blog/everything-pki) out.
 
@@ -901,5 +901,6 @@ step certificate install --all ~/.step/certs/root_ca.crt
 step ca certificate lobocki.duckdns.org \
   lobocki.duckdns.org.crt lobocki.duckdns.org.key \
   --san lobocki.duckdns.org --san lukasz.lobocki@googlemail.com \
-  --kty EC --curve P-256 --not-after 8760h
+  --kty EC --curve P-256 --not-after 8760h \
+  --ca-url=https://lobocki.duckdns.org:9000
 ```
