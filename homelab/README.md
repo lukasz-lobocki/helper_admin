@@ -436,9 +436,9 @@ https://caddylog.lobocki.duckdns.org {
   file_server {
     index caddylog.html
   }
-  basicauth {
-    la_lukasz **[redacted]**
-  }
+  #basicauth {
+  #  la_lukasz **[redacted]**
+  #}
 }
 
 # Nextcloud
@@ -464,12 +464,12 @@ https://pihole.lobocki.duckdns.org {
 }
 
 https://dash.lobocki.duckdns.org {
-  # import tls_snippet
+  import tls_snippet
   import header_snippet
   reverse_proxy odroid.lan:3001
-  basicauth {
-    la_lukasz **[redacted]**
-  }
+  #basicauth {
+  #  la_lukasz **[redacted]**
+  #}
   encode gzip
 }
 ```
