@@ -601,6 +601,13 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
 
 ```bash
 sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ trashbin:cleanup --all-users \
+; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
+  php occ versions:cleanup
+```
+
+```bash
+sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ files:scan --all \
 ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ files:scan-app-data
@@ -613,13 +620,6 @@ sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ photos:map-media-to-place \
 ; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
   php occ preview:generate
-```
-
-```bash
-sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ trashbin:cleanup --all-users \
-; sudo docker exec --user www-data -it nextcloud-aio-nextcloud \
-  php occ versions:cleanup
 ```
 
 ```bash
