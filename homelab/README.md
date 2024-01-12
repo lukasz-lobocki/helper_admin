@@ -275,15 +275,15 @@ docker exec -it paperless_webserver_1 \
 #### General maintenance
 
 ```bash
-docker exec -it paperless_webserver_1 \
+docker exec -it paperless-webserver-1 \
   document_index reindex
-docker exec -it paperless_webserver_1 \
+docker exec -it paperless-webserver-1 \
   document_sanity_checker
-docker exec -it paperless_webserver_1 \
+docker exec -it paperless-webserver-1 \
   document_create_classifier
-docker exec -it paperless_webserver_1 \
+docker exec -it paperless-webserver-1 \
   document_retagger -c -t -T --use-first
-docker exec -it paperless_webserver_1 \
+docker exec -it paperless-webserver-1 \
   document_thumbnails
 ```
 
