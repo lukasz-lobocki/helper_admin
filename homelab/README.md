@@ -144,8 +144,16 @@ usermod --append --groups docker la_lukasz
 
 ```bash
 docker pull portainer/portainer-ce:latest
+```
 
-docker run -d -p 9443:9443 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+```bash
+docker run -d -p 9443:9443 --name=portainer --restart=always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v portainer_data:/data \
+  -v ~/portainer/certs:/certs \
+  portainer/portainer-ce:latest \
+  --sslcert /certs/nuc11atk.lan.crt \
+  --sslkey /certs/nuc11atk.lan.key
 ```
 
 ## 3. Setup _paperless-ngx_ on _docker_ at _NUC11ATK_
