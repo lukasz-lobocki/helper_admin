@@ -573,16 +573,36 @@ curl -s 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Cou
 
 ```bash
 ssh la_lukasz@nuc11atk.lan \
-'cat ~/nextcloud-aio/data/caddylog*.json \
+'zcat $(ls -t ~/nextcloud-aio/data/caddylog*.gz | head -2) \
   | docker run --rm -i -e LANG=$LANG \
   -v /home/la_lukasz/nextcloud-aio/data:/input \
   -v /home/la_lukasz/nextcloud-aio/sites/goaccess_caddy:/output \
   allinurl/goaccess --log-format CADDY --exclude-ip=192.168.2.1 \
   --with-output-resolver --agent-list --tz="Europe/Berlin" \
-  --ignore-panel=TLS_TYPE --no-query-string --unknowns-as-crawlers \
+  --enable-panel=VISITORS \
+  --ignore-panel=REQUESTS \
+  --ignore-panel=REQUESTS_STATIC \
+  --ignore-panel=NOT_FOUND \
+  --enable-panel=HOSTS \
+  --enable-panel=OS \
+  --enable-panel=BROWSERS \
+  --ignore-panel=VISIT_TIMES \
+  --enable-panel=VIRTUAL_HOSTS \
+  --ignore-panel=REFERRERS \
+  --ignore-panel=REFERRING_SITES \
+  --ignore-panel=KEYPHRASES \
+  --ignore-panel=STATUS_CODES \
+  --ignore-panel=REMOTE_USER \
+  --ignore-panel=CACHE_STATUS \
+  --ignore-panel=GEO_LOCATION \
+  --enable-panel=ASN \
+  --ignore-panel=MIME_TYPE \
+  --ignore-panel=TLS_TYPE \
+  --no-query-string --unknowns-as-crawlers --max-items=9 --real-os \
   --geoip-database=/input/GeoLite2-Country.mmdb \
   --geoip-database=/input/GeoLite2-ASN.mmdb \
-  --html-report-title="Caddylog" --output=/output/caddylog.html -'
+  --html-report-title="Caddylog" --output=/output/caddylog.html \
+  /input/caddylog.json -'
 ```
 
 #### Chown and chmod
