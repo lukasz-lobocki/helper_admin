@@ -229,10 +229,10 @@ volumes:
 #### _docker-compose.env_
 
 ```ini
-PAPERLESS_URL=https://paperless.lobocki.duckdns.org
+PAPERLESS_URL=https://paperless.ideant.pl
 PAPERLESS_SECRET_KEY=***[redacted]***
 PAPERLESS_TRUSTED_PROXIES=127.0.0.1
-PAPERLESS_ALLOWED_HOSTS=localhost # use only with caddy
+PAPERLESS_ALLOWED_HOSTS=localhost
 PAPERLESS_TIME_ZONE=Europe/Warsaw
 PAPERLESS_OCR_LANGUAGE=pol+eng
 PAPERLESS_OCR_LANGUAGES=pol eng
@@ -252,7 +252,8 @@ PAPERLESS_OCR_OUTPUT_TYPE=pdf
 PAPERLESS_CONSUMER_RECURSIVE=true
 PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=true
 PAPERLESS_DATE_ORDER=YMD
-PAPERLESS_PRE_CONSUME_SCRIPT=/usr/src/paperless/scripts/removepassword.py
+PAPERLESS_PRE_CONSUME_SCRIPT=/usr/src/paperless/scripts/pre-consumption.py
+PAPERLESS_POST_CONSUME_SCRIPT=/usr/src/paperless/scripts/post-consumption.sh
 ```
 
 ```bash
@@ -410,75 +411,76 @@ networks:
       mode require_and_verify
       trusted_ca_cert_file /certs/Absolute_Trust_Global_Root_CA_-_G2.crt
       trusted_ca_cert_file /certs/Absolute_Trust_ID_Assurance_-_G2.crt
-      trusted_ca_cert_file /certs/Absolute_Trust_ID_Assurance_PKI.crt
       trusted_ca_cert_file /certs/LOBOCKI-PIEKARNIK-CA.crt
     }
   }
 }
 
 (header_snippet) {
-  header {
-    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-    X-XSS-Protection "1; mode=block"
-    X-Frame-Options "SAMEORIGIN"
-    Referrer-Policy "strict-origin-when-cross-origin"
-    Content-Security-Policy "upgrade-insecure-requests"
-    -Server
-    -X-Powered-By
-  }
-  tls lukasz.lobocki@googlemail.com
-  log {
-    output file /data/caddylog.json {
-      roll_size 150MiB
-      roll_keep 10
-      roll_keep_for 42d
-      roll_uncompressed
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-XSS-Protection "1; mode=block"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Content-Security-Policy "upgrade-insecure-requests"
+        -Server
+        -X-Powered-By
     }
-  }
+    tls lukasz.lobocki@googlemail.com
+    log {
+        output file /data/caddylog.json {
+            roll_size 75MiB
+            roll_keep 10
+            roll_keep_for 42d
+        }
+    }
 }
 
-https://caddylog.lobocki.duckdns.org {
-  import tls_snippet
-  import header_snippet
-  root * /srv/goaccess_caddy
-  file_server {
-    index caddylog.html
-  }
-  #basicauth {
-  #  la_lukasz **[redacted]**
-  #}
+# Nextcloud
+https://ideant.pl {
+    # import tls_snippet
+    import header_snippet
+    reverse_proxy localhost:11000
 }
 
-# Nextcloud. SSH:11022
-https://lobocki.duckdns.org {
-  # import tls_snippet
-  import header_snippet
-  reverse_proxy localhost:11000
+https://assets.ideant.pl {
+    import header_snippet
+    import tls_snippet
+    root * /srv/assets
+    file_server {
+#        index caddylog.html
+    }
 }
 
-https://paperless.lobocki.duckdns.org {
-  import tls_snippet
-  import header_snippet
-  reverse_proxy localhost:8081
-  encode gzip
+https://caddylog.ideant.pl {
+    import header_snippet
+    import tls_snippet
+    root * /srv/goaccess_caddy
+    file_server {
+        index caddylog.html
+    }
 }
 
-https://pihole.lobocki.duckdns.org {
-  import tls_snippet
-  import header_snippet
-  reverse_proxy 192.168.2.2:80
-  redir / /admin{uri}
-  encode gzip
+https://paperless.ideant.pl {
+    import tls_snippet
+    import header_snippet
+    reverse_proxy localhost:8081
+    encode gzip
 }
 
-https://dash.lobocki.duckdns.org {
-  import tls_snippet
-  import header_snippet
-  reverse_proxy odroid.lan:3001
-  #basicauth {
-  #  la_lukasz **[redacted]**
-  #}
-  encode gzip
+https://pihole.ideant.pl {
+    import tls_snippet
+    import header_snippet
+    reverse_proxy 192.168.2.2:80
+    redir / /admin{uri}
+    encode gzip
+}
+
+https://dash.ideant.pl {
+    import tls_snippet
+    import header_snippet
+    reverse_proxy odroid.lan:3001
+    encode gzip
 }
 ```
 
@@ -572,8 +574,7 @@ curl -s 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Cou
 ```
 
 ```bash
-ssh la_lukasz@nuc11atk.lan \
-'zcat $(ls -t ~/nextcloud-aio/data/caddylog*.gz | head -2) \
+zcat $(ls -t ~/nextcloud-aio/data/caddylog*.gz | head -2) \
   | docker run --rm -i -e LANG=$LANG \
   -v /home/la_lukasz/nextcloud-aio/data:/input \
   -v /home/la_lukasz/nextcloud-aio/sites/goaccess_caddy:/output \
@@ -602,7 +603,7 @@ ssh la_lukasz@nuc11atk.lan \
   --geoip-database=/input/GeoLite2-Country.mmdb \
   --geoip-database=/input/GeoLite2-ASN.mmdb \
   --html-report-title="Caddylog" --output=/output/caddylog.html \
-  /input/caddylog.json -'
+  /input/caddylog.json -
 ```
 
 #### Chown and chmod
