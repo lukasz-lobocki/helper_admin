@@ -807,7 +807,7 @@ docker run -it --name "smallstep-odroid-pki" \
   -v /home/la_lukasz/smallstep:/home/step \
   -p 9000:9000 \
   -e "DOCKER_STEPCA_INIT_NAME=odroid-pki" \
-  -e "DOCKER_STEPCA_INIT_DNS_NAMES=localhost,odroid,odroid.lan" \
+  -e "DOCKER_STEPCA_INIT_DNS_NAMES=localhost,lobocki.duckdns.org" \
   -e "DOCKER_STEPCA_INIT_PROVISIONER_NAME=lukasz.lobocki@googlemail.com" \
   smallstep/step-ca \
 2>&1 | tee -a step-ca.init
@@ -838,8 +838,7 @@ docker run -it --name "smallstep-odroid-pki" \
   "insecureAddress": "",
   "dnsNames": [
     "localhost",
-    "odroid",
-    "odroid.lan"
+    "lobocki.duckdns.org"
   ],
   "logger": {
     "format": "text"
@@ -857,13 +856,13 @@ docker run -it --name "smallstep-odroid-pki" \
         "key": {
           "use": "sig",
           "kty": "EC",
-          "kid": "**[redacted]**",
+          "kid": "***[redacted]***",
           "crv": "P-256",
           "alg": "ES256",
-          "x": "**[redacted]**",
-          "y": "**[redacted]**"
+          "x": "***[redacted]***",
+          "y": "***[redacted]***"
         },
-        "encryptedKey": "**[redacted]**",
+        "encryptedKey": "***[redacted]***",
         "claims": {
           "minTLSCertDuration": "5m",
           "maxTLSCertDuration": "8760h",
